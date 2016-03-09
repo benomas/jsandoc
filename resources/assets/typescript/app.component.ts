@@ -1,8 +1,10 @@
 import {Component} from 'angular2/core';
 import { LangService }     from './lang.service';
+import { ResumeSectionComponent }   from './resume-section.component';
 @Component({
     selector: 'my-app',
-    templateUrl: 'partials/index.html',
+    templateUrl: 'templates/index.html',
+    directives:[ResumeSectionComponent],
     providers:  [
                     LangService
                 ]

@@ -1,4 +1,4 @@
-System.register(['angular2/core', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './lang.service', './resume-section.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, lang_service_1;
+    var core_1, lang_service_1, resume_section_component_1;
     var AppComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
+            },
+            function (resume_section_component_1_1) {
+                resume_section_component_1 = resume_section_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -194,7 +197,8 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        templateUrl: 'partials/index.html',
+                        templateUrl: 'templates/index.html',
+                        directives: [resume_section_component_1.ResumeSectionComponent],
                         providers: [
                             lang_service_1.LangService
                         ]
