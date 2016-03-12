@@ -10,7 +10,16 @@ export class LangService
                         "resume":
                         {
                             "resume":"Resumen",
-                            "app_title":"Resumen personal"
+                            "app_title":"Resumen personal",
+                            "name":"Nombre",
+                            "firstLastName":"Primer apellido",
+                            "secondLastName":"Segundo apellido",
+                            "address":"Dirección",
+                            "SexValue":"Sexo",
+                            "birdDate":"Fecha de nacimiento",
+                            "phones":"Telefono(s)",
+                            "celPhone":"Celular(es)",
+                            "eMail":"Correo(s)"
                         }
                     }
                 }

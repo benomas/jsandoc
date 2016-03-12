@@ -1,3 +1,21 @@
-<div *ngFor="#sectionProperty of section">
-    {{sectionProperty}}
+<div class="panel panel-primary">
+  <div class="panel-heading" (click)="panelToggle()" style="cursor:pointer;">
+    <h2 class="panel-title" style="text-align: left;"><b>{{sectionTitle}}</b></h2>
+  </div>
+  <div [hidden]="!visible" class="panel-body" *ngFor="#item of section; #position = index" style="border-bottom:2px solid #CCCCCC;">
+    <div *ngIf="!isArray(item)">
+        <div *ngIf="!isArray(item.value)" class="col-md-3 col-sm-6 hidden-md hidden-lg"><b>{{item.property}}</b></div>
+        <div *ngIf="!isArray(item.value)" class="col-md-3 col-sm-6 hidden-sm hidden-xs" style="text-align: left;"><b>{{item.property}}</b></div>
+        <div *ngIf="canBeRendered(item.value)" class="col-md-9 pull-left hidden-sm hidden-xs" style="text-align: left;">{{item.value}}</div>
+        <div *ngIf="canBeRendered(item.value)" class="col-sm-6 hidden-md hidden-lg">{{item.value}}</div>
+
+        <div *ngIf="!isObject(item)" class="col-md-9 pull-left hidden-sm hidden-xs" style="text-align: left;">{{item}}</div>
+        <div *ngIf="!isObject(item)" class="col-sm-6 hidden-md hidden-lg">{{item}}</div>
+
+        <resume-section *ngIf="isArray(item.value)" [section]="item.value" [sectionTitle]="item.property">
+        </resume-section>
+    </div>
+    <resume-section *ngIf="isArray(item)" [section]="item" [sectionTitle]="position+1">
+    </resume-section>
+  </div>
 </div>

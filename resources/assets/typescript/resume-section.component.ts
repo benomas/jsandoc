@@ -1,17 +1,53 @@
-import {Component,PipeTransform}      from 'angular2/core';
+import {Component}      from 'angular2/core';
 import {LangService}    from './lang.service';
 
 @Component({
     selector: 'resume-section',
     templateUrl: 'templates/resume-section.html',
-    inputs: ['section']
+    inputs: ['section','sectionTitle'],
+    directives:[ResumeSectionComponent],
 })
-@Pipe({ name: 'values',  pure: false })
-export class ResumeSectionComponent implements PipeTransform
+export class ResumeSectionComponent
 {
-    transform(value: any, args: any[] = null): any
-    {
-        return Object.keys(value).map(key => value[key]);
-    }
     section;
+    sectionTitle;
+    visible: boolean = true;
+
+    constructor(private _langService: LangService)
+    {
+    }
+    canBeRendered(level):boolean
+    {
+        return !this.isObject(level);
+    }
+
+    isPureArray(level):boolean
+    {
+        if(this.isArray(level))
+        {
+            level.forEach((subLevel) =>
+            {
+                if(typeof subLevel ==='object' && !this.isArray(subLevel))
+                    return false;
+            });
+        }
+        return true;
+    }
+
+    isObject(level):boolean
+    {
+        if(typeof level ==='object')
+            return true;
+        return false;
+    }
+
+    isArray(level):boolean
+    {
+        return Object.prototype.toString.call( level ) === '[object Array]';
+    }
+
+    panelToggle():void
+    {
+        this.visible = !this.visible;
+    }
 }

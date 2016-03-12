@@ -4,6 +4,7 @@
         <?php echo '<title>'.trans('app.resume').'</title>'; ?>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link href="css/app.css" rel="stylesheet" type="text/css">
         <script src="es6-shim/es6-shim.min.js"></script>
         <script src="systemjs/dist/system-polyfills.js"></script>
 
@@ -35,7 +36,7 @@
                 width: 100%;
                 display: table;
                 font-weight: 100;
-                font-family: 'Lato';
+                /*font-family: 'Lato';*/
             }
 
             .container {
@@ -49,16 +50,14 @@
                 display: inline-block;
             }
 
-            .title {
+            /*.title {
                 font-size: 96px;
-            }
+            }*/
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-
-                <?php echo '<div class="title">'.trans('app.resume').'</div>'; ?>
                 <my-app>Loading...</my-app>
             </div>
         </div>
