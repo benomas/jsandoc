@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<!--<div class="panel panel-primary">
   <div class="panel-heading" (click)="panelToggle()" style="cursor:pointer;">
     <h2 class="panel-title" style="text-align: left;"><b>{{sectionTitle}}</b></h2>
   </div>
@@ -17,5 +17,65 @@
     </div>
     <resume-section *ngIf="isArray(item)" [section]="item" [sectionTitle]="position+1">
     </resume-section>
+  </div>
+</div>
+-->
+<div *ngFor="#item of section; #position = index">
+  <div *ngIf="isObject(item)">
+    <div *ngIf="isArray(item)">
+      <resume-section [section]="item"
+                      [sectionTitle]="position+1"
+                      (childover)="notifyOverToParent($event)"
+                      (childleave)="notifyLeaveToParent($event)"
+      >
+      </resume-section>
+    </div>
+    <div *ngIf="!isArray(item)">
+      <span *ngIf="isArray(item.value) && hiddenPosition(item)!==null"
+            class="glyphicon glyphicon-folder-close"
+            aria-hidden="true"
+            style="cursor:pointer;"
+            (click)="panelToggle(item)"
+      >
+      </span>
+      <span *ngIf="isArray(item.value) && hiddenPosition(item)===null"
+            class="glyphicon glyphicon-folder-open"
+            aria-hidden="true"
+            style="cursor:pointer;"
+            (click)="panelToggle(item)"
+      >
+      </span>
+      <span class="section-title"
+            [ngClass]='{"clickeable":isArray(item.value),"with-child-over":childElementOver ===item.value || item===overThisElement}'
+            (mouseenter)="overThis(item)"
+            (mouseleave)="leaveThis(item)"
+            (click)="panelToggle(item)"
+      >
+        {{item.property}}:
+      </span>
+      <div *ngIf="isArray(item.value)"  style="padding-left:20px;">
+        <resume-section [section]="item.value"
+                        [sectionTitle]="position+1"
+                        (childover)="notifyOverToParent($event)"
+                        (childleave)="notifyLeaveToParent($event)"
+                        [hidden]="hiddenPosition(item)!==null"
+        >
+        </resume-section>
+      </div>
+      <span *ngIf="!isArray(item.value)"
+            [ngClass]='{"with-child-over":item===overThisElement}'
+            (mouseenter)="overThis(item)"
+            (mouseleave)="leaveThis(item)"
+      >
+        {{item.value}}
+      </span>
+    </div>
+  </div>
+  <div  *ngIf="!isObject(item)"
+        [ngClass]='{"with-child-over":item===overThisElement}'
+        (mouseenter)="overThis(item)"
+        (mouseleave)="leaveThis(item)"
+  >
+    {{item}}
   </div>
 </div>

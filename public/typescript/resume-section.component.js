@@ -1,4 +1,4 @@
-System.register(['angular2/core', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './lang.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, lang_service_1;
+    var core_1, common_1, lang_service_1;
     var ResumeSectionComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -24,20 +27,24 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
             ResumeSectionComponent = (function () {
                 function ResumeSectionComponent(_langService) {
                     this._langService = _langService;
-                    this.visible = true;
+                    this.childover = new core_1.EventEmitter();
+                    this.childleave = new core_1.EventEmitter();
+                    this.overThisElement = false;
+                    this.hiddens = [];
                 }
                 ResumeSectionComponent.prototype.canBeRendered = function (level) {
                     return !this.isObject(level);
                 };
                 ResumeSectionComponent.prototype.isPureArray = function (level) {
                     var _this = this;
+                    var pureArray = true;
                     if (this.isArray(level)) {
                         level.forEach(function (subLevel) {
-                            if (typeof subLevel === 'object' && !_this.isArray(subLevel))
-                                return false;
+                            if (!_this.isArray(subLevel))
+                                pureArray = false;
                         });
                     }
-                    return true;
+                    return pureArray;
                 };
                 ResumeSectionComponent.prototype.isObject = function (level) {
                     if (typeof level === 'object')
@@ -47,15 +54,48 @@ System.register(['angular2/core', './lang.service'], function(exports_1, context
                 ResumeSectionComponent.prototype.isArray = function (level) {
                     return Object.prototype.toString.call(level) === '[object Array]';
                 };
-                ResumeSectionComponent.prototype.panelToggle = function () {
-                    this.visible = !this.visible;
+                ResumeSectionComponent.prototype.panelToggle = function (level) {
+                    if (!this.isArray(level.value))
+                        return false;
+                    var position = this.hiddenPosition(level);
+                    if (position !== null)
+                        this.hiddens.splice(position, 1);
+                    else
+                        this.hiddens.push(level);
+                };
+                ResumeSectionComponent.prototype.hiddenPosition = function (level) {
+                    var levelHidden = null;
+                    this.hiddens.forEach(function (subLevel, index) {
+                        if (level === subLevel)
+                            levelHidden = index;
+                    });
+                    return levelHidden;
+                };
+                ResumeSectionComponent.prototype.overThis = function (emitter) {
+                    this.overThisElement = emitter;
+                    this.childover.next(this.section);
+                };
+                ResumeSectionComponent.prototype.leaveThis = function (emitter) {
+                    this.overThisElement = null;
+                    this.childleave.next(this.section);
+                };
+                ResumeSectionComponent.prototype.notifyOverToParent = function (parent) {
+                    this.childElementOver = parent;
+                    this.childover.next(this.section);
+                };
+                ResumeSectionComponent.prototype.notifyLeaveToParent = function (parent) {
+                    this.childElementOver = null;
+                    this.childleave.next(this.section);
                 };
                 ResumeSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'resume-section',
                         templateUrl: 'templates/resume-section.html',
-                        inputs: ['section', 'sectionTitle'],
-                        directives: [ResumeSectionComponent],
+                        inputs: ['section', 'sectionTitle', 'sectionParent'],
+                        outputs: ['childover', 'childleave'],
+                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .section-iterator\n                {\n                    border-left:2px solid #FFFFFF;\n                    border-bottom:1px solid #FFFFFF;\n                }\n                .section-iterator:hover\n                {\n                    border-left:2px solid #CCCCCC;\n                    border-bottom:1px solid #CCCCCC;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                "
+                        ],
+                        directives: [ResumeSectionComponent, common_1.NgClass],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])
                 ], ResumeSectionComponent);

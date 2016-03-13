@@ -76,53 +76,64 @@ export class AppComponent
                 {"property":"Lenguajes de programación",
                  "value":
                     [
-                        [
-                            {"property":"Tipo de lenguaje","value":"Web backend"},
-                            {"property":"Lenguaje","value":"php"},
-                            {"property":"Frameworks",
-                             "value":
-                                [
-                                    "Codeingniter",
-                                    "Inux",
-                                    "WordPress",
-                                    "Laravel",
-                                ]
-                            }
-                        ],
-                        [
-                            {"property":"Tipo de lenguaje","value":"Escritorio"},
-                            {"property":"Lenguaje","value":"java"}
-                        ],
-                        [
-                            {"property":"Tipo de lenguaje","value":"Escritorio"},
-                            {"property":"Lenguaje","value":"c/c++"}
-                        ],
-                        [
-                            {"property":"Tipo de lenguaje","value":"Base de datos"},
-                            {"property":"Lenguaje","value":"mySql"}
-                        ],
-                        [
-                            {"property":"Tipo de lenguaje","value":"Base de datos"},
-                            {"property":"Lenguaje","value":"msSql"}
-                        ],
-                        [
-                            {"property":"Tipo de lenguaje","value":"Web frontend"},
-                            {"property":"Lenguaje","value":"javascript"},
-                            {"property":"Librerias",
-                             "value":
-                                [
-                                    "Jquery",
-                                    "JMaps"
-                                ]
-                            },
-                            {"property":"Frameworks",
-                             "value":
-                                [
-                                    "Angular",
-                                    "Angular II"
-                                ]
-                            }
-                        ]
+                        {"property":"Web backend",
+                         "value":
+                            [
+                                {"property":"php",
+                                 "value":
+                                 [
+                                    {"property":"Frameworks",
+                                     "value":
+                                        [
+                                            "Codeingniter",
+                                            "Inux",
+                                            "WordPress",
+                                            "Laravel"
+                                        ]
+                                    },
+                                 ]
+                                },
+                            ]
+                        },
+                        {"property":"Escritorio",
+                         "value":
+                            [
+                                "java",
+                                "c/c++"
+                            ]
+                        },
+                        {"property":"Base de datos",
+                         "value":
+                            [
+                                "mySql",
+                                "msSql",
+                                "postgresql",
+                            ]
+                        },
+                        {"property":"Web frontend",
+                         "value":
+                            [
+                                {"property":"javascript",
+                                 "value":
+                                 [
+                                    {"property":"Librerias",
+                                     "value":
+                                        [
+                                            "Jquery",
+                                            "JMaps"
+                                        ]
+                                    },
+                                    {"property":"Frameworks",
+                                     "value":
+                                        [
+                                            "Angular",
+                                            "Angular II"
+                                        ]
+                                    },
+                                 ]
+                                },
+                            ]
+                        }
                     ]
                 }
             ],
