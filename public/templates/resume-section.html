@@ -1,48 +1,28 @@
-<!--<div class="panel panel-primary">
-  <div class="panel-heading" (click)="panelToggle()" style="cursor:pointer;">
-    <h2 class="panel-title" style="text-align: left;"><b>{{sectionTitle}}</b></h2>
-  </div>
-  <div [hidden]="!visible" class="panel-body" *ngFor="#item of section; #position = index" style="border-bottom:2px solid #CCCCCC;">
-    <div *ngIf="!isArray(item)">
-        <div *ngIf="!isArray(item.value)" class="col-md-3 col-sm-6 hidden-md hidden-lg"><b>{{item.property}}</b></div>
-        <div *ngIf="!isArray(item.value)" class="col-md-3 col-sm-6 hidden-sm hidden-xs" style="text-align: left;"><b>{{item.property}}</b></div>
-        <div *ngIf="canBeRendered(item.value)" class="col-md-9 pull-left hidden-sm hidden-xs" style="text-align: left;">{{item.value}}</div>
-        <div *ngIf="canBeRendered(item.value)" class="col-sm-6 hidden-md hidden-lg">{{item.value}}</div>
-
-        <div *ngIf="!isObject(item)" class="col-md-9 pull-left hidden-sm hidden-xs" style="text-align: left;">{{item}}</div>
-        <div *ngIf="!isObject(item)" class="col-sm-6 hidden-md hidden-lg">{{item}}</div>
-
-        <resume-section *ngIf="isArray(item.value)" [section]="item.value" [sectionTitle]="item.property">
-        </resume-section>
-    </div>
-    <resume-section *ngIf="isArray(item)" [section]="item" [sectionTitle]="position+1">
-    </resume-section>
-  </div>
-</div>
--->
 <div *ngFor="#item of section; #position = index">
   <div *ngIf="isObject(item)">
     <div *ngIf="isArray(item)">
+      <div  class="section-title"
+            [ngClass]='{"with-child-over":childElementOver ===item.value || item===overThisElement}'
+            style="display:inline-block; vertical-align: top;"
+      >
+        {{position+1}}:
+      </div>
       <resume-section [section]="item"
                       [sectionTitle]="position+1"
                       (childover)="notifyOverToParent($event)"
                       (childleave)="notifyLeaveToParent($event)"
+                      style="display:inline-block;"
+                      class="border-left"
       >
       </resume-section>
     </div>
     <div *ngIf="!isArray(item)">
-      <span *ngIf="isArray(item.value) && hiddenPosition(item)!==null"
-            class="glyphicon glyphicon-folder-close"
+      <span *ngIf="isArray(item.value)"
+            class="glyphicon"
             aria-hidden="true"
             style="cursor:pointer;"
             (click)="panelToggle(item)"
-      >
-      </span>
-      <span *ngIf="isArray(item.value) && hiddenPosition(item)===null"
-            class="glyphicon glyphicon-folder-open"
-            aria-hidden="true"
-            style="cursor:pointer;"
-            (click)="panelToggle(item)"
+            [ngClass]='{"glyphicon-folder-close":hiddenPosition(item)!==null,"glyphicon-folder-open":hiddenPosition(item)===null}'
       >
       </span>
       <span class="section-title"
@@ -71,7 +51,7 @@
       </span>
     </div>
   </div>
-  <div  *ngIf="!isObject(item)"
+  <div *ngIf="!isObject(item)"
         [ngClass]='{"with-child-over":item===overThisElement}'
         (mouseenter)="overThis(item)"
         (mouseleave)="leaveThis(item)"

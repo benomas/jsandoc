@@ -31,6 +31,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                     this.childleave = new core_1.EventEmitter();
                     this.overThisElement = false;
                     this.hiddens = [];
+                    this.showItemPosition = false;
                 }
                 ResumeSectionComponent.prototype.canBeRendered = function (level) {
                     return !this.isObject(level);
@@ -91,9 +92,9 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                     core_1.Component({
                         selector: 'resume-section',
                         templateUrl: 'templates/resume-section.html',
-                        inputs: ['section', 'sectionTitle', 'sectionParent'],
+                        inputs: ['section', 'sectionTitle', 'sectionParent', 'showItemPosition'],
                         outputs: ['childover', 'childleave'],
-                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .section-iterator\n                {\n                    border-left:2px solid #FFFFFF;\n                    border-bottom:1px solid #FFFFFF;\n                }\n                .section-iterator:hover\n                {\n                    border-left:2px solid #CCCCCC;\n                    border-bottom:1px solid #CCCCCC;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                "
+                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .section-iterator\n                {\n                    border-left:2px solid #FFFFFF;\n                    border-bottom:1px solid #FFFFFF;\n                }\n                .section-iterator:hover\n                {\n                    border-left:2px solid #CCCCCC;\n                    border-bottom:1px solid #CCCCCC;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n                "
                         ],
                         directives: [ResumeSectionComponent, common_1.NgClass],
                     }), 

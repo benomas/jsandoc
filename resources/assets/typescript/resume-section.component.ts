@@ -5,7 +5,7 @@ import {LangService}    from './lang.service';
 @Component({
     selector: 'resume-section',
     templateUrl: 'templates/resume-section.html',
-    inputs: ['section','sectionTitle','sectionParent'],
+    inputs: ['section','sectionTitle','sectionParent','showItemPosition'],
     outputs: ['childover','childleave'],
     styles: [`
                 .section-title
@@ -31,6 +31,14 @@ import {LangService}    from './lang.service';
                 {
                     cursor:pointer;
                 }
+                .border-left
+                {
+                    border-left:2px solid #FFFFFF;
+                }
+                .border-left:hover
+                {
+                    border-left:2px solid #204D74;
+                }
                 `
             ],
     directives:[ResumeSectionComponent,NgClass],
@@ -45,6 +53,7 @@ export class ResumeSectionComponent
     childElementOver;
     overThisElement = false;
     hiddens = [];
+    showItemPosition=false;
     constructor(private _langService: LangService)
     {
     }
