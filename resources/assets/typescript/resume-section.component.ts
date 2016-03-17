@@ -1,26 +1,16 @@
 import {Component,EventEmitter}      from 'angular2/core';
-import {NgClass} from 'angular2/common';
+import {NgClass,NgSwitch,NgSwitchWhen,NgSwitchDefault} from 'angular2/common';
 import {LangService}    from './lang.service';
 
 @Component({
     selector: 'resume-section',
     templateUrl: 'templates/resume-section.html',
-    inputs: ['section','sectionTitle','sectionParent','showItemPosition'],
+    inputs: ['section','sectionTitle','sectionParent'],
     outputs: ['childover','childleave'],
     styles: [`
                 .section-title
                 {
                   font-weight:bold;
-                }
-                .section-iterator
-                {
-                    border-left:2px solid #FFFFFF;
-                    border-bottom:1px solid #FFFFFF;
-                }
-                .section-iterator:hover
-                {
-                    border-left:2px solid #CCCCCC;
-                    border-bottom:1px solid #CCCCCC;
                 }
                 .with-child-over
                 {
@@ -39,9 +29,10 @@ import {LangService}    from './lang.service';
                 {
                     border-left:2px solid #204D74;
                 }
+
                 `
             ],
-    directives:[ResumeSectionComponent,NgClass],
+    directives:[ResumeSectionComponent,NgClass,NgSwitch, NgSwitchWhen, NgSwitchDefault],
 })
 export class ResumeSectionComponent
 {
@@ -53,16 +44,12 @@ export class ResumeSectionComponent
     childElementOver;
     overThisElement = false;
     hiddens = [];
-    showItemPosition=false;
+
     constructor(private _langService: LangService)
     {
     }
-    canBeRendered(level):boolean
-    {
-        return !this.isObject(level);
-    }
 
-    isPureArray(level):boolean
+    doubleLevelArray(level):boolean
     {
         var pureArray = true;
         if(this.isArray(level))
@@ -70,7 +57,10 @@ export class ResumeSectionComponent
             level.forEach((subLevel) =>
             {
                 if(!this.isArray(subLevel))
+                {
                     pureArray = false;
+                    return false;
+                }
             });
         }
         return pureArray;
@@ -132,5 +122,38 @@ export class ResumeSectionComponent
     {
         this.childElementOver = null;
         this.childleave.next(this.section);
+    }
+
+    overArrayChild(level)
+    {
+        if(level === this.childElementOver)
+            return true;
+        var arrayChild=false;
+        level.forEach((subLevel) =>
+        {
+            if(subLevel===this.childElementOver)
+            {
+                arrayChild = true;
+            }
+        });
+        return arrayChild;
+    }
+
+    getCase(item):string
+    {
+        if(!this.isObject(item))
+            return "primitive";
+
+        if(this.doubleLevelArray(this.section))
+            return 'array-array';
+
+        if(this.isArray(item))
+            return "array";
+
+        if(!this.isArray(item.value))
+            return "property-value";
+
+
+        return "property-array";
     }
 }

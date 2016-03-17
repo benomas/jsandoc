@@ -31,18 +31,16 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                     this.childleave = new core_1.EventEmitter();
                     this.overThisElement = false;
                     this.hiddens = [];
-                    this.showItemPosition = false;
                 }
-                ResumeSectionComponent.prototype.canBeRendered = function (level) {
-                    return !this.isObject(level);
-                };
-                ResumeSectionComponent.prototype.isPureArray = function (level) {
+                ResumeSectionComponent.prototype.doubleLevelArray = function (level) {
                     var _this = this;
                     var pureArray = true;
                     if (this.isArray(level)) {
                         level.forEach(function (subLevel) {
-                            if (!_this.isArray(subLevel))
+                            if (!_this.isArray(subLevel)) {
                                 pureArray = false;
+                                return false;
+                            }
                         });
                     }
                     return pureArray;
@@ -88,15 +86,38 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                     this.childElementOver = null;
                     this.childleave.next(this.section);
                 };
+                ResumeSectionComponent.prototype.overArrayChild = function (level) {
+                    var _this = this;
+                    if (level === this.childElementOver)
+                        return true;
+                    var arrayChild = false;
+                    level.forEach(function (subLevel) {
+                        if (subLevel === _this.childElementOver) {
+                            arrayChild = true;
+                        }
+                    });
+                    return arrayChild;
+                };
+                ResumeSectionComponent.prototype.getCase = function (item) {
+                    if (!this.isObject(item))
+                        return "primitive";
+                    if (this.doubleLevelArray(this.section))
+                        return 'array-array';
+                    if (this.isArray(item))
+                        return "array";
+                    if (!this.isArray(item.value))
+                        return "property-value";
+                    return "property-array";
+                };
                 ResumeSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'resume-section',
                         templateUrl: 'templates/resume-section.html',
-                        inputs: ['section', 'sectionTitle', 'sectionParent', 'showItemPosition'],
+                        inputs: ['section', 'sectionTitle', 'sectionParent'],
                         outputs: ['childover', 'childleave'],
-                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .section-iterator\n                {\n                    border-left:2px solid #FFFFFF;\n                    border-bottom:1px solid #FFFFFF;\n                }\n                .section-iterator:hover\n                {\n                    border-left:2px solid #CCCCCC;\n                    border-bottom:1px solid #CCCCCC;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n                "
+                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n\n                "
                         ],
-                        directives: [ResumeSectionComponent, common_1.NgClass],
+                        directives: [ResumeSectionComponent, common_1.NgClass, common_1.NgSwitch, common_1.NgSwitchWhen, common_1.NgSwitchDefault],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])
                 ], ResumeSectionComponent);
