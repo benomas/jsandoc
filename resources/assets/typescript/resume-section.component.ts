@@ -1,6 +1,7 @@
-import {Component,EventEmitter}      from 'angular2/core';
-import {NgClass,NgSwitch,NgSwitchWhen,NgSwitchDefault} from 'angular2/common';
-import {LangService}    from './lang.service';
+import {Component,EventEmitter}     from 'angular2/core';
+import {NgClass}                    from 'angular2/common';
+import {AddElementComponent}        from './add-element.component';
+import {LangService}                from './lang.service';
 
 @Component({
     selector: 'resume-section',
@@ -32,7 +33,7 @@ import {LangService}    from './lang.service';
 
                 `
             ],
-    directives:[ResumeSectionComponent,NgClass,NgSwitch, NgSwitchWhen, NgSwitchDefault],
+    directives:[ResumeSectionComponent,NgClass,AddElementComponent],
 })
 export class ResumeSectionComponent
 {
@@ -44,6 +45,7 @@ export class ResumeSectionComponent
     childElementOver;
     overThisElement = false;
     hiddens = [];
+    newElement;
 
     constructor(private _langService: LangService)
     {
@@ -155,5 +157,10 @@ export class ResumeSectionComponent
 
 
         return "property-array";
+    }
+
+    add(value)
+    {
+        this.section.push(value);
     }
 }

@@ -1,0 +1,63 @@
+<span *ngIf="mode==='primitive'">
+  <input  type="text"
+          [(ngModel)]="primitiveValue" size="20"
+          placeholder="Nuevo valor"
+  >
+</span>
+<span *ngIf="mode==='array'">
+  Preciona boton agregar, se añadira un arreglo vacio
+</span>
+<span *ngIf="mode==='property-value'">
+  <input  type="text"
+          [(ngModel)]="property" size="15"
+          placeholder="Nueva propiedad"
+  >
+  <input  type="text"
+          [(ngModel)]="propertyValue" size="30"
+          placeholder="Nuevo valor"
+  >
+</span>
+  <button  class="btn btn-success btn-xs"
+          (click)="changeMode('primitive')"
+          title="Valor"
+          [ngClass]='{"les-important":getModeAsInt()!==1}'
+  >
+    <span
+          class="glyphicon glyphicon-minus"
+          aria-hidden="true"
+    >
+    </span>
+  </button>
+  <button  class="btn btn-info btn-xs"
+          (click)="changeMode('array')"
+          title="Arreglo"
+          [ngClass]='{"les-important":getModeAsInt()!==2}'
+  >
+    <span
+          class="glyphicon glyphicon-align-justify"
+          aria-hidden="true"
+    >
+    </span>
+  </button>
+  <button  class="btn btn-warning btn-xs"
+          (click)="changeMode('property-value')"
+          title="Propiedad-valor"
+          [ngClass]='{"les-important":getModeAsInt()!==3}'
+  >
+    <span
+          class="glyphicon glyphicon-list"
+          aria-hidden="true"
+    >
+    </span>
+  </button>
+  <button  class="btn btn-primary btn-xs"
+          (click)="add(section)"
+          title="Agregar"
+          [ngClass]='{"les-important":0}'
+  >
+    <span
+          class="glyphicon glyphicon-plus"
+          aria-hidden="true"
+    >
+    </span>
+  </button>

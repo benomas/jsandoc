@@ -1,11 +1,4 @@
-<div *ngFor="#item of section; #position = index">
-
-  <div *ngIf="getCase(section) === 'array'"
-  >
-
-    <input >
-    </input>
-  </div>
+<div *ngFor="#item of section; #position = index #end = last">
 
   <div *ngIf="getCase(item) === 'primitive'"
         [ngClass]='{"with-child-over":item===overThisElement}'
@@ -90,4 +83,8 @@
     </resume-section>
   </div>
 
+  <add-element *ngIf="end" (pushdata)=add($event)>
+  </add-element>
 </div>
+<add-element *ngIf="section.length===0" (pushdata)=add($event)>
+</add-element>

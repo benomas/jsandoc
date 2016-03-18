@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './add-element.component', './lang.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, lang_service_1;
+    var core_1, common_1, add_element_component_1, lang_service_1;
     var ResumeSectionComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
             },
             function (common_1_1) {
                 common_1 = common_1_1;
+            },
+            function (add_element_component_1_1) {
+                add_element_component_1 = add_element_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -109,6 +112,9 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                         return "property-value";
                     return "property-array";
                 };
+                ResumeSectionComponent.prototype.add = function (value) {
+                    this.section.push(value);
+                };
                 ResumeSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'resume-section',
@@ -117,7 +123,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                         outputs: ['childover', 'childleave'],
                         styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n\n                "
                         ],
-                        directives: [ResumeSectionComponent, common_1.NgClass, common_1.NgSwitch, common_1.NgSwitchWhen, common_1.NgSwitchDefault],
+                        directives: [ResumeSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])
                 ], ResumeSectionComponent);

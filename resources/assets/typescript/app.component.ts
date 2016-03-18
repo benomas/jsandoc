@@ -12,7 +12,7 @@ import { ResumeSectionComponent }   from './resume-section.component';
 export class AppComponent
 {
     resume =
-    [
+    [/*
         {"property":"Información personal",
          "value":
             [
@@ -217,7 +217,7 @@ export class AppComponent
                 ]
 
             ]
-        }
+        }*/
     ];
     constructor(private _langService: LangService)
     {
