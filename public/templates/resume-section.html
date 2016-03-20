@@ -83,8 +83,8 @@
     </resume-section>
   </div>
 
-  <add-element *ngIf="end" (pushdata)=add($event)>
+  <add-element *ngIf="end" (pushdata)=add($event) [section]="section">
   </add-element>
 </div>
-<add-element *ngIf="section.length===0" (pushdata)=add($event)>
+<add-element *ngIf="section.length===0" (pushdata)=add($event) [section]="section">
 </add-element>

@@ -40,6 +40,7 @@
             }
 
             .container {
+                width: auto;
                /* text-align: center;
                 display: table-cell;
                 vertical-align: middle;*/

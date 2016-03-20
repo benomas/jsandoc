@@ -1,63 +1,116 @@
-<span *ngIf="mode==='primitive'">
-  <input  type="text"
-          [(ngModel)]="primitiveValue" size="20"
-          placeholder="Nuevo valor"
-  >
-</span>
-<span *ngIf="mode==='array'">
-  Preciona boton agregar, se añadira un arreglo vacio
-</span>
-<span *ngIf="mode==='property-value'">
-  <input  type="text"
-          [(ngModel)]="property" size="15"
-          placeholder="Nueva propiedad"
-  >
-  <input  type="text"
-          [(ngModel)]="propertyValue" size="30"
-          placeholder="Nuevo valor"
-  >
-</span>
-  <button  class="btn btn-success btn-xs"
-          (click)="changeMode('primitive')"
-          title="Valor"
-          [ngClass]='{"les-important":getModeAsInt()!==1}'
-  >
-    <span
-          class="glyphicon glyphicon-minus"
-          aria-hidden="true"
-    >
-    </span>
-  </button>
-  <button  class="btn btn-info btn-xs"
-          (click)="changeMode('array')"
-          title="Arreglo"
-          [ngClass]='{"les-important":getModeAsInt()!==2}'
-  >
-    <span
-          class="glyphicon glyphicon-align-justify"
-          aria-hidden="true"
-    >
-    </span>
-  </button>
-  <button  class="btn btn-warning btn-xs"
-          (click)="changeMode('property-value')"
-          title="Propiedad-valor"
-          [ngClass]='{"les-important":getModeAsInt()!==3}'
-  >
-    <span
-          class="glyphicon glyphicon-list"
-          aria-hidden="true"
-    >
-    </span>
-  </button>
-  <button  class="btn btn-primary btn-xs"
-          (click)="add(section)"
-          title="Agregar"
-          [ngClass]='{"les-important":0}'
-  >
-    <span
-          class="glyphicon glyphicon-plus"
-          aria-hidden="true"
-    >
-    </span>
-  </button>
+<div style="margin:5px;">
+  <form class="form-inline">
+
+    <div class="form-group" >
+    <!-- buttons -->
+      <button  class="btn btn-success btn-xs"
+              (click)="changeMode('primitive')"
+              title="Valor"
+              [ngClass]='{"les-important":getModeAsInt()!==1}'
+      >
+        <span
+              class="glyphicon glyphicon-minus"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+      <button  class="btn btn-info btn-xs"
+              (click)="changeMode('array')"
+              title="Arreglo"
+              [ngClass]='{"les-important":getModeAsInt()!==2}'
+      >
+        <span
+              class="glyphicon glyphicon-align-justify"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+      <button  class="btn btn-warning btn-xs"
+              (click)="changeMode('property-value')"
+              title="Propiedad-valor"
+              [ngClass]='{"les-important":getModeAsInt()!==3}'
+      >
+        <span
+              class="glyphicon glyphicon-list"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+      <button  class="btn btn-primary btn-xs"
+                      (click)="add(section)"
+                      title="Agregar"
+                      [disabled]="!validePush()"
+
+      >
+        <span
+              class="glyphicon glyphicon-plus"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+    </div>
+
+  <!-- inputs -->
+    <div class="form-group" *ngIf="mode==='primitive'">
+      <label class="sr-only" for="primitive">Email address</label>
+      <primitive-element
+                          (sendData)="setJsonLevel($event,'primitiveElementValue')"
+                          [primitiveElementPlaceHolder]="'Tipo texto'"
+                          [primitiveElementTitle]="'Agregar una descripción'"
+      >
+      </primitive-element>
+    </div>
+    <div class="form-group" *ngIf="mode==='array'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <array-element  *ngIf="mode==='array'"
+                      (sendData)="setJsonLevel($event,'arrayElementValue')" >
+      </array-element>
+    </div>
+    <div class="form-group" *ngIf="mode==='property-value'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <primitive-element (sendData)="setJsonLevel($event,'propertyPrimitiveElementValue')"
+                          [primitiveElementPlaceHolder]="'Tipo texto'"
+                          [primitiveElementTitle]="'Agregar un concepto'"
+      >
+      </primitive-element>
+      <select class="form-control" [(ngModel)]="typeSelector">
+          <option  value="primitive-primitive" [selected]="1">
+            Valor
+          </option>
+          <option  value="primitive-array">
+            Arreglo
+          </option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="mode==='property-value' && typeSelector==='primitive-primitive'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <primitive-element
+                          (sendData)="setJsonLevel($event,'propertyValuePrimitiveElementValue')"
+                          [primitiveElementPlaceHolder]="'Tipo texto'"
+                          [primitiveElementTitle]="'Agregar una descripción'"
+      >
+      </primitive-element>
+    </div>
+    <div class="form-group" *ngIf="mode==='property-value' && typeSelector==='primitive-array'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <array-element
+                      (sendData)="setJsonLevel($event,'propertyValueArrayElementValue')">
+      </array-element>
+    </div>
+    <div class="form-group" *ngIf="section.length>0">
+        <select class="form-control" [(ngModel)]="orderPosition">
+          <option  value="before" [selected]="1">
+            Antes de
+          </option>
+          <option  value="after">
+            Despues de
+          </option>
+        </select>
+        <select class="form-control" [(ngModel)]="selectedPosition">
+          <option *ngFor="#item of section; #position = index #end = last" [value]="position+1" [selected]="end">
+          {{position+1}}
+          </option>
+        </select>
+      </div>
+  </form>
+</div>
