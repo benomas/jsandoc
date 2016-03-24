@@ -46,35 +46,37 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                 AddElementComponent.prototype.add = function () {
                     if (!this.validePush())
                         return false;
-                    if (this.mode === 'primitive') {
-                        this.pushdata.next(this.primitiveElementValue);
-                    }
-                    if (this.mode === 'array') {
-                        this.pushdata.next(this.arrayElementValue);
-                    }
-                    if (this.mode === 'property-value') {
-                        if (this.typeSelector === 'primitive-primitive') {
-                            this.pushdata.next({ "property": this.propertyPrimitiveElementValue,
-                                "value": this.propertyValuePrimitiveElementValue
-                            });
-                        }
-                        if (this.typeSelector === 'primitive-array') {
-                            this.pushdata.next({ "property": this.propertyPrimitiveElementValue,
-                                "value": this.propertyValueArrayElementValue
-                            });
-                        }
+                    switch (this.mode) {
+                        case 'primitive':
+                            this.pushdata.next({ "jsonValue": this.primitiveElementValue, "position": this.getPosition() });
+                            break;
+                        case 'array':
+                            this.pushdata.next({ "jsonValue": this.arrayElementValue, "position": this.getPosition() });
+                            break;
+                        case 'property-value':
+                            this.pushdata.next({ "jsonValue": this.propertyElementValue, "position": this.getPosition() });
+                            break;
+                        case 'primitive-primitive':
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyValuePrimitiveElementValue });
+                            break;
+                        case 'primitive-array':
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyArrayPrimitiveElementValue });
+                            break;
+                        case 'primitive-property':
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyPropertyElementValue });
+                            break;
                     }
                 };
                 AddElementComponent.prototype.getModeAsInt = function () {
-                    if (this.mode === 'primitive') {
-                        return 1;
+                    switch (this.mode) {
+                        case 'primitive': return 1;
+                        case 'array': return 2;
+                        case 'property-value': return 3;
+                        case 'primitive-primitive': return 4;
+                        case 'primitive-array': return 5;
+                        case 'primitive-property': return 6;
                     }
-                    if (this.mode === 'array') {
-                        return 2;
-                    }
-                    if (this.mode === 'property-value') {
-                        return 3;
-                    }
+                    return 0;
                 };
                 AddElementComponent.prototype.setJsonLevel = function (jsonValue, level) {
                     this[level] = jsonValue;
@@ -84,21 +86,40 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                         return true;
                     if (this.mode === 'array' && this.arrayElementValue)
                         return true;
-                    if (this.mode === 'property-value' && this.propertyPrimitiveElementValue) {
-                        if (this.typeSelector === 'primitive-primitive' &&
-                            this.propertyValuePrimitiveElementValue)
-                            return true;
-                        if (this.typeSelector === 'primitive-array' &&
-                            this.propertyValueArrayElementValue)
-                            return true;
-                    }
+                    if (this.mode === 'property-value' && this.propertyElementValue)
+                        return true;
+                    if (this.mode === 'primitive-primitive' &&
+                        this.propertyPrimitiveElementValue &&
+                        this.propertyValuePrimitiveElementValue)
+                        return true;
+                    if (this.mode === 'primitive-array' &&
+                        this.propertyPrimitiveElementValue &&
+                        this.propertyArrayPrimitiveElementValue)
+                        return true;
+                    if (this.mode === 'primitive-property' &&
+                        this.propertyPrimitiveElementValue &&
+                        this.propertyPropertyElementValue)
+                        return true;
                     return false;
+                };
+                AddElementComponent.prototype.getPosition = function () {
+                    var selectedPosition = this.section.length;
+                    var orderPosition = 'after';
+                    if (typeof this.selectedPosition !== 'undefined')
+                        selectedPosition = this.selectedPosition;
+                    if (typeof this.orderPosition !== 'undefined')
+                        orderPosition = this.orderPosition;
+                    if (orderPosition === 'after')
+                        return selectedPosition;
+                    if (orderPosition === 'before')
+                        return selectedPosition - 1;
+                    return 0;
                 };
                 AddElementComponent = __decorate([
                     core_1.Component({
                         selector: 'add-element',
                         templateUrl: 'templates/add-element.html',
-                        inputs: ['section'],
+                        inputs: ['section', 'dataType'],
                         outputs: ['pushdata'],
                         styles: [".les-important{opacity: 0.6;}\n              .les-important:hover{opacity: 1;}\n             "
                         ],

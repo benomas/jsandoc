@@ -1,90 +1,93 @@
-<div *ngFor="#item of section; #position = index #end = last">
-
-  <div *ngIf="getCase(item) === 'primitive'"
-        [ngClass]='{"with-child-over":item===overThisElement}'
-        (mouseenter)="overThis(item)"
-        (mouseleave)="leaveThis(item)"
+<span style="padding:5px; display: table-cell;" *ngIf="editionActive">
+  <button
+          class="btn btn-xs"
+          title="Valor"
+          (click)="setEditionOnElement(0)"
+          [ngClass]='{"btn-default":!getEditionOnElement(0),"btn-success":getEditionOnElement(0)}'
   >
-    {{item}}
-  </div>
-
-  <div *ngIf="getCase(item) === 'array'" >
-    <resume-section [section]="item"
-                    [sectionTitle]="position+1"
-                    (childover)="notifyOverToParent($event)"
-                    (childleave)="notifyLeaveToParent($event)"
-                    style="display:inline-block;"
-    >
-    </resume-section>
-  </div>
-
-  <div *ngIf="getCase(item) === 'property-value'" >
     <span
-          class="section-title"
-          [ngClass]='{"with-child-over":childElementOver ===item.value || item===overThisElement}'
-          (mouseenter)="overThis(item)"
-          (mouseleave)="leaveThis(item)"
-          (click)="panelToggle(item)"
+          class="glyphicon glyphicon-edit"
+          aria-hidden="true"
     >
-      {{item.property}}:
     </span>
+  </button>
+</span>
+<add-element  *ngIf="editionActive  && getEditionOnElement(0)"
+              (pushdata)=add($event)
+              [section]="section"
+              [dataType]="dataType"
+              style="display: table-cell;"
+>
+</add-element>
+<div *ngIf="dataType === 'property-value'">
+  <div  *ngFor="#key of keys; #position = index #end = last"
+        class="left-indent"
+  >
     <span
-          [ngClass]='{"with-child-over":item===overThisElement}'
-          (mouseenter)="overThis(item)"
-          (mouseleave)="leaveThis(item)"
-    >
-      {{item.value}}
-    </span>
-  </div>
-
-  <div *ngIf="getCase(item) === 'property-array'" >
-    <span
+          *ngIf="getCase(section[key])!=='primitive'"
           class="glyphicon"
           aria-hidden="true"
           style="cursor:pointer;"
-          (click)="panelToggle(item)"
-          [ngClass]='{"glyphicon-folder-close":hiddenPosition(item)!==null,"glyphicon-folder-open":hiddenPosition(item)===null}'
+          (click)="panelToggle(position)"
+          [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
     >
     </span>
     <span
-          class="section-title clickeable"
-          [ngClass]='{"with-child-over":childElementOver ===item.value || item===overThisElement}'
-          (mouseenter)="overThis(item)"
-          (mouseleave)="leaveThis(item)"
-          (click)="panelToggle(item)"
+          class="section-title"
+          [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElement}'
+          (mouseenter)="overThis(key)"
+          (mouseleave)="leaveThis(key)"
+          (click)="panelToggle(key)"
+
     >
-      {{item.property}}:
+      {{key}}:
     </span>
-    <div style="padding-left:20px;">
-      <resume-section [section]="item.value"
+    <span
+          *ngIf="getCase(section[key])==='primitive'"
+          [ngClass]='{"with-child-over":key===overThisElement}'
+          (mouseenter)="overThis(key)"
+          (mouseleave)="leaveThis(key)"
+    >
+      {{section[key]}}
+    </span>
+    <div *ngIf="getCase(section[key])!=='primitive'">
+      <resume-section [section]="section[key]"
                       [sectionTitle]="position+1"
+                      [editionActive]="editionActive"
                       (childover)="notifyOverToParent($event)"
                       (childleave)="notifyLeaveToParent($event)"
-                      [hidden]="hiddenPosition(item)!==null"
+                      [hidden]="hiddenPosition(position)"
       >
       </resume-section>
     </div>
   </div>
-
-  <div *ngIf="doubleLevelArray(section)" >
-    <div  class="section-title"
-            [ngClass]='{"with-child-over":overArrayChild(item)}'
-            style="display:inline-block; vertical-align: top;"
-    >
-      {{position+1}}
-    </div>
-    <resume-section [section]="item"
-                    [sectionTitle]="position+1"
-                    (childover)="notifyOverToParent($event)"
-                    (childleave)="notifyLeaveToParent($event)"
-                    style="display:inline-block;"
-                    class="border-left"
-    >
-    </resume-section>
-  </div>
-
-  <add-element *ngIf="end" (pushdata)=add($event) [section]="section">
-  </add-element>
 </div>
-<add-element *ngIf="section.length===0" (pushdata)=add($event) [section]="section">
-</add-element>
+
+<div *ngIf="dataType === 'array'">
+  <div
+        *ngFor="#item of section; #position = index #end = last"
+  >
+
+    <div *ngIf="getCase(item) === 'primitive'"
+          [ngClass]='{"with-child-over":item===overThisElement}'
+          (mouseenter)="overThis(item)"
+          (mouseleave)="leaveThis(item)"
+          class="left-indent"
+    >
+      {{item}}
+    </div>
+
+    <div *ngIf="getCase(item) !== 'primitive'"
+          class="left-indent"
+    >
+      <resume-section [section]="item"
+                      [sectionTitle]="position+1"
+                      [editionActive]="editionActive"
+                      (childover)="notifyOverToParent($event)"
+                      (childleave)="notifyLeaveToParent($event)"
+                      style="display:inline-block;"
+      >
+      </resume-section>
+    </div>
+  </div>
+</div>

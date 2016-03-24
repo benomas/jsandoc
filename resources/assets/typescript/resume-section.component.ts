@@ -1,4 +1,4 @@
-import {Component,EventEmitter}     from 'angular2/core';
+import {Component,EventEmitter, OnInit }     from 'angular2/core';
 import {NgClass}                    from 'angular2/common';
 import {AddElementComponent}        from './add-element.component';
 import {LangService}                from './lang.service';
@@ -6,7 +6,7 @@ import {LangService}                from './lang.service';
 @Component({
     selector: 'resume-section',
     templateUrl: 'templates/resume-section.html',
-    inputs: ['section','sectionTitle','sectionParent'],
+    inputs: ['section','sectionTitle','sectionParent','editionActive'],
     outputs: ['childover','childleave'],
     styles: [`
                 .section-title
@@ -35,13 +35,19 @@ import {LangService}                from './lang.service';
             ],
     directives:[ResumeSectionComponent,NgClass,AddElementComponent],
 })
-export class ResumeSectionComponent
+export class ResumeSectionComponent implements OnInit
 {
     public childover = new EventEmitter();
     public childleave = new EventEmitter();
     section;
+    keys;
+    dataType;
+
+
     sectionTitle;
     sectionParent;
+    editionActive;
+    editionOnElement;
     childElementOver;
     overThisElement = false;
     hiddens = [];
@@ -49,23 +55,30 @@ export class ResumeSectionComponent
 
     constructor(private _langService: LangService)
     {
+        this.editionOnElement=[];
+    }
+
+    ngOnInit()
+    {
+        this.dataType = this.getCase(this.section);
+        this.setDataType();
     }
 
     doubleLevelArray(level):boolean
     {
-        var pureArray = true;
+        var hasDoubleArray = false;
         if(this.isArray(level))
         {
             level.forEach((subLevel) =>
             {
-                if(!this.isArray(subLevel))
+                if(this.isArray(subLevel))
                 {
-                    pureArray = false;
-                    return false;
+                    hasDoubleArray = true;
+                    return true;
                 }
             });
         }
-        return pureArray;
+        return hasDoubleArray;
     }
 
     isObject(level):boolean
@@ -80,26 +93,19 @@ export class ResumeSectionComponent
         return Object.prototype.toString.call( level ) === '[object Array]';
     }
 
-    panelToggle(level):boolean
+    panelToggle(position):void
     {
-        if(!this.isArray(level.value))
-            return false;
-        var position =this.hiddenPosition(level);
-        if(position!==null)
-            this.hiddens.splice(position, 1);
+        if( typeof this.hiddens[position]==='undefined')
+            this.hiddens[position] = true;
         else
-            this.hiddens.push(level);
+            this.hiddens[position] = !this.hiddens[position];
     }
 
-    hiddenPosition(level)
+    hiddenPosition(position)
     {
-        var levelHidden = null;
-        this.hiddens.forEach((subLevel,index) =>
-        {
-            if(level===subLevel)
-                levelHidden = index;
-        });
-        return levelHidden;
+        if( typeof this.hiddens[position]==='undefined')
+            return false;
+        return this.hiddens[position];
     }
 
     overThis(emitter)
@@ -145,22 +151,49 @@ export class ResumeSectionComponent
     {
         if(!this.isObject(item))
             return "primitive";
-
+        /*
         if(this.doubleLevelArray(this.section))
-            return 'array-array';
+            return 'array-array';*/
 
         if(this.isArray(item))
             return "array";
 
-        if(!this.isArray(item.value))
-            return "property-value";
-
-
-        return "property-array";
+        return "property-value";
     }
 
-    add(value)
+    add(jsonInsert)
     {
-        this.section.push(value);
+        if(this.dataType === 'array')
+            this.section.splice(jsonInsert.position,0 ,jsonInsert.jsonValue );
+        if(this.dataType === 'property-value')
+        {
+            this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
+        }
+        this.setDataType();
+    }
+
+    setEditionOnElement(position):void
+    {
+        if( typeof this.editionOnElement[position]==='undefined')
+            this.editionOnElement[position]= true;
+        else
+            this.editionOnElement[position] = !this.editionOnElement[position];
+    }
+
+    getEditionOnElement(position):boolean
+    {
+        if(typeof this.editionOnElement[position]==='undefined')
+            return false;
+        return this.editionOnElement[position];
+    }
+
+    setDataType()
+    {
+     if( this.dataType ==='property-value' ||
+        this.dataType ==='property-array'
+        )
+        {
+            this.keys = Object.keys(this.section).sort();
+        }
     }
 }

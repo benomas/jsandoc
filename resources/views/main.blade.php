@@ -54,6 +54,10 @@
             /*.title {
                 font-size: 96px;
             }*/
+            .left-indent
+            {
+                margin-left:20px;
+            }
         </style>
     </head>
     <body>

@@ -1,1 +1,36 @@
-<resume-section [section]="resume" [sectionTitle]="'Curriculum Vitae'"></resume-section>
+<h3>
+    Curriculum Vitae
+    <button *ngIf="hasPermision"
+            class="btn btn-xs"
+            title="Valor"
+            [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
+            (click)="editionActive = !editionActive"
+    >
+      <span
+            class="glyphicon glyphicon-edit"
+            aria-hidden="true"
+      >
+      </span>
+    </button>
+</h3>
+<div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
+    <resume-section [section]="resume2"
+                    [sectionTitle]="'Curriculum Vitae'"
+                    [editionActive]="editionActive"
+    >
+    </resume-section>
+</div>
+<textarea [(ngModel)]="jsonEditor">
+
+</textarea>
+<button
+            class="btn btn-xs"
+            title="Valor"
+            (click)="loadJson()"
+    >
+  <span
+        class="glyphicon glyphicon-edit"
+        aria-hidden="true"
+  >
+  </span>
+</button>

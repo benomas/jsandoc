@@ -34,19 +34,24 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     this.childleave = new core_1.EventEmitter();
                     this.overThisElement = false;
                     this.hiddens = [];
+                    this.editionOnElement = [];
                 }
+                ResumeSectionComponent.prototype.ngOnInit = function () {
+                    this.dataType = this.getCase(this.section);
+                    this.setDataType();
+                };
                 ResumeSectionComponent.prototype.doubleLevelArray = function (level) {
                     var _this = this;
-                    var pureArray = true;
+                    var hasDoubleArray = false;
                     if (this.isArray(level)) {
                         level.forEach(function (subLevel) {
-                            if (!_this.isArray(subLevel)) {
-                                pureArray = false;
-                                return false;
+                            if (_this.isArray(subLevel)) {
+                                hasDoubleArray = true;
+                                return true;
                             }
                         });
                     }
-                    return pureArray;
+                    return hasDoubleArray;
                 };
                 ResumeSectionComponent.prototype.isObject = function (level) {
                     if (typeof level === 'object')
@@ -56,22 +61,16 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                 ResumeSectionComponent.prototype.isArray = function (level) {
                     return Object.prototype.toString.call(level) === '[object Array]';
                 };
-                ResumeSectionComponent.prototype.panelToggle = function (level) {
-                    if (!this.isArray(level.value))
-                        return false;
-                    var position = this.hiddenPosition(level);
-                    if (position !== null)
-                        this.hiddens.splice(position, 1);
+                ResumeSectionComponent.prototype.panelToggle = function (position) {
+                    if (typeof this.hiddens[position] === 'undefined')
+                        this.hiddens[position] = true;
                     else
-                        this.hiddens.push(level);
+                        this.hiddens[position] = !this.hiddens[position];
                 };
-                ResumeSectionComponent.prototype.hiddenPosition = function (level) {
-                    var levelHidden = null;
-                    this.hiddens.forEach(function (subLevel, index) {
-                        if (level === subLevel)
-                            levelHidden = index;
-                    });
-                    return levelHidden;
+                ResumeSectionComponent.prototype.hiddenPosition = function (position) {
+                    if (typeof this.hiddens[position] === 'undefined')
+                        return false;
+                    return this.hiddens[position];
                 };
                 ResumeSectionComponent.prototype.overThis = function (emitter) {
                     this.overThisElement = emitter;
@@ -104,22 +103,40 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                 ResumeSectionComponent.prototype.getCase = function (item) {
                     if (!this.isObject(item))
                         return "primitive";
-                    if (this.doubleLevelArray(this.section))
-                        return 'array-array';
                     if (this.isArray(item))
                         return "array";
-                    if (!this.isArray(item.value))
-                        return "property-value";
-                    return "property-array";
+                    return "property-value";
                 };
-                ResumeSectionComponent.prototype.add = function (value) {
-                    this.section.push(value);
+                ResumeSectionComponent.prototype.add = function (jsonInsert) {
+                    if (this.dataType === 'array')
+                        this.section.splice(jsonInsert.position, 0, jsonInsert.jsonValue);
+                    if (this.dataType === 'property-value') {
+                        this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
+                    }
+                    this.setDataType();
+                };
+                ResumeSectionComponent.prototype.setEditionOnElement = function (position) {
+                    if (typeof this.editionOnElement[position] === 'undefined')
+                        this.editionOnElement[position] = true;
+                    else
+                        this.editionOnElement[position] = !this.editionOnElement[position];
+                };
+                ResumeSectionComponent.prototype.getEditionOnElement = function (position) {
+                    if (typeof this.editionOnElement[position] === 'undefined')
+                        return false;
+                    return this.editionOnElement[position];
+                };
+                ResumeSectionComponent.prototype.setDataType = function () {
+                    if (this.dataType === 'property-value' ||
+                        this.dataType === 'property-array') {
+                        this.keys = Object.keys(this.section).sort();
+                    }
                 };
                 ResumeSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'resume-section',
                         templateUrl: 'templates/resume-section.html',
-                        inputs: ['section', 'sectionTitle', 'sectionParent'],
+                        inputs: ['section', 'sectionTitle', 'sectionParent', 'editionActive'],
                         outputs: ['childover', 'childleave'],
                         styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n\n                "
                         ],

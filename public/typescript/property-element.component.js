@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './primitive-element.component', './array-element.component', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './lang.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, primitive_element_component_1, array_element_component_1, lang_service_1;
+    var core_1, common_1, lang_service_1;
     var PropertyElementComponent;
     return {
         setters:[
@@ -19,12 +19,6 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
             },
             function (common_1_1) {
                 common_1 = common_1_1;
-            },
-            function (primitive_element_component_1_1) {
-                primitive_element_component_1 = primitive_element_component_1_1;
-            },
-            function (array_element_component_1_1) {
-                array_element_component_1 = array_element_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -35,19 +29,27 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                     this._langService = _langService;
                     this.pushdata = new core_1.EventEmitter();
                     this.validated = new core_1.EventEmitter();
+                    this.sendData = new core_1.EventEmitter();
                 }
+                PropertyElementComponent.prototype.setData = function () {
+                    if (this.jsonValue &&
+                        this.jsonValue !== '')
+                        this.sendData.next(this.jsonValue);
+                    else
+                        this.sendData.next(null);
+                };
+                PropertyElementComponent.prototype.ngOnInit = function () {
+                    this.jsonValue = {};
+                    this.setData();
+                };
                 PropertyElementComponent = __decorate([
                     core_1.Component({
                         selector: 'property-element',
                         templateUrl: 'templates/property-element.html',
                         inputs: ['section', 'sectionTitle', 'sectionParent'],
-                        outputs: ['pushdata', 'validated'],
-                        styles: [".les-important{opacity: 0.6;}\n              .les-important:hover{opacity: 1;}\n             "
-                        ],
+                        outputs: ['sendData'],
                         directives: [
                             common_1.NgClass,
-                            primitive_element_component_1.PrimitiveElementComponent,
-                            array_element_component_1.ArrayElementComponent,
                             PropertyElementComponent
                         ],
                     }), 
