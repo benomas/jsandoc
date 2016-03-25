@@ -1,6 +1,5 @@
 <div style="margin:5px;" *ngIf="dataType==='array'">
   <form class="form-inline">
-
     <div class="form-group" >
     <!-- buttons -->
       <button  class="btn btn-success btn-xs"
@@ -55,8 +54,8 @@
       <label class="sr-only" for="primitive">Email address</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'primitiveElementValue')"
-                          [primitiveElementPlaceHolder]="'Tipo texto'"
-                          [primitiveElementTitle]="'Agregar una descripción'"
+                          [primitiveElementPlaceHolder]="'Concepto'"
+                          [primitiveElementTitle]="'Agregar un concepto'"
       >
       </primitive-element>
     </div>
@@ -73,20 +72,20 @@
       </property-element>
     </div>
     <div class="form-group" *ngIf="section.length>0">
-        <select class="form-control" [(ngModel)]="orderPosition">
-          <option  value="before" >
-            Antes de
-          </option>
-          <option  value="after" [selected]="1">
-            Despues de
-          </option>
-        </select>
-        <select class="form-control" [(ngModel)]="selectedPosition">
-          <option *ngFor="#item of section; #position = index #end = last" [value]="position+1" [selected]="end">
-          {{position+1}}
-          </option>
-        </select>
-      </div>
+      <select class="form-control" [(ngModel)]="orderPosition">
+        <option  value="before" >
+          Antes de
+        </option>
+        <option  value="after" [selected]="1">
+          Despues de
+        </option>
+      </select>
+      <select class="form-control" [(ngModel)]="selectedPosition">
+        <option *ngFor="#item of section; #position = index #end = last" [value]="position+1" [selected]="end">
+        {{item}}
+        </option>
+      </select>
+    </div>
   </form>
 </div>
 <div style="margin:5px;" *ngIf="dataType==='property-value'">
@@ -142,8 +141,8 @@
     <div class="form-group">
       <label class="sr-only" for="exampleInputEmail3">Email address</label>
       <primitive-element (sendData)="setJsonLevel($event,'propertyPrimitiveElementValue')"
-                          [primitiveElementPlaceHolder]="'Tipo texto'"
-                          [primitiveElementTitle]="'Agregar un concepto'"
+                          [primitiveElementPlaceHolder]="'Propiedad'"
+                          [primitiveElementTitle]="'Agregar una propiedad'"
       >
       </primitive-element>
     </div>
@@ -151,8 +150,8 @@
       <label class="sr-only" for="exampleInputEmail3">Email address</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'propertyValuePrimitiveElementValue')"
-                          [primitiveElementPlaceHolder]="'Tipo texto'"
-                          [primitiveElementTitle]="'Agregar una descripción'"
+                          [primitiveElementPlaceHolder]="'Valor'"
+                          [primitiveElementTitle]="'Agregar un valor'"
       >
       </primitive-element>
     </div>
@@ -167,6 +166,21 @@
       <property-element
                       (sendData)="setJsonLevel($event,'propertyPropertyElementValue')">
       </property-element>
+    </div>
+    <div class="form-group" *ngIf="keys.length>0">
+      <select class="form-control" [(ngModel)]="orderPosition">
+        <option  value="before" >
+          Antes de
+        </option>
+        <option  value="after" [selected]="1">
+          Despues de
+        </option>
+      </select>
+      <select class="form-control" [(ngModel)]="selectedPosition">
+        <option *ngFor="#key of keys; #position = index #end = last" [value]="position+1" [selected]="end">
+        {{key}}
+        </option>
+      </select>
     </div>
   </form>
 </div>

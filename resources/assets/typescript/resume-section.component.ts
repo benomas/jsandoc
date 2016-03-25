@@ -1,4 +1,4 @@
-import {Component,EventEmitter, OnInit }     from 'angular2/core';
+import {Component,EventEmitter, OnInit,OnChanges,SimpleChange }     from 'angular2/core';
 import {NgClass}                    from 'angular2/common';
 import {AddElementComponent}        from './add-element.component';
 import {LangService}                from './lang.service';
@@ -6,7 +6,14 @@ import {LangService}                from './lang.service';
 @Component({
     selector: 'resume-section',
     templateUrl: 'templates/resume-section.html',
-    inputs: ['section','sectionTitle','sectionParent','editionActive'],
+    inputs: [   'section',
+                'sectionTitle',
+                'sectionParent',
+                'editionActive',
+                'depth',
+                'collapseAll',
+                'openAll'
+            ],
     outputs: ['childover','childleave'],
     styles: [`
                 .section-title
@@ -35,13 +42,16 @@ import {LangService}                from './lang.service';
             ],
     directives:[ResumeSectionComponent,NgClass,AddElementComponent],
 })
-export class ResumeSectionComponent implements OnInit
+export class ResumeSectionComponent implements OnInit,OnChanges
 {
     public childover = new EventEmitter();
     public childleave = new EventEmitter();
     section;
     keys;
     dataType;
+    depth;
+    collapseAll;
+    openAll;
 
 
     sectionTitle;
@@ -62,6 +72,31 @@ export class ResumeSectionComponent implements OnInit
     {
         this.dataType = this.getCase(this.section);
         this.setDataType();
+    }
+
+    ngOnChanges(changes: {[propertyName: string]: SimpleChange})
+    {
+        if(typeof this.collapseAll !== 'undefined')
+        {
+            if(changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue)
+            {
+                if(changes['collapseAll'].currentValue)
+                {
+                    this.hiddenAll();
+                }
+            }
+        }
+
+        if(typeof this.openAll !== 'undefined')
+        {
+            if(changes['openAll'].currentValue !== changes['openAll'].previousValue)
+            {
+                if(changes['openAll'].currentValue)
+                {
+                    this.showAll();
+                }
+            }
+        }
     }
 
     doubleLevelArray(level):boolean
@@ -108,6 +143,44 @@ export class ResumeSectionComponent implements OnInit
         return this.hiddens[position];
     }
 
+    hiddenAll()
+    {
+        var count = 0;
+        if(this.dataType ==="array")
+        {
+            while(count<this.section.length)
+            {
+                this.hiddens[count++]=true;
+            }
+        }
+        if(this.dataType ==="property-value")
+        {
+            while(count<this.keys.length)
+            {
+                this.hiddens[count++]=true;
+            }
+        }
+    }
+
+    showAll()
+    {
+        var count = 0;
+        if(this.dataType ==="array")
+        {
+            while(count<this.section.length)
+            {
+                this.hiddens[count++]=false;
+            }
+        }
+        if(this.dataType ==="property-value")
+        {
+            while(count<this.keys.length)
+            {
+                this.hiddens[count++]=false;
+            }
+        }
+    }
+
     overThis(emitter)
     {
         this.overThisElement=emitter;
@@ -151,9 +224,6 @@ export class ResumeSectionComponent implements OnInit
     {
         if(!this.isObject(item))
             return "primitive";
-        /*
-        if(this.doubleLevelArray(this.section))
-            return 'array-array';*/
 
         if(this.isArray(item))
             return "array";
@@ -167,6 +237,7 @@ export class ResumeSectionComponent implements OnInit
             this.section.splice(jsonInsert.position,0 ,jsonInsert.jsonValue );
         if(this.dataType === 'property-value')
         {
+            this.propertyInsert(jsonInsert);
             this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
         }
         this.setDataType();
@@ -189,11 +260,26 @@ export class ResumeSectionComponent implements OnInit
 
     setDataType()
     {
-     if( this.dataType ==='property-value' ||
-        this.dataType ==='property-array'
-        )
+        if( this.dataType ==='property-value')
+            this.keys = Object.keys(this.section);
+    }
+
+    propertyInsert(jsonInsert)
+    {
+        var count = 0;
+        var newSection={};
+        while(count<jsonInsert.position)
         {
-            this.keys = Object.keys(this.section).sort();
+            newSection[this.keys[count]] = this.section[this.keys[count]];
+            count++;
         }
+        count++;
+        newSection[jsonInsert.newProperty] = jsonInsert.newValue;
+        while(count<this.keys.length)
+        {
+            newSection[this.keys[count]] = this.section[this.keys[count]];
+            count++;
+        }
+        this.section = newSection;
     }
 }

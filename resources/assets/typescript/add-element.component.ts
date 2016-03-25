@@ -1,14 +1,14 @@
-import {Component,EventEmitter}     from 'angular2/core';
-import {NgClass}                    from 'angular2/common';
-import {PrimitiveElementComponent}  from './primitive-element.component';
-import {ArrayElementComponent}      from './array-element.component';
-import {PropertyElementComponent}   from './property-element.component';
-import {LangService}                from './lang.service';
+import {Component,EventEmitter, OnInit }    from 'angular2/core';
+import {NgClass}                            from 'angular2/common';
+import {PrimitiveElementComponent}          from './primitive-element.component';
+import {ArrayElementComponent}              from './array-element.component';
+import {PropertyElementComponent}           from './property-element.component';
+import {LangService}                        from './lang.service';
 
 @Component({
     selector: 'add-element',
     templateUrl: 'templates/add-element.html',
-    inputs: ['section','dataType'],
+    inputs: ['section','dataType','keys'],
     outputs:['pushdata'],
     styles: [`.les-important{opacity: 0.6;}
               .les-important:hover{opacity: 1;}
@@ -21,7 +21,7 @@ import {LangService}                from './lang.service';
                     PropertyElementComponent
                 ],
 })
-export class AddElementComponent
+export class AddElementComponent implements OnInit
 {
     public pushdata = new EventEmitter();
     inyectData;
@@ -40,10 +40,19 @@ export class AddElementComponent
     selectedPosition;
     section;
     dataType;
+    keys;
 
     constructor(private _langService: LangService)
     {
-        this.mode='primitive';
+    }
+
+    ngOnInit()
+    {
+
+        if(this.dataType ==='array')
+            this.mode='primitive';
+        if(this.dataType ==='property-value')
+            this.mode='primitive-primitive';
         this.typeSelector='primitive-primitive';
     }
 
@@ -61,9 +70,9 @@ export class AddElementComponent
             case 'primitive'            :   this.pushdata.next({"jsonValue":this.primitiveElementValue,"position":this.getPosition()}); break;
             case 'array'                :   this.pushdata.next({"jsonValue":this.arrayElementValue,"position":this.getPosition()}); break;
             case 'property-value'       :   this.pushdata.next({"jsonValue":this.propertyElementValue,"position":this.getPosition()}); break;
-            case 'primitive-primitive'  :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyValuePrimitiveElementValue}); break;
-            case 'primitive-array'      :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyArrayPrimitiveElementValue}); break;
-            case 'primitive-property'   :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyPropertyElementValue}); break;
+            case 'primitive-primitive'  :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyValuePrimitiveElementValue,"position":this.getPosition()}); break;
+            case 'primitive-array'      :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyArrayPrimitiveElementValue,"position":this.getPosition()}); break;
+            case 'primitive-property'   :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyPropertyElementValue,"position":this.getPosition()}); break;
         }
     }
 
@@ -111,7 +120,12 @@ export class AddElementComponent
 
     getPosition()
     {
-        var selectedPosition    = this.section.length;
+        var selectedPosition;
+        if(this.dataType ==='array')
+            selectedPosition    = this.section.length;
+        if(this.dataType ==='property-value')
+            selectedPosition    = this.keys.length;
+
         var orderPosition       = 'after';
 
         if(typeof this.selectedPosition!== 'undefined')

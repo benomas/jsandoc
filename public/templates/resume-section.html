@@ -1,4 +1,4 @@
-<span style="padding:5px; display: table-cell;" *ngIf="editionActive">
+<span style="padding:5px; display: table-cell;" *ngIf="editionActive && depth===0">
   <button
           class="btn btn-xs"
           title="Valor"
@@ -16,6 +16,7 @@
               (pushdata)=add($event)
               [section]="section"
               [dataType]="dataType"
+              [keys]="keys"
               style="display: table-cell;"
 >
 </add-element>
@@ -57,6 +58,9 @@
                       (childover)="notifyOverToParent($event)"
                       (childleave)="notifyLeaveToParent($event)"
                       [hidden]="hiddenPosition(position)"
+                      [depth]="depth+1"
+                      [openAll]="openAll"
+                      [collapseAll]="collapseAll"
       >
       </resume-section>
     </div>
@@ -80,12 +84,23 @@
     <div *ngIf="getCase(item) !== 'primitive'"
           class="left-indent"
     >
+        <span
+          class="glyphicon"
+          aria-hidden="true"
+          style="cursor:pointer;"
+          (click)="panelToggle(position)"
+          [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+        >
+        </span>
       <resume-section [section]="item"
                       [sectionTitle]="position+1"
                       [editionActive]="editionActive"
                       (childover)="notifyOverToParent($event)"
                       (childleave)="notifyLeaveToParent($event)"
-                      style="display:inline-block;"
+                      [hidden]="hiddenPosition(position)"
+                      [depth]="depth+1"
+                      [openAll]="openAll"
+                      [collapseAll]="collapseAll"
       >
       </resume-section>
     </div>

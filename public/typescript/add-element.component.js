@@ -37,9 +37,14 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                 function AddElementComponent(_langService) {
                     this._langService = _langService;
                     this.pushdata = new core_1.EventEmitter();
-                    this.mode = 'primitive';
-                    this.typeSelector = 'primitive-primitive';
                 }
+                AddElementComponent.prototype.ngOnInit = function () {
+                    if (this.dataType === 'array')
+                        this.mode = 'primitive';
+                    if (this.dataType === 'property-value')
+                        this.mode = 'primitive-primitive';
+                    this.typeSelector = 'primitive-primitive';
+                };
                 AddElementComponent.prototype.changeMode = function (mode) {
                     this.mode = mode;
                 };
@@ -57,13 +62,13 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                             this.pushdata.next({ "jsonValue": this.propertyElementValue, "position": this.getPosition() });
                             break;
                         case 'primitive-primitive':
-                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyValuePrimitiveElementValue });
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyValuePrimitiveElementValue, "position": this.getPosition() });
                             break;
                         case 'primitive-array':
-                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyArrayPrimitiveElementValue });
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyArrayPrimitiveElementValue, "position": this.getPosition() });
                             break;
                         case 'primitive-property':
-                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyPropertyElementValue });
+                            this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyPropertyElementValue, "position": this.getPosition() });
                             break;
                     }
                 };
@@ -103,7 +108,11 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                     return false;
                 };
                 AddElementComponent.prototype.getPosition = function () {
-                    var selectedPosition = this.section.length;
+                    var selectedPosition;
+                    if (this.dataType === 'array')
+                        selectedPosition = this.section.length;
+                    if (this.dataType === 'property-value')
+                        selectedPosition = this.keys.length;
                     var orderPosition = 'after';
                     if (typeof this.selectedPosition !== 'undefined')
                         selectedPosition = this.selectedPosition;
@@ -119,7 +128,7 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                     core_1.Component({
                         selector: 'add-element',
                         templateUrl: 'templates/add-element.html',
-                        inputs: ['section', 'dataType'],
+                        inputs: ['section', 'dataType', 'keys'],
                         outputs: ['pushdata'],
                         styles: [".les-important{opacity: 0.6;}\n              .les-important:hover{opacity: 1;}\n             "
                         ],

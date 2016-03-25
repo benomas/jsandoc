@@ -40,6 +40,22 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     this.dataType = this.getCase(this.section);
                     this.setDataType();
                 };
+                ResumeSectionComponent.prototype.ngOnChanges = function (changes) {
+                    if (typeof this.collapseAll !== 'undefined') {
+                        if (changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue) {
+                            if (changes['collapseAll'].currentValue) {
+                                this.hiddenAll();
+                            }
+                        }
+                    }
+                    if (typeof this.openAll !== 'undefined') {
+                        if (changes['openAll'].currentValue !== changes['openAll'].previousValue) {
+                            if (changes['openAll'].currentValue) {
+                                this.showAll();
+                            }
+                        }
+                    }
+                };
                 ResumeSectionComponent.prototype.doubleLevelArray = function (level) {
                     var _this = this;
                     var hasDoubleArray = false;
@@ -71,6 +87,32 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     if (typeof this.hiddens[position] === 'undefined')
                         return false;
                     return this.hiddens[position];
+                };
+                ResumeSectionComponent.prototype.hiddenAll = function () {
+                    var count = 0;
+                    if (this.dataType === "array") {
+                        while (count < this.section.length) {
+                            this.hiddens[count++] = true;
+                        }
+                    }
+                    if (this.dataType === "property-value") {
+                        while (count < this.keys.length) {
+                            this.hiddens[count++] = true;
+                        }
+                    }
+                };
+                ResumeSectionComponent.prototype.showAll = function () {
+                    var count = 0;
+                    if (this.dataType === "array") {
+                        while (count < this.section.length) {
+                            this.hiddens[count++] = false;
+                        }
+                    }
+                    if (this.dataType === "property-value") {
+                        while (count < this.keys.length) {
+                            this.hiddens[count++] = false;
+                        }
+                    }
                 };
                 ResumeSectionComponent.prototype.overThis = function (emitter) {
                     this.overThisElement = emitter;
@@ -111,6 +153,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     if (this.dataType === 'array')
                         this.section.splice(jsonInsert.position, 0, jsonInsert.jsonValue);
                     if (this.dataType === 'property-value') {
+                        this.propertyInsert(jsonInsert);
                         this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
                     }
                     this.setDataType();
@@ -127,16 +170,36 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     return this.editionOnElement[position];
                 };
                 ResumeSectionComponent.prototype.setDataType = function () {
-                    if (this.dataType === 'property-value' ||
-                        this.dataType === 'property-array') {
-                        this.keys = Object.keys(this.section).sort();
+                    if (this.dataType === 'property-value')
+                        this.keys = Object.keys(this.section);
+                };
+                ResumeSectionComponent.prototype.propertyInsert = function (jsonInsert) {
+                    var count = 0;
+                    var newSection = {};
+                    while (count < jsonInsert.position) {
+                        newSection[this.keys[count]] = this.section[this.keys[count]];
+                        count++;
                     }
+                    count++;
+                    newSection[jsonInsert.newProperty] = jsonInsert.newValue;
+                    while (count < this.keys.length) {
+                        newSection[this.keys[count]] = this.section[this.keys[count]];
+                        count++;
+                    }
+                    this.section = newSection;
                 };
                 ResumeSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'resume-section',
                         templateUrl: 'templates/resume-section.html',
-                        inputs: ['section', 'sectionTitle', 'sectionParent', 'editionActive'],
+                        inputs: ['section',
+                            'sectionTitle',
+                            'sectionParent',
+                            'editionActive',
+                            'depth',
+                            'collapseAll',
+                            'openAll'
+                        ],
                         outputs: ['childover', 'childleave'],
                         styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .with-child-over\n                {\n                    text-decoration:underline;\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n\n                "
                         ],
