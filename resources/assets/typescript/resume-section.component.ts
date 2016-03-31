@@ -65,7 +65,7 @@ export class ResumeSectionComponent implements OnInit,OnChanges
 
     constructor(private _langService: LangService)
     {
-        this.editionOnElement=[];
+        this.editionOnElement={};
     }
 
     ngOnInit()
@@ -76,7 +76,7 @@ export class ResumeSectionComponent implements OnInit,OnChanges
 
     ngOnChanges(changes: {[propertyName: string]: SimpleChange})
     {
-        if(typeof this.collapseAll !== 'undefined')
+        if(typeof this.collapseAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
         {
             if(changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue)
             {
@@ -87,7 +87,7 @@ export class ResumeSectionComponent implements OnInit,OnChanges
             }
         }
 
-        if(typeof this.openAll !== 'undefined')
+        if(typeof this.openAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
         {
             if(changes['openAll'].currentValue !== changes['openAll'].previousValue)
             {
@@ -264,17 +264,25 @@ export class ResumeSectionComponent implements OnInit,OnChanges
             this.keys = Object.keys(this.section);
     }
 
+    getItemKeys(item)
+    {
+        if( this.getCase(item) ==='property-value')
+            return Object.keys(item);
+        return null;
+    }
+
     propertyInsert(jsonInsert)
     {
         var count = 0;
         var newSection={};
+        console.log(jsonInsert.position);
         while(count<jsonInsert.position)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];
             count++;
         }
-        count++;
         newSection[jsonInsert.newProperty] = jsonInsert.newValue;
+        console.log(this.keys.length);
         while(count<this.keys.length)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];

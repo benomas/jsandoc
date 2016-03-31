@@ -2,9 +2,8 @@
     Curriculum Vitae
     <button
             *ngIf="collapseAll"
-            class="btn btn-xs"
+            class="btn btn-xs btn-default"
             title="Abrir todo"
-            [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
             (click)="setOpenAll()"
     >
       <span
@@ -15,9 +14,8 @@
     </button>
     <button
             *ngIf="openAll"
-            class="btn btn-xs"
+            class="btn btn-xs btn-default"
             title="Cerrar todo"
-            [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
             (click)="setCollapseAll()"
     >
       <span
@@ -49,6 +47,7 @@
     >
     </resume-section>
 </div>
+<!--
 <textarea [(ngModel)]="jsonEditor">
 
 </textarea>
@@ -63,3 +62,4 @@
   >
   </span>
 </button>
+-->

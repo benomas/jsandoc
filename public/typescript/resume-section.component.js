@@ -34,21 +34,21 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     this.childleave = new core_1.EventEmitter();
                     this.overThisElement = false;
                     this.hiddens = [];
-                    this.editionOnElement = [];
+                    this.editionOnElement = {};
                 }
                 ResumeSectionComponent.prototype.ngOnInit = function () {
                     this.dataType = this.getCase(this.section);
                     this.setDataType();
                 };
                 ResumeSectionComponent.prototype.ngOnChanges = function (changes) {
-                    if (typeof this.collapseAll !== 'undefined') {
+                    if (typeof this.collapseAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined') {
                         if (changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue) {
                             if (changes['collapseAll'].currentValue) {
                                 this.hiddenAll();
                             }
                         }
                     }
-                    if (typeof this.openAll !== 'undefined') {
+                    if (typeof this.openAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined') {
                         if (changes['openAll'].currentValue !== changes['openAll'].previousValue) {
                             if (changes['openAll'].currentValue) {
                                 this.showAll();
@@ -173,15 +173,21 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     if (this.dataType === 'property-value')
                         this.keys = Object.keys(this.section);
                 };
+                ResumeSectionComponent.prototype.getItemKeys = function (item) {
+                    if (this.getCase(item) === 'property-value')
+                        return Object.keys(item);
+                    return null;
+                };
                 ResumeSectionComponent.prototype.propertyInsert = function (jsonInsert) {
                     var count = 0;
                     var newSection = {};
+                    console.log(jsonInsert.position);
                     while (count < jsonInsert.position) {
                         newSection[this.keys[count]] = this.section[this.keys[count]];
                         count++;
                     }
-                    count++;
                     newSection[jsonInsert.newProperty] = jsonInsert.newValue;
+                    console.log(this.keys.length);
                     while (count < this.keys.length) {
                         newSection[this.keys[count]] = this.section[this.keys[count]];
                         count++;

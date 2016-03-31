@@ -1,9 +1,9 @@
-<span style="padding:5px; display: table-cell;" *ngIf="editionActive && depth===0">
+<div *ngIf="editionActive " style="padding-left:13px;">
   <button
           class="btn btn-xs"
           title="Valor"
-          (click)="setEditionOnElement(0)"
-          [ngClass]='{"btn-default":!getEditionOnElement(0),"btn-success":getEditionOnElement(0)}'
+          (click)="setEditionOnElement('root')"
+          [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-success":getEditionOnElement("root")}'
   >
     <span
           class="glyphicon glyphicon-edit"
@@ -11,13 +11,13 @@
     >
     </span>
   </button>
-</span>
-<add-element  *ngIf="editionActive  && getEditionOnElement(0)"
+</div>
+<add-element  *ngIf="editionActive  && getEditionOnElement('root')"
               (pushdata)=add($event)
               [section]="section"
               [dataType]="dataType"
               [keys]="keys"
-              style="display: table-cell;"
+              style="display: table-cell; padding-left:7px;"
 >
 </add-element>
 <div *ngIf="dataType === 'property-value'">
@@ -26,7 +26,7 @@
   >
     <span
           *ngIf="getCase(section[key])!=='primitive'"
-          class="glyphicon"
+          class="glyphicon low-font"
           aria-hidden="true"
           style="cursor:pointer;"
           (click)="panelToggle(position)"
@@ -85,24 +85,24 @@
           class="left-indent"
     >
         <span
-          class="glyphicon"
+          class="glyphicon low-font"
           aria-hidden="true"
           style="cursor:pointer;"
           (click)="panelToggle(position)"
           [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
         >
         </span>
-      <resume-section [section]="item"
-                      [sectionTitle]="position+1"
-                      [editionActive]="editionActive"
-                      (childover)="notifyOverToParent($event)"
-                      (childleave)="notifyLeaveToParent($event)"
-                      [hidden]="hiddenPosition(position)"
-                      [depth]="depth+1"
-                      [openAll]="openAll"
-                      [collapseAll]="collapseAll"
-      >
-      </resume-section>
+        <resume-section [section]="item"
+                        [sectionTitle]="position+1"
+                        [editionActive]="editionActive"
+                        (childover)="notifyOverToParent($event)"
+                        (childleave)="notifyLeaveToParent($event)"
+                        [hidden]="hiddenPosition(position)"
+                        [depth]="depth+1"
+                        [openAll]="openAll"
+                        [collapseAll]="collapseAll"
+        >
+        </resume-section>
     </div>
   </div>
 </div>

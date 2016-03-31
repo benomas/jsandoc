@@ -56,7 +56,11 @@
             }*/
             .left-indent
             {
-                margin-left:20px;
+                margin-left:10px;
+            }
+            .low-font
+            {
+                font-size:10px;
             }
         </style>
     </head>

@@ -161,7 +161,24 @@ export class AppComponent
                     },
                 ]
         };
-    resume2 = {  "parques":
+    resume2 ;
+    editionActive;
+    hasPermision;
+    loadJson()
+    {
+        //delete this.resume2;
+        //this.resume2 = this.jsonEditor;
+        //this.resume2 = {};
+        //this.resume2 = [{"uno":"dos"}];
+    }
+    constructor(private _langService: LangService)
+    {
+        this.hasPermision=true;
+        this.editionActive=false;
+        this.openAll=true;
+        this.collapseAll=false;
+
+        this.resume2 = {  "parques":
                 {
                     "Cerro de la reina":
                     {
@@ -243,20 +260,6 @@ export class AppComponent
                     }
                 }
             };
-    editionActive;
-    hasPermision;
-    loadJson()
-    {
-        delete this.resume2;
-        this.resume2 = this.jsonEditor;
-        console.log(this.resume2);
-    }
-    constructor(private _langService: LangService)
-    {
-        this.hasPermision=true;
-        this.editionActive=false;
-        this.openAll=true;
-        this.collapseAll=false;
     }
 
     setOpenAll()

@@ -147,6 +147,10 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
                             },
                         ]
                     };
+                    this.hasPermision = true;
+                    this.editionActive = false;
+                    this.openAll = true;
+                    this.collapseAll = false;
                     this.resume2 = { "parques": {
                             "Cerro de la reina": {
                                 "Informacion": "http://zonaguadalajara.com/cerro-de-la-reina/",
@@ -215,15 +219,8 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
                             }
                         }
                     };
-                    this.hasPermision = true;
-                    this.editionActive = false;
-                    this.openAll = true;
-                    this.collapseAll = false;
                 }
                 AppComponent.prototype.loadJson = function () {
-                    delete this.resume2;
-                    this.resume2 = this.jsonEditor;
-                    console.log(this.resume2);
                 };
                 AppComponent.prototype.setOpenAll = function () {
                     this.openAll = true;
