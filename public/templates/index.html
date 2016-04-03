@@ -38,7 +38,9 @@
     </button>
 </h3>
 <div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
-    <resume-section [section]="resume"
+    <resume-section
+                    *ngIf="resume"
+                    [section]="resume"
                     [sectionTitle]="'Curriculum Vitae'"
                     [editionActive]="editionActive"
                     [depth]="0"
@@ -47,10 +49,11 @@
     >
     </resume-section>
 </div>
-<!--
+
 <textarea [(ngModel)]="jsonEditor">
 
 </textarea>
+
 <button
             class="btn btn-xs"
             title="Valor"
@@ -62,4 +65,3 @@
   >
   </span>
 </button>
--->

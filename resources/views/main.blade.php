@@ -12,11 +12,15 @@
         <script src="systemjs/dist/system.src.js"></script>
         <script src="rxjs/bundles/Rx.js"></script>
         <script src="angular2/bundles/angular2.dev.js"></script>
+        <script src="angular2/bundles/http.dev.js"></script>
 
         <script>
-              System.config({
-                packages: {
-                  typescript: {
+              System.config(
+              {
+                packages:
+                {
+                  typescript:
+                  {
                     format: 'register',
                     defaultExtension: 'js'
                   }

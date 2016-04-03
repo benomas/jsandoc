@@ -11,9 +11,19 @@
 |
 */
 
-Route::get('/', function () {
+
+Route::get('/', function ()
+{
     return view('main');
 });
+
+
+Route::get('/beny', function ()
+{
+    return json_encode('{"uno":1,"dos":2}');
+});
+
+Route::resource('resume', 'ResumeController');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +35,7 @@ Route::get('/', function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
+/*
 Route::group(['middleware' => ['web']], function () {
     //
-});
+});*/
