@@ -25,9 +25,6 @@ export class AppComponent implements OnInit
     loadJson()
     {
         this.resume = {};
-        //this.resume2 = this.jsonEditor;
-        //this.resume2 = {};
-        //this.resume2 = [{"uno":"dos"}];
         this.resume = JSON.parse(this.jsonEditor);
     }
     constructor(private _langService: LangService,private _resumeService: ResumeService)

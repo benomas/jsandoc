@@ -22,7 +22,7 @@ import {LangService}                from './lang.service';
                 }
                 .with-child-over
                 {
-                    text-decoration:underline;
+                    /*text-decoration:underline;*/
                     color:#204D74;
                 }
                 .clickeable
