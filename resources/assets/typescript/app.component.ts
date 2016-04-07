@@ -1,66 +1,35 @@
 import { Component,OnInit }             from 'angular2/core';
 import { NgClass }                      from 'angular2/common';
+import { ResumeEditionComponent}        from './resume-edition.component';
 import { LangService }                  from './lang.service';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
+import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams} from 'angular2/router';
 @Component({
     selector: 'my-app',
-    templateUrl: 'templates/index.html',
-    directives:[ResumeSectionComponent],
+    templateUrl: 'templates/app-component.html',
+    directives:[
+                    ROUTER_DIRECTIVES,
+                    ResumeEditionComponent,
+                    ResumeSectionComponent
+                ],
     providers:  [
                     NgClass,
+                    ROUTER_PROVIDERS,
                     LangService
                 ]
 })
-export class AppComponent implements OnInit
+
+@RouteConfig(
+[ {
+    path: '/beny',
+    name: 'ResumeEdition',
+    component: ResumeEditionComponent,
+    useAsDefault: true
+  }
+])
+
+export class AppComponent
 {
-    jsonEditor;
-    collapseAll;
-    openAll;
-
-    resume;
-    errorMessage;
-    editionActive;
-    hasPermision;
-    loadJson()
-    {
-        this.resume = {};
-        this.resume = JSON.parse(this.jsonEditor);
-    }
-    constructor(private _langService: LangService,private _resumeService: ResumeService)
-    {
-        this.hasPermision=true;
-        this.editionActive=false;
-        this.openAll=true;
-        this.collapseAll=false;
-    }
-
-    getResume()
-    {
-         this._resumeService.getResume().subscribe(
-          data =>
-          {
-            this.resume = data;
-          },
-          err => { this.errorMessage = true }
-        );
-    }
-
-    ngOnInit()
-    {
-        this.getResume();
-    }
-
-    setOpenAll()
-    {
-        this.openAll    =true;
-        this.collapseAll=false;
-    }
-
-    setCollapseAll()
-    {
-        this.openAll    =false;
-        this.collapseAll=true;
-    }
 
 }

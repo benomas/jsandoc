@@ -17,11 +17,12 @@ Route::get('/', function ()
     return view('main');
 });
 
-
-Route::get('/beny', function ()
+Route::get('/{url_name}', function ()
 {
-    return json_encode('{"uno":1,"dos":2}');
+    return view('main');
 });
+
+
 
 Route::resource('resume', 'ResumeController');
 

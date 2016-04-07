@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './lang.service', './resume.service', './resume-section.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './resume-edition.component', './lang.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, lang_service_1, resume_service_1, resume_section_component_1;
+    var core_1, common_1, resume_edition_component_1, lang_service_1, resume_section_component_1, router_1;
     var AppComponent;
     return {
         setters:[
@@ -20,57 +20,45 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
             function (common_1_1) {
                 common_1 = common_1_1;
             },
+            function (resume_edition_component_1_1) {
+                resume_edition_component_1 = resume_edition_component_1_1;
+            },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
             },
-            function (resume_service_1_1) {
-                resume_service_1 = resume_service_1_1;
-            },
             function (resume_section_component_1_1) {
                 resume_section_component_1 = resume_section_component_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_langService, _resumeService) {
-                    this._langService = _langService;
-                    this._resumeService = _resumeService;
-                    this.hasPermision = true;
-                    this.editionActive = false;
-                    this.openAll = true;
-                    this.collapseAll = false;
+                function AppComponent() {
                 }
-                AppComponent.prototype.loadJson = function () {
-                    this.resume = {};
-                    this.resume = JSON.parse(this.jsonEditor);
-                };
-                AppComponent.prototype.getResume = function () {
-                    var _this = this;
-                    this._resumeService.getResume().subscribe(function (data) {
-                        _this.resume = data;
-                    }, function (err) { _this.errorMessage = true; });
-                };
-                AppComponent.prototype.ngOnInit = function () {
-                    this.getResume();
-                };
-                AppComponent.prototype.setOpenAll = function () {
-                    this.openAll = true;
-                    this.collapseAll = false;
-                };
-                AppComponent.prototype.setCollapseAll = function () {
-                    this.openAll = false;
-                    this.collapseAll = true;
-                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        templateUrl: 'templates/index.html',
-                        directives: [resume_section_component_1.ResumeSectionComponent],
+                        templateUrl: 'templates/app-component.html',
+                        directives: [
+                            router_1.ROUTER_DIRECTIVES,
+                            resume_edition_component_1.ResumeEditionComponent,
+                            resume_section_component_1.ResumeSectionComponent
+                        ],
                         providers: [
                             common_1.NgClass,
+                            router_1.ROUTER_PROVIDERS,
                             lang_service_1.LangService
                         ]
-                    }), 
-                    __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService])
+                    }),
+                    router_1.RouteConfig([{
+                            path: '/beny',
+                            name: 'ResumeEdition',
+                            component: resume_edition_component_1.ResumeEditionComponent,
+                            useAsDefault: true
+                        }
+                    ]), 
+                    __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
             }());

@@ -2,7 +2,6 @@
 <html>
     <head>
         <?php echo '<title>'.trans('app.resume').'</title>'; ?>
-
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href="css/app.css" rel="stylesheet" type="text/css">
         <script src="es6-shim/es6-shim.min.js"></script>
@@ -13,7 +12,9 @@
         <script src="rxjs/bundles/Rx.js"></script>
         <script src="angular2/bundles/angular2.dev.js"></script>
         <script src="angular2/bundles/http.dev.js"></script>
+        <script src="angular2/bundles/router.dev.js"></script>
 
+        <base href="/resume/">
         <script>
               System.config(
               {

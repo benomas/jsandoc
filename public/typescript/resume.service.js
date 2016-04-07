@@ -27,7 +27,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
             ResumeService = (function () {
                 function ResumeService(http) {
                     this.http = http;
-                    this._resumeUrl = '/resume/resume';
+                    this._resumeUrl = '/resume/resume/beny';
                 }
                 ResumeService.prototype.getResume = function () {
                     return this.http.get(this._resumeUrl).map(function (res) { return JSON.parse(res.json().data); });
@@ -42,6 +42,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                 ResumeService.prototype.putResume = function () {
                 };
                 ResumeService.prototype.deleteResume = function () {
+                };
+                ResumeService.prototype.setResumeUrl = function (resumeUrl) {
+                    this._resumeUrl = resumeUrl;
                 };
                 ResumeService = __decorate([
                     core_1.Injectable(), 

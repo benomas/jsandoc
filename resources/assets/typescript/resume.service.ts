@@ -8,7 +8,7 @@ export class ResumeService
     {
     }
 
-    private _resumeUrl = '/resume/resume';  // URL to web api
+    private _resumeUrl = '/resume/resume/beny';  // URL to web api
     resume;
 
     getResume()
@@ -37,6 +37,11 @@ export class ResumeService
     deleteResume()
     {
 
+    }
+
+    public setResumeUrl(resumeUrl)
+    {
+        this._resumeUrl = resumeUrl;
     }
 
 }
