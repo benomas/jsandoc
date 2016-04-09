@@ -5,10 +5,9 @@ import { LangService }                  from './lang.service';
 import { ResumeCore }                   from './resume-core';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
-
 @Component({
-    selector: 'resume-edition',
-    templateUrl: 'templates/resume-edition.html',
+    selector: 'resume-new',
+    templateUrl: 'templates/resume-new.html',
     directives:[
                     ResumeSectionComponent
                 ],
@@ -19,7 +18,7 @@ import { ResumeSectionComponent }       from './resume-section.component';
 })
 
 
-export class ResumeEditionComponent extends ResumeCore implements OnInit
+export class ResumeNewComponent extends ResumeCore implements OnInit
 {
     constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router,private _routeParams: RouteParams)
     {

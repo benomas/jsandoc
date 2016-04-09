@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './resume-edition.component', './lang.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './resume-home.component', './resume-new.component', './resume-edition.component', './resume-show.component', './lang.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './resume-edition.component
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, resume_edition_component_1, lang_service_1, resume_section_component_1, router_1;
+    var core_1, common_1, resume_home_component_1, resume_new_component_1, resume_edition_component_1, resume_show_component_1, lang_service_1, resume_section_component_1, router_1;
     var AppComponent;
     return {
         setters:[
@@ -20,8 +20,17 @@ System.register(['angular2/core', 'angular2/common', './resume-edition.component
             function (common_1_1) {
                 common_1 = common_1_1;
             },
+            function (resume_home_component_1_1) {
+                resume_home_component_1 = resume_home_component_1_1;
+            },
+            function (resume_new_component_1_1) {
+                resume_new_component_1 = resume_new_component_1_1;
+            },
             function (resume_edition_component_1_1) {
                 resume_edition_component_1 = resume_edition_component_1_1;
+            },
+            function (resume_show_component_1_1) {
+                resume_show_component_1 = resume_show_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -88,7 +97,10 @@ System.register(['angular2/core', 'angular2/common', './resume-edition.component
                         selector: 'my-app',
                         templateUrl: 'templates/app-component.html',
                         directives: [
+                            resume_home_component_1.ResumeHomeComponent,
+                            resume_new_component_1.ResumeNewComponent,
                             resume_edition_component_1.ResumeEditionComponent,
+                            resume_show_component_1.ResumeShowComponent,
                             router_1.ROUTER_DIRECTIVES,
                             resume_section_component_1.ResumeSectionComponent
                         ],
@@ -101,17 +113,17 @@ System.register(['angular2/core', 'angular2/common', './resume-edition.component
                     router_1.RouteConfig([{
                             path: '/',
                             name: 'ResumeHome',
-                            component: resume_edition_component_1.ResumeEditionComponent
+                            component: resume_home_component_1.ResumeHomeComponent
                         },
                         {
                             path: 'home/:name',
                             name: 'ResumeHome2',
-                            component: resume_edition_component_1.ResumeEditionComponent
+                            component: resume_home_component_1.ResumeHomeComponent
                         },
                         {
                             path: 'new/',
                             name: 'ResumeNew',
-                            component: resume_edition_component_1.ResumeEditionComponent
+                            component: resume_new_component_1.ResumeNewComponent
                         },
                         {
                             path: 'edit/:name',
@@ -122,7 +134,7 @@ System.register(['angular2/core', 'angular2/common', './resume-edition.component
                         {
                             path: 'show/:name',
                             name: 'ResumeShow',
-                            component: resume_edition_component_1.ResumeEditionComponent
+                            component: resume_show_component_1.ResumeShowComponent
                         }
                     ]), 
                     __metadata('design:paramtypes', [router_1.Router])

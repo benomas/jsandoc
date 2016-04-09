@@ -1,15 +1,23 @@
 import { Component,OnInit }             from 'angular2/core';
 import { NgClass }                      from 'angular2/common';
+import { ResumeHomeComponent}           from './resume-home.component';
+import { ResumeNewComponent}            from './resume-new.component';
 import { ResumeEditionComponent}        from './resume-edition.component';
+import { ResumeShowComponent}           from './resume-show.component';
 import { LangService }                  from './lang.service';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
+import { TestComponent }                from './test.component';
 import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} from 'angular2/router';
+
 @Component({
     selector: 'my-app',
     templateUrl: 'templates/app-component.html',
     directives:[
+                    ResumeHomeComponent,
+                    ResumeNewComponent,
                     ResumeEditionComponent,
+                    ResumeShowComponent,
                     ROUTER_DIRECTIVES,
                     ResumeSectionComponent
                 ],
@@ -24,17 +32,17 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
 [ {
     path: '/',
     name: 'ResumeHome',
-    component: ResumeEditionComponent
+    component: ResumeHomeComponent
   },
   {
     path: 'home/:name',
     name: 'ResumeHome2',
-    component: ResumeEditionComponent
+    component: ResumeHomeComponent
   },
   {
     path: 'new/',
     name: 'ResumeNew',
-    component: ResumeEditionComponent
+    component: ResumeNewComponent
   },
   {
     path: 'edit/:name',
@@ -45,7 +53,7 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
   {
     path: 'show/:name',
     name: 'ResumeShow',
-    component: ResumeEditionComponent
+    component: ResumeShowComponent
   }
 ])
 

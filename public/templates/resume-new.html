@@ -1,0 +1,67 @@
+<h3>
+    Curriculum Vitae
+    <button
+            *ngIf="collapseAll"
+            class="btn btn-xs btn-default"
+            title="Abrir todo"
+            (click)="setOpenAll()"
+    >
+      <span
+            class="glyphicon glyphicon-resize-full"
+            aria-hidden="true"
+      >
+      </span>
+    </button>
+    <button
+            *ngIf="openAll"
+            class="btn btn-xs btn-default"
+            title="Cerrar todo"
+            (click)="setCollapseAll()"
+    >
+      <span
+            class="glyphicon glyphicon-resize-small"
+            aria-hidden="true"
+      >
+      </span>
+    </button>
+    <button *ngIf="hasPermision"
+            class="btn btn-xs"
+            title="Valor"
+            [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
+            (click)="editionActive = !editionActive"
+    >
+      <span
+            class="glyphicon glyphicon-edit"
+            aria-hidden="true"
+      >
+      </span>
+    </button>
+</h3>
+<div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
+    <resume-section
+                    *ngIf="resume"
+                    [section]="resume"
+                    [sectionTitle]="'Curriculum Vitae'"
+                    [editionActive]="editionActive"
+                    [depth]="0"
+                    [openAll]="openAll"
+                    [collapseAll]="collapseAll"
+    >
+    </resume-section>
+</div>
+
+<textarea [(ngModel)]="jsonEditor">
+
+</textarea>
+
+<button
+            class="btn btn-xs"
+            title="Valor"
+            (click)="loadJson()"
+    >
+  <span
+        class="glyphicon glyphicon-edit"
+        aria-hidden="true"
+  >
+  </span>
+</button>

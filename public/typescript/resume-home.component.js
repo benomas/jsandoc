@@ -16,7 +16,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, router_1, lang_service_1, resume_core_1, resume_service_1, resume_section_component_1;
-    var ResumeEditionComponent;
+    var ResumeHomeComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -41,9 +41,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                 resume_section_component_1 = resume_section_component_1_1;
             }],
         execute: function() {
-            ResumeEditionComponent = (function (_super) {
-                __extends(ResumeEditionComponent, _super);
-                function ResumeEditionComponent(_langService, _resumeService, _router, _routeParams) {
+            ResumeHomeComponent = (function (_super) {
+                __extends(ResumeHomeComponent, _super);
+                function ResumeHomeComponent(_langService, _resumeService, _router, _routeParams) {
                     this._langService = _langService;
                     this._resumeService = _resumeService;
                     this._router = _router;
@@ -53,13 +53,13 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this.openAll = true;
                     this.collapseAll = false;
                 }
-                ResumeEditionComponent.prototype.ngOnInit = function () {
+                ResumeHomeComponent.prototype.ngOnInit = function () {
                     this.getResume(this._routeParams.get('name'));
                 };
-                ResumeEditionComponent = __decorate([
+                ResumeHomeComponent = __decorate([
                     core_1.Component({
-                        selector: 'resume-edition',
-                        templateUrl: 'templates/resume-edition.html',
+                        selector: 'resume-home',
+                        templateUrl: 'templates/resume-home.html',
                         directives: [
                             resume_section_component_1.ResumeSectionComponent
                         ],
@@ -69,10 +69,10 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                         ]
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router, router_1.RouteParams])
-                ], ResumeEditionComponent);
-                return ResumeEditionComponent;
+                ], ResumeHomeComponent);
+                return ResumeHomeComponent;
             }(resume_core_1.ResumeCore));
-            exports_1("ResumeEditionComponent", ResumeEditionComponent);
+            exports_1("ResumeHomeComponent", ResumeHomeComponent);
         }
     }
 });
