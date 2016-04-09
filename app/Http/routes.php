@@ -17,10 +17,36 @@ Route::get('/', function ()
     return view('main');
 });
 
-Route::get('/{url_name}', function ()
+Route::get('new/', function ()
 {
     return view('main');
 });
+
+Route::get('new', function ()
+{
+    return view('main');
+});
+
+Route::get('new/{url_name}', function ()
+{
+    return view('main');
+});
+
+Route::get('home/{url_name}', function ()
+{
+    return view('main');
+});
+
+Route::get('edit/{url_name}', function ()
+{
+    return view('main');
+});
+
+Route::get('show/{url_name}', function ()
+{
+    return view('main');
+});
+
 
 
 

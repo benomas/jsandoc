@@ -3,8 +3,7 @@ import { NgClass }                      from 'angular2/common';
 import { LangService }                  from './lang.service';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
-import { TestComponent }                from './test.component';
-import { Router}                        from 'angular2/router';
+import { Router,RouteParams}            from 'angular2/router';
 @Component({
     selector: 'resume-edition',
     templateUrl: 'templates/resume-edition.html',
@@ -33,7 +32,7 @@ export class ResumeEditionComponent implements OnInit
         this.resume = {};
         this.resume = JSON.parse(this.jsonEditor);
     }
-    constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router)
+    constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router,private _routeParams: RouteParams)
     {
         this.hasPermision=true;
         this.editionActive=false;
@@ -41,20 +40,26 @@ export class ResumeEditionComponent implements OnInit
         this.collapseAll=false;
     }
 
-    getResume()
+    getResume(urlName)
     {
-         this._resumeService.getResume().subscribe(
+        if(!urlName )
+            return false; //this._router.navigate(['ResumeHome']);
+         this._resumeService.getResume(urlName).subscribe(
           data =>
           {
             this.resume = data;
           },
-          err => { this.errorMessage = true }
+          err =>
+          {
+            this.errorMessage = true;
+            this._router.navigate(['ResumeHome']);
+            }
         );
     }
 
     ngOnInit()
     {
-        this.getResume();
+        this.getResume(this._routeParams.get('name'));
     }
 
     setOpenAll()
@@ -69,4 +74,9 @@ export class ResumeEditionComponent implements OnInit
         this.collapseAll=true;
     }
 
+    gotoAction(action,param)
+    {
+      let link = [action, { name: param }];
+      this.currentAction=action;
+    }
 }

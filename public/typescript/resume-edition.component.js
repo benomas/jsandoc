@@ -34,10 +34,11 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
             }],
         execute: function() {
             ResumeEditionComponent = (function () {
-                function ResumeEditionComponent(_langService, _resumeService, _router) {
+                function ResumeEditionComponent(_langService, _resumeService, _router, _routeParams) {
                     this._langService = _langService;
                     this._resumeService = _resumeService;
                     this._router = _router;
+                    this._routeParams = _routeParams;
                     this.hasPermision = true;
                     this.editionActive = false;
                     this.openAll = true;
@@ -47,14 +48,19 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
                     this.resume = {};
                     this.resume = JSON.parse(this.jsonEditor);
                 };
-                ResumeEditionComponent.prototype.getResume = function () {
+                ResumeEditionComponent.prototype.getResume = function (urlName) {
                     var _this = this;
-                    this._resumeService.getResume().subscribe(function (data) {
+                    if (!urlName)
+                        return false;
+                    this._resumeService.getResume(urlName).subscribe(function (data) {
                         _this.resume = data;
-                    }, function (err) { _this.errorMessage = true; });
+                    }, function (err) {
+                        _this.errorMessage = true;
+                        _this._router.navigate(['ResumeHome']);
+                    });
                 };
                 ResumeEditionComponent.prototype.ngOnInit = function () {
-                    this.getResume();
+                    this.getResume(this._routeParams.get('name'));
                 };
                 ResumeEditionComponent.prototype.setOpenAll = function () {
                     this.openAll = true;
@@ -63,6 +69,10 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
                 ResumeEditionComponent.prototype.setCollapseAll = function () {
                     this.openAll = false;
                     this.collapseAll = true;
+                };
+                ResumeEditionComponent.prototype.gotoAction = function (action, param) {
+                    var link = [action, { name: param }];
+                    this.currentAction = action;
                 };
                 ResumeEditionComponent = __decorate([
                     core_1.Component({
@@ -76,7 +86,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service', './resume
                             lang_service_1.LangService
                         ]
                     }), 
-                    __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router])
+                    __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router, router_1.RouteParams])
                 ], ResumeEditionComponent);
                 return ResumeEditionComponent;
             }());

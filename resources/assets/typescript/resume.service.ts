@@ -8,12 +8,14 @@ export class ResumeService
     {
     }
 
-    private _resumeUrl = '/resume/resume/beny';  // URL to web api
+    private _resumeUrl = '/resume/resume/';  // URL to web api
     resume;
 
-    getResume()
+    getResume(resumeUrlParam)
     {
-        return this.http.get(this._resumeUrl).map((res:Response) => JSON.parse(res.json().data));
+        if(typeof resumeUrlParam!=='string')
+            return Promise.resolve(null);
+        return this.http.get('/resume/resume/'+resumeUrlParam).map((res:Response) => JSON.parse(res.json().data));
     }
 
     private handleError (error: Response)
@@ -37,11 +39,6 @@ export class ResumeService
     deleteResume()
     {
 
-    }
-
-    public setResumeUrl(resumeUrl)
-    {
-        this._resumeUrl = resumeUrl;
     }
 
 }

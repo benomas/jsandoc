@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php echo '<title>'.trans('app.resume').'</title>'; ?>
+        <base href="/resume/">
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href="css/app.css" rel="stylesheet" type="text/css">
         <script src="es6-shim/es6-shim.min.js"></script>
@@ -14,7 +15,6 @@
         <script src="angular2/bundles/http.dev.js"></script>
         <script src="angular2/bundles/router.dev.js"></script>
 
-        <base href="/resume/">
         <script>
               System.config(
               {
@@ -66,6 +66,14 @@
             .low-font
             {
                 font-size:10px;
+            }
+            .nav.navbar-nav>li
+            {
+                cursor:pointer;
+            }
+            .nav.navbar-nav>li:hover
+            {
+                background-color: #5E5E5E;
             }
         </style>
     </head>
