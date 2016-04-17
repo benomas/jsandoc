@@ -5,7 +5,6 @@ import { LangService }                  from './lang.service';
 import { ResumeCore }                   from './resume-core';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
-
 @Component({
     selector: 'resume-edition',
     templateUrl: 'templates/resume-edition.html',
@@ -21,8 +20,9 @@ import { ResumeSectionComponent }       from './resume-section.component';
 
 export class ResumeEditionComponent extends ResumeCore implements OnInit
 {
-    constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router,private _routeParams: RouteParams)
+    constructor(protected _langService: LangService,protected _resumeService: ResumeService,protected _router: Router,protected _routeParams: RouteParams)
     {
+        super(_langService,_resumeService,_router,_routeParams);
         this.hasPermision=true;
         this.editionActive=false;
         this.openAll=true;

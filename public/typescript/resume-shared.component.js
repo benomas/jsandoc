@@ -16,7 +16,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, router_1, lang_service_1, resume_core_1, resume_service_1, resume_section_component_1;
-    var ResumeShowComponent;
+    var ResumeSharedComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -41,9 +41,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                 resume_section_component_1 = resume_section_component_1_1;
             }],
         execute: function() {
-            ResumeShowComponent = (function (_super) {
-                __extends(ResumeShowComponent, _super);
-                function ResumeShowComponent(_langService, _resumeService, _router, _routeParams) {
+            ResumeSharedComponent = (function (_super) {
+                __extends(ResumeSharedComponent, _super);
+                function ResumeSharedComponent(_langService, _resumeService, _router, _routeParams) {
                     _super.call(this, _langService, _resumeService, _router, _routeParams);
                     this._langService = _langService;
                     this._resumeService = _resumeService;
@@ -54,12 +54,12 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this.openAll = true;
                     this.collapseAll = false;
                 }
-                ResumeShowComponent.prototype.ngOnInit = function () {
+                ResumeSharedComponent.prototype.ngOnInit = function () {
                     this.getResume(this._routeParams.get('name'));
                 };
-                ResumeShowComponent = __decorate([
+                ResumeSharedComponent = __decorate([
                     core_1.Component({
-                        selector: 'resume-show',
+                        selector: 'resume-shared',
                         templateUrl: 'templates/resume-show.html',
                         directives: [
                             resume_section_component_1.ResumeSectionComponent
@@ -70,10 +70,10 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                         ]
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router, router_1.RouteParams])
-                ], ResumeShowComponent);
-                return ResumeShowComponent;
+                ], ResumeSharedComponent);
+                return ResumeSharedComponent;
             }(resume_core_1.ResumeCore));
-            exports_1("ResumeShowComponent", ResumeShowComponent);
+            exports_1("ResumeSharedComponent", ResumeSharedComponent);
         }
     }
 });

@@ -1,31 +1,22 @@
 <nav class="navbar navbar-inverse"
-  *ngIf="currentAction!=='ResumeShow'">
+  *ngIf="currentAction!=='ResumeShared'">
    <div class="container-fluid">
     <ul class="nav navbar-nav">
         <li
-          *ngIf="!currentParam"
           [ngClass]='{"active":currentAction==="ResumeHome"}'>
-          <a (click)="gotoAction('ResumeHome',currentParam)">
-            Inicio
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li
-          *ngIf="currentParam"
-          [ngClass]='{"active":currentAction==="ResumeHome2"}'>
-          <a (click)="gotoAction('ResumeHome2',currentParam)">
+          <a (click)="gotoAction('ResumeHome',NULL)">
             Inicio
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li [ngClass]='{"active":currentAction==="ResumeNew"}'>
-          <a (click)="gotoAction('ResumeNew',currentParam)">
+          <a (click)="gotoAction('ResumeNew',NULL)">
             Nuevo
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li
-          *ngIf="currentParam"
+          *ngIf="currentAction==='ResumeEdit' && currentParam"
           [ngClass]='{"active":currentAction==="ResumeEdit"}'>
           <a (click)="gotoAction('ResumeEdit',currentParam)">
             Editar
@@ -33,7 +24,7 @@
           </a>
         </li>
         <li
-          *ngIf="currentParam"
+          *ngIf="currentAction==='ResumeShow' && currentParam"
           [ngClass]='{"active":currentAction==="ResumeShow"}'>
           <a (click)="gotoAction('ResumeShow',currentParam)">
             Vista

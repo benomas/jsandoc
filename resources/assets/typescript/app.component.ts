@@ -4,6 +4,7 @@ import { ResumeHomeComponent}           from './resume-home.component';
 import { ResumeNewComponent}            from './resume-new.component';
 import { ResumeEditionComponent}        from './resume-edition.component';
 import { ResumeShowComponent}           from './resume-show.component';
+import { ResumeSharedComponent}           from './resume-shared.component';
 import { LangService }                  from './lang.service';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
@@ -18,12 +19,13 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
                     ResumeNewComponent,
                     ResumeEditionComponent,
                     ResumeShowComponent,
+                    ResumeSharedComponent,
                     ROUTER_DIRECTIVES,
                     ResumeSectionComponent
                 ],
     providers:  [
                     NgClass,
-                    ROUTER_PROVIDERS
+                    ROUTER_PROVIDERS,
                     LangService
                 ]
 })
@@ -32,11 +34,6 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
 [ {
     path: '/',
     name: 'ResumeHome',
-    component: ResumeHomeComponent
-  },
-  {
-    path: 'home/:name',
-    name: 'ResumeHome2',
     component: ResumeHomeComponent
   },
   {
@@ -54,6 +51,11 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
     path: 'show/:name',
     name: 'ResumeShow',
     component: ResumeShowComponent
+  },
+  {
+    path: 'shared/:name',
+    name: 'ResumeShared',
+    component: ResumeSharedComponent
   }
 ])
 
@@ -61,61 +63,55 @@ export class AppComponent implements OnInit
 {
     currentAction;
     currentParam;
-    constructor( private _router: Router)
+    constructor(protected _langService: LangService,protected _resumeService: ResumeService, private _router: Router)
     {
-        this.currentAction='ResumeHome';
+        this.currentAction='ResumeShared';
         this.currentParam='';
     }
 
     ngOnInit()
     {
-        this.checkCurrentAction();
+        this._router.subscribe((val) => {this.checkCurrentAction(val)});
     }
 
     gotoAction(action,param)
     {
-        link = [action];
+        let link = [action];
         if(param)
-            let link = [action, { name: param }];
+            link = [action, { name: param }];
         this.currentAction=action;
         this._router.navigate(link);
     }
 
-    checkCurrentAction()
+    checkCurrentAction(toNavitage)
     {
-        let str = this._router.lastNavigationAttempt;
-        let patt = new RegExp(/\/show\/.+/);
-        if( patt.test(str))
+        let str = toNavitage;
+        if( /shared\/.+/.test(str))
+        {
+            this.currentParam = 'beny';
+            return this.currentAction='ResumeShared';
+        }
+        if( /show\/.+/.test(str))
         {
             this.currentParam = 'beny';
             return this.currentAction='ResumeShow';
         }
-        patt = new RegExp(/\/edit\/.+/);
-        if( patt.test(str))
+        if( /edit\/.+/.test(str))
         {
             this.currentParam = 'beny';
             return this.currentAction='ResumeEdit';
         }
-        patt = new RegExp(/\/home\/.+/);
-        if( patt.test(str))
+        if( /home\/.+/.test(str))
         {
             this.currentParam = 'beny';
             return this.currentAction='ResumeHome';
         }
-        patt = new RegExp(/\/home\//);
-        if( patt.test(str))
+        if( /home\//.test(str))
         {
             this.currentParam = '';
             return this.currentAction='ResumeHome2';
         }
-        patt = new RegExp(/\//);
-        if( patt.test(str))
-        {
-            this.currentParam = '';
-            return this.currentAction='ResumeHome';
-        }
-        patt = new RegExp(/\/new\//);
-        if( patt.test(str))
+        if( /new\//.test(str))
         {
             this.currentParam = '';
             return this.currentAction='ResumeNew';

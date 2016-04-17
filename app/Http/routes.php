@@ -11,46 +11,51 @@
 |
 */
 
-
-Route::get('/', function ()
+Route::group(['middleware' => ['web']], function ()
 {
-    return view('main');
+    // Authentication routes...
+    Route::get('auth/login', 'Auth\AuthController@getLogin');
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+    // Registration routes...
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+    Route::resource('resume', 'ResumeController');
+
+    Route::get('shared/{url_name}', function ()
+    {
+        return view('main');
+    });
 });
 
-Route::get('new/', function ()
+Route::group(['middleware' => ['web','auth']], function ()
 {
-    return view('main');
+    //Route::get('/', 'ResumeViewController@index');
+
+    Route::get('/', function ()
+    {
+        return view('main');
+    });
+
+    Route::get('new/', function ()
+    {
+        return view('main');
+    });
+
+    Route::get('edit/{url_name}', function ()
+    {
+        return view('main');
+    });
+
+    Route::get('show/{url_name}', function ()
+    {
+        return view('main');
+    });
+
 });
 
-Route::get('new', function ()
-{
-    return view('main');
-});
-
-Route::get('new/{url_name}', function ()
-{
-    return view('main');
-});
-
-Route::get('home/{url_name}', function ()
-{
-    return view('main');
-});
-
-Route::get('edit/{url_name}', function ()
-{
-    return view('main');
-});
-
-Route::get('show/{url_name}', function ()
-{
-    return view('main');
-});
-
-
-
-
-Route::resource('resume', 'ResumeController');
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +67,3 @@ Route::resource('resume', 'ResumeController');
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-/*
-Route::group(['middleware' => ['web']], function () {
-    //
-});*/

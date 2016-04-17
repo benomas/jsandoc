@@ -30,8 +30,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                     this._resumeUrl = '/resume/resume/';
                 }
                 ResumeService.prototype.getResume = function (resumeUrlParam) {
-                    if (typeof resumeUrlParam !== 'string')
-                        return Promise.resolve(null);
                     return this.http.get('/resume/resume/' + resumeUrlParam).map(function (res) { return JSON.parse(res.json().data); });
                 };
                 ResumeService.prototype.handleError = function (error) {

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './resume-home.component', './resume-new.component', './resume-edition.component', './resume-show.component', './lang.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './resume-home.component', './resume-new.component', './resume-edition.component', './resume-show.component', './resume-shared.component', './lang.service', './resume.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, resume_home_component_1, resume_new_component_1, resume_edition_component_1, resume_show_component_1, lang_service_1, resume_section_component_1, router_1;
+    var core_1, common_1, resume_home_component_1, resume_new_component_1, resume_edition_component_1, resume_show_component_1, resume_shared_component_1, lang_service_1, resume_service_1, resume_section_component_1, router_1;
     var AppComponent;
     return {
         setters:[
@@ -32,8 +32,14 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
             function (resume_show_component_1_1) {
                 resume_show_component_1 = resume_show_component_1_1;
             },
+            function (resume_shared_component_1_1) {
+                resume_shared_component_1 = resume_shared_component_1_1;
+            },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
+            },
+            function (resume_service_1_1) {
+                resume_service_1 = resume_service_1_1;
             },
             function (resume_section_component_1_1) {
                 resume_section_component_1 = resume_section_component_1_1;
@@ -43,50 +49,47 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_router) {
+                function AppComponent(_langService, _resumeService, _router) {
+                    this._langService = _langService;
+                    this._resumeService = _resumeService;
                     this._router = _router;
-                    this.currentAction = 'ResumeHome';
+                    this.currentAction = 'ResumeShared';
                     this.currentParam = '';
                 }
                 AppComponent.prototype.ngOnInit = function () {
-                    this.checkCurrentAction();
+                    var _this = this;
+                    this._router.subscribe(function (val) { _this.checkCurrentAction(val); });
                 };
                 AppComponent.prototype.gotoAction = function (action, param) {
-                    link = [action];
+                    var link = [action];
                     if (param)
-                        var link = [action, { name: param }];
+                        link = [action, { name: param }];
                     this.currentAction = action;
                     this._router.navigate(link);
                 };
-                AppComponent.prototype.checkCurrentAction = function () {
-                    var str = this._router.lastNavigationAttempt;
-                    var patt = new RegExp(/\/show\/.+/);
-                    if (patt.test(str)) {
+                AppComponent.prototype.checkCurrentAction = function (toNavitage) {
+                    var str = toNavitage;
+                    if (/shared\/.+/.test(str)) {
+                        this.currentParam = 'beny';
+                        return this.currentAction = 'ResumeShared';
+                    }
+                    if (/show\/.+/.test(str)) {
                         this.currentParam = 'beny';
                         return this.currentAction = 'ResumeShow';
                     }
-                    patt = new RegExp(/\/edit\/.+/);
-                    if (patt.test(str)) {
+                    if (/edit\/.+/.test(str)) {
                         this.currentParam = 'beny';
                         return this.currentAction = 'ResumeEdit';
                     }
-                    patt = new RegExp(/\/home\/.+/);
-                    if (patt.test(str)) {
+                    if (/home\/.+/.test(str)) {
                         this.currentParam = 'beny';
                         return this.currentAction = 'ResumeHome';
                     }
-                    patt = new RegExp(/\/home\//);
-                    if (patt.test(str)) {
+                    if (/home\//.test(str)) {
                         this.currentParam = '';
                         return this.currentAction = 'ResumeHome2';
                     }
-                    patt = new RegExp(/\//);
-                    if (patt.test(str)) {
-                        this.currentParam = '';
-                        return this.currentAction = 'ResumeHome';
-                    }
-                    patt = new RegExp(/\/new\//);
-                    if (patt.test(str)) {
+                    if (/new\//.test(str)) {
                         this.currentParam = '';
                         return this.currentAction = 'ResumeNew';
                     }
@@ -101,6 +104,7 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
                             resume_new_component_1.ResumeNewComponent,
                             resume_edition_component_1.ResumeEditionComponent,
                             resume_show_component_1.ResumeShowComponent,
+                            resume_shared_component_1.ResumeSharedComponent,
                             router_1.ROUTER_DIRECTIVES,
                             resume_section_component_1.ResumeSectionComponent
                         ],
@@ -113,11 +117,6 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
                     router_1.RouteConfig([{
                             path: '/',
                             name: 'ResumeHome',
-                            component: resume_home_component_1.ResumeHomeComponent
-                        },
-                        {
-                            path: 'home/:name',
-                            name: 'ResumeHome2',
                             component: resume_home_component_1.ResumeHomeComponent
                         },
                         {
@@ -135,9 +134,14 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
                             path: 'show/:name',
                             name: 'ResumeShow',
                             component: resume_show_component_1.ResumeShowComponent
+                        },
+                        {
+                            path: 'shared/:name',
+                            name: 'ResumeShared',
+                            component: resume_shared_component_1.ResumeSharedComponent
                         }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

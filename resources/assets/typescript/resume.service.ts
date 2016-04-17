@@ -13,8 +13,8 @@ export class ResumeService
 
     getResume(resumeUrlParam)
     {
-        if(typeof resumeUrlParam!=='string')
-            return Promise.resolve(null);
+       /* if(typeof resumeUrlParam!=='string')
+            return Promise.resolve(null);*/
         return this.http.get('/resume/resume/'+resumeUrlParam).map((res:Response) => JSON.parse(res.json().data));
     }
 

@@ -6,8 +6,8 @@ import { ResumeCore }                   from './resume-core';
 import { ResumeService }                from './resume.service';
 import { ResumeSectionComponent }       from './resume-section.component';
 @Component({
-    selector: 'resume-new',
-    templateUrl: 'templates/resume-new.html',
+    selector: 'resume-shared',
+    templateUrl: 'templates/resume-show.html',
     directives:[
                     ResumeSectionComponent
                 ],
@@ -18,12 +18,12 @@ import { ResumeSectionComponent }       from './resume-section.component';
 })
 
 
-export class ResumeNewComponent extends ResumeCore implements OnInit
+export class ResumeSharedComponent extends ResumeCore implements OnInit
 {
     constructor(protected _langService: LangService,protected _resumeService: ResumeService,protected _router: Router,protected _routeParams: RouteParams)
     {
         super(_langService,_resumeService,_router,_routeParams);
-        this.hasPermision=true;
+        this.hasPermision=false;
         this.editionActive=false;
         this.openAll=true;
         this.collapseAll=false;

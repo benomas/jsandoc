@@ -20,8 +20,9 @@ import { ResumeSectionComponent }       from './resume-section.component';
 
 export class ResumeHomeComponent extends ResumeCore implements OnInit
 {
-    constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router,private _routeParams: RouteParams)
+    constructor(protected _langService: LangService,protected _resumeService: ResumeService,protected _router: Router,protected _routeParams: RouteParams)
     {
+        super(_langService,_resumeService,_router,_routeParams);
         this.hasPermision=true;
         this.editionActive=false;
         this.openAll=true;

@@ -6,7 +6,15 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             ResumeCore = (function () {
-                function ResumeCore() {
+                function ResumeCore(_langService, _resumeService, _router, _routeParams) {
+                    this._langService = _langService;
+                    this._resumeService = _resumeService;
+                    this._router = _router;
+                    this._routeParams = _routeParams;
+                    this.hasPermision = true;
+                    this.editionActive = false;
+                    this.openAll = true;
+                    this.collapseAll = false;
                 }
                 ResumeCore.prototype.loadJson = function () {
                     this.resume = {};
@@ -34,6 +42,7 @@ System.register([], function(exports_1, context_1) {
                 ResumeCore.prototype.gotoAction = function (action, param) {
                     var link = [action, { name: param }];
                     this.currentAction = action;
+                    this._router.navigate(link);
                 };
                 return ResumeCore;
             }());

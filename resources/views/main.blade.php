@@ -75,6 +75,10 @@
             {
                 background-color: #5E5E5E;
             }
+            a{
+                text-decoration: none;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>

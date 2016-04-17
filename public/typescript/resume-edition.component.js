@@ -44,6 +44,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
             ResumeEditionComponent = (function (_super) {
                 __extends(ResumeEditionComponent, _super);
                 function ResumeEditionComponent(_langService, _resumeService, _router, _routeParams) {
+                    _super.call(this, _langService, _resumeService, _router, _routeParams);
                     this._langService = _langService;
                     this._resumeService = _resumeService;
                     this._router = _router;

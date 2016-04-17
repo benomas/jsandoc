@@ -1,67 +1,36 @@
-<h3>
-    Curriculum Vitae
-    <button
-            *ngIf="collapseAll"
-            class="btn btn-xs btn-default"
-            title="Abrir todo"
-            (click)="setOpenAll()"
-    >
-      <span
-            class="glyphicon glyphicon-resize-full"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-    <button
-            *ngIf="openAll"
-            class="btn btn-xs btn-default"
-            title="Cerrar todo"
-            (click)="setCollapseAll()"
-    >
-      <span
-            class="glyphicon glyphicon-resize-small"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-    <button *ngIf="hasPermision"
-            class="btn btn-xs"
-            title="Valor"
-            [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
-            (click)="editionActive = !editionActive"
-    >
-      <span
-            class="glyphicon glyphicon-edit"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-</h3>
-<div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
-    <resume-section
-                    *ngIf="resume"
-                    [section]="resume"
-                    [sectionTitle]="'Curriculum Vitae'"
-                    [editionActive]="editionActive"
-                    [depth]="0"
-                    [openAll]="openAll"
-                    [collapseAll]="collapseAll"
-    >
-    </resume-section>
+<div>
+  <h1>
+    Bienvenido Beny
+  </h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Mis resumenes</h3>
+    </div>
+    <div class="panel-body" style="margin:10px;">
+      <div class="row">
+        <div class="col-xs-12" style="border:1px solid #CCCCCC; border-radius:5px;">
+          <div class="col-xs-1">
+            Beny
+          </div>
+          <div class="col-xs-11" style="padding-top:3px; padding-bottom:3px;">
+            <button type="button" class="btn btn-success btn-sm"  (click)="gotoAction('ResumeShow','beny')">Ver</button>
+            <button type="button" class="btn btn-warning btn-sm"  (click)="gotoAction('ResumeEdit','beny')">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm"  (click)="gotoAction('ResumeEdit','beny')">Borrar</button>
+            <button type="button" class="btn btn-info btn-sm"  (click)="gotoAction('ResumeShared','beny')">Compartido</button>
+          </div>
+        </div>
+        <div class="col-xs-12" style="border:1px solid #CCCCCC; border-radius:5px;">
+          <div class="col-xs-1">
+            Jose
+          </div>
+          <div class="col-xs-11" style="padding-top:3px; padding-bottom:3px;">
+            <button type="button" class="btn btn-success btn-sm"  (click)="gotoAction('ResumeShow','jose')">Ver</button>
+            <button type="button" class="btn btn-warning btn-sm"  (click)="gotoAction('ResumeEdit','jose')">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm"  (click)="gotoAction('ResumeEdit','jose')">Borrar</button>
+            <button type="button" class="btn btn-info btn-sm"  (click)="gotoAction('ResumeShared','jose')">Compartido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<textarea [(ngModel)]="jsonEditor">
-
-</textarea>
-
-<button
-            class="btn btn-xs"
-            title="Valor"
-            (click)="loadJson()"
-    >
-  <span
-        class="glyphicon glyphicon-edit"
-        aria-hidden="true"
-  >
-  </span>
-</button>

@@ -13,21 +13,22 @@ export class ResumeCore
     errorMessage;
     editionActive;
     hasPermision;
+    currentAction;
 
     loadJson()
     {
         this.resume = {};
         this.resume = JSON.parse(this.jsonEditor);
     }
-/*
-    constructor(private _langService: LangService,private _resumeService: ResumeService,private _router: Router,private _routeParams: RouteParams)
+
+    constructor(protected _langService: LangService,protected _resumeService: ResumeService,protected _router: Router,protected _routeParams: RouteParams)
     {
         this.hasPermision=true;
         this.editionActive=false;
         this.openAll=true;
         this.collapseAll=false;
     }
-*/
+
     getResume(urlName)
     {
         if(!urlName )
@@ -59,8 +60,9 @@ export class ResumeCore
 
     gotoAction(action,param)
     {
-      let link = [action, { name: param }];
-      this.currentAction=action;
+        let link = [action, { name: param }];
+        this.currentAction=action;
+        this._router.navigate(link);
     }
 
 }
