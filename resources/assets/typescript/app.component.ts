@@ -1,13 +1,13 @@
 import { Component,OnInit }             from 'angular2/core';
 import { NgClass }                      from 'angular2/common';
-import { ResumeHomeComponent}           from './resume-home.component';
-import { ResumeNewComponent}            from './resume-new.component';
-import { ResumeEditionComponent}        from './resume-edition.component';
-import { ResumeShowComponent}           from './resume-show.component';
-import { ResumeSharedComponent}           from './resume-shared.component';
+import { JsandocHomeComponent}          from './jsandoc-home.component';
+import { JsandocNewComponent}           from './jsandoc-new.component';
+import { JsandocEditionComponent}       from './jsandoc-edition.component';
+import { JsandocShowComponent}          from './jsandoc-show.component';
+import { JsandocSharedComponent}        from './jsandoc-shared.component';
 import { LangService }                  from './lang.service';
-import { ResumeService }                from './resume.service';
-import { ResumeSectionComponent }       from './resume-section.component';
+import { JsandocService }               from './jsandoc.service';
+import { JsandocSectionComponent }      from './jsandoc-section.component';
 import { TestComponent }                from './test.component';
 import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} from 'angular2/router';
 
@@ -15,13 +15,13 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
     selector: 'my-app',
     templateUrl: 'templates/app-component.html',
     directives:[
-                    ResumeHomeComponent,
-                    ResumeNewComponent,
-                    ResumeEditionComponent,
-                    ResumeShowComponent,
-                    ResumeSharedComponent,
+                    JsandocHomeComponent,
+                    JsandocNewComponent,
+                    JsandocEditionComponent,
+                    JsandocShowComponent,
+                    JsandocSharedComponent,
                     ROUTER_DIRECTIVES,
-                    ResumeSectionComponent
+                    JsandocSectionComponent
                 ],
     providers:  [
                     NgClass,
@@ -33,29 +33,29 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
 @RouteConfig(
 [ {
     path: '/',
-    name: 'ResumeHome',
-    component: ResumeHomeComponent
-  },
-  {
-    path: 'new/',
-    name: 'ResumeNew',
-    component: ResumeNewComponent
-  },
-  {
-    path: 'edit/:name',
-    name: 'ResumeEdit',
-    component: ResumeEditionComponent,
+    name: 'JsandocHome',
+    component: JsandocHomeComponent,
     useAsDefault: true
   },
   {
+    path: 'new/',
+    name: 'JsandocNew',
+    component: JsandocNewComponent
+  },
+  {
+    path: 'edit/:name',
+    name: 'JsandocEdit',
+    component: JsandocEditionComponent,
+  },
+  {
     path: 'show/:name',
-    name: 'ResumeShow',
-    component: ResumeShowComponent
+    name: 'JsandocShow',
+    component: JsandocShowComponent
   },
   {
     path: 'shared/:name',
-    name: 'ResumeShared',
-    component: ResumeSharedComponent
+    name: 'JsandocShared',
+    component: JsandocSharedComponent
   }
 ])
 
@@ -63,9 +63,9 @@ export class AppComponent implements OnInit
 {
     currentAction;
     currentParam;
-    constructor(protected _langService: LangService,protected _resumeService: ResumeService, private _router: Router)
+    constructor(protected _langService: LangService,protected _jsandocService: JsandocService, private _router: Router)
     {
-        this.currentAction='ResumeShared';
+        this.currentAction='JsandocShared';
         this.currentParam='';
     }
 
@@ -89,34 +89,34 @@ export class AppComponent implements OnInit
         if( /shared\/.+/.test(str))
         {
             this.currentParam = 'beny';
-            return this.currentAction='ResumeShared';
+            return this.currentAction='JsandocShared';
         }
         if( /show\/.+/.test(str))
         {
             this.currentParam = 'beny';
-            return this.currentAction='ResumeShow';
+            return this.currentAction='JsandocShow';
         }
         if( /edit\/.+/.test(str))
         {
             this.currentParam = 'beny';
-            return this.currentAction='ResumeEdit';
+            return this.currentAction='JsandocEdit';
         }
         if( /home\/.+/.test(str))
         {
             this.currentParam = 'beny';
-            return this.currentAction='ResumeHome';
+            return this.currentAction='JsandocHome';
         }
         if( /home\//.test(str))
         {
             this.currentParam = '';
-            return this.currentAction='ResumeHome2';
+            return this.currentAction='JsandocHome2';
         }
         if( /new\//.test(str))
         {
             this.currentParam = '';
-            return this.currentAction='ResumeNew';
+            return this.currentAction='JsandocNew';
         }
 
-        return this.currentAction='ResumeHome';
+        return this.currentAction='JsandocHome';
     }
 }

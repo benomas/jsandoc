@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class ResumeViewController extends Controller
+class JsandocViewController extends Controller
 {
     //
     public function index()

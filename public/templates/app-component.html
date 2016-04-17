@@ -1,32 +1,32 @@
 <nav class="navbar navbar-inverse"
-  *ngIf="currentAction!=='ResumeShared'">
+  *ngIf="currentAction!=='JsandocShared'">
    <div class="container-fluid">
     <ul class="nav navbar-nav">
         <li
-          [ngClass]='{"active":currentAction==="ResumeHome"}'>
-          <a (click)="gotoAction('ResumeHome',NULL)">
+          [ngClass]='{"active":currentAction==="JsandocHome"}'>
+          <a (click)="gotoAction('JsandocHome',NULL)">
             Inicio
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li [ngClass]='{"active":currentAction==="ResumeNew"}'>
-          <a (click)="gotoAction('ResumeNew',NULL)">
+        <li [ngClass]='{"active":currentAction==="JsandocNew"}'>
+          <a (click)="gotoAction('JsandocNew',NULL)">
             Nuevo
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li
-          *ngIf="currentAction==='ResumeEdit' && currentParam"
-          [ngClass]='{"active":currentAction==="ResumeEdit"}'>
-          <a (click)="gotoAction('ResumeEdit',currentParam)">
+          *ngIf="currentAction==='JsandocEdit' && currentParam"
+          [ngClass]='{"active":currentAction==="JsandocEdit"}'>
+          <a (click)="gotoAction('JsandocEdit',currentParam)">
             Editar
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li
-          *ngIf="currentAction==='ResumeShow' && currentParam"
-          [ngClass]='{"active":currentAction==="ResumeShow"}'>
-          <a (click)="gotoAction('ResumeShow',currentParam)">
+          *ngIf="currentAction==='JsandocShow' && currentParam"
+          [ngClass]='{"active":currentAction==="JsandocShow"}'>
+          <a (click)="gotoAction('JsandocShow',currentParam)">
             Vista
             <span class="sr-only">(current)</span>
           </a>

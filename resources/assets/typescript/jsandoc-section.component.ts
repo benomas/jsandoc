@@ -4,8 +4,8 @@ import {AddElementComponent}        from './add-element.component';
 import {LangService}                from './lang.service';
 
 @Component({
-    selector: 'resume-section',
-    templateUrl: 'templates/resume-section.html',
+    selector: 'jsandoc-section',
+    templateUrl: 'templates/jsandoc-section.html',
     inputs: [   'section',
                 'sectionTitle',
                 'sectionParent',
@@ -40,9 +40,9 @@ import {LangService}                from './lang.service';
 
                 `
             ],
-    directives:[ResumeSectionComponent,NgClass,AddElementComponent],
+    directives:[JsandocSectionComponent,NgClass,AddElementComponent],
 })
-export class ResumeSectionComponent implements OnInit,OnChanges
+export class JsandocSectionComponent implements OnInit,OnChanges
 {
     public childover = new EventEmitter();
     public childleave = new EventEmitter();

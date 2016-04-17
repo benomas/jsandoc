@@ -1,6 +1,6 @@
 <!-- resources/views/auth/login.blade.php -->
 
-<form method="POST" action="/resume/auth/login">
+<form method="POST" action="/jsandoc/auth/login">
     {!! csrf_field() !!}
 <div style="padding:10px; background-color: #CCCCCC;">
     <div>

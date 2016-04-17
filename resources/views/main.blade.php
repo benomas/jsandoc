@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php echo '<title>'.trans('app.resume').'</title>'; ?>
-        <base href="/resume/">
+        <?php echo '<title>'.trans('app.jsandoc').'</title>'; ?>
+        <base href="/jsandoc/">
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href="css/app.css" rel="stylesheet" type="text/css">
         <script src="es6-shim/es6-shim.min.js"></script>

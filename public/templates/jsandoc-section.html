@@ -52,7 +52,7 @@
       {{section[key]}}
     </span>
     <div *ngIf="getCase(section[key])!=='primitive'">
-      <resume-section [section]="section[key]"
+      <jsandoc-section [section]="section[key]"
                       [sectionTitle]="position+1"
                       [editionActive]="editionActive"
                       (childover)="notifyOverToParent($event)"
@@ -62,7 +62,7 @@
                       [openAll]="openAll"
                       [collapseAll]="collapseAll"
       >
-      </resume-section>
+      </jsandoc-section>
     </div>
   </div>
 </div>
@@ -92,7 +92,7 @@
           [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
         >
         </span>
-        <resume-section [section]="item"
+        <jsandoc-section [section]="item"
                         [sectionTitle]="position+1"
                         [editionActive]="editionActive"
                         (childover)="notifyOverToParent($event)"
@@ -102,7 +102,7 @@
                         [openAll]="openAll"
                         [collapseAll]="collapseAll"
         >
-        </resume-section>
+        </jsandoc-section>
     </div>
   </div>
 </div>

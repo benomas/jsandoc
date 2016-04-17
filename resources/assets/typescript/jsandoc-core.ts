@@ -1,15 +1,15 @@
 import { LangService }                  from './lang.service';
-import { ResumeService }                from './resume.service';
+import { JsandocService }                from './jsandoc.service';
 import { Router,RouteParams}            from 'angular2/router';
 
 
-export class ResumeCore
+export class JsandocCore
 {
     jsonEditor;
     collapseAll;
     openAll;
 
-    resume;
+    jsandoc;
     errorMessage;
     editionActive;
     hasPermision;
@@ -17,11 +17,11 @@ export class ResumeCore
 
     loadJson()
     {
-        this.resume = {};
-        this.resume = JSON.parse(this.jsonEditor);
+        this.jsandoc = {};
+        this.jsandoc = JSON.parse(this.jsonEditor);
     }
 
-    constructor(protected _langService: LangService,protected _resumeService: ResumeService,protected _router: Router,protected _routeParams: RouteParams)
+    constructor(protected _langService: LangService,protected _jsandocService: JsandocService,protected _router: Router,protected _routeParams: RouteParams)
     {
         this.hasPermision=true;
         this.editionActive=false;
@@ -29,19 +29,19 @@ export class ResumeCore
         this.collapseAll=false;
     }
 
-    getResume(urlName)
+    getJsandoc(urlName)
     {
         if(!urlName )
-            return false; //this._router.navigate(['ResumeHome']);
-         this._resumeService.getResume(urlName).subscribe(
+            return false; //this._router.navigate(['JsandocHome']);
+         this._jsandocService.getJsandoc(urlName).subscribe(
           data =>
           {
-            this.resume = data;
+            this.jsandoc = data;
           },
           err =>
           {
             this.errorMessage = true;
-            this._router.navigate(['ResumeHome']);
+            //this._router.navigate(['JsandocHome']);
             }
         );
     }

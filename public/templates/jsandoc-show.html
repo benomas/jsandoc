@@ -38,14 +38,14 @@
     </button>
 </h3>
 <div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
-    <resume-section
-                    *ngIf="resume"
-                    [section]="resume"
+    <jsandoc-section
+                    *ngIf="jsandoc"
+                    [section]="jsandoc"
                     [sectionTitle]="'Curriculum Vitae'"
                     [editionActive]="editionActive"
                     [depth]="0"
                     [openAll]="openAll"
                     [collapseAll]="collapseAll"
     >
-    </resume-section>
+    </jsandoc-section>
 </div>

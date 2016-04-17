@@ -1,6 +1,6 @@
 <!-- resources/views/auth/register.blade.php -->
 
-<form method="POST" action="/resume/auth/register">
+<form method="POST" action="/jsandoc/auth/register">
     {!! csrf_field() !!}
 
     <div>

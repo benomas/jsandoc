@@ -21,11 +21,11 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             LangService = (function () {
                 function LangService() {
                     this.currentLeng = "es";
-                    this.currentContext = "resume";
+                    this.currentContext = "jsandoc";
                     this.languages = { "es": {
-                            "resume": {
-                                "resume": "Resumen",
-                                "app_title": "Resumen personal",
+                            "jsandoc": {
+                                "jsandoc": "Jsandocn",
+                                "app_title": "Jsandocn personal",
                                 "name": "Nombre",
                                 "firstLastName": "Primer apellido",
                                 "secondLastName": "Segundo apellido",

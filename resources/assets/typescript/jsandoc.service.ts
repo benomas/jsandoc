@@ -2,20 +2,20 @@ import {Injectable}     from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 @Injectable()
-export class ResumeService
+export class JsandocService
 {
     constructor (private http: Http)
     {
     }
 
-    private _resumeUrl = '/resume/resume/';  // URL to web api
-    resume;
+    private _jsandocUrl = 'jsandoc/';  // URL to web api
+    jsandoc;
 
-    getResume(resumeUrlParam)
+    getJsandoc(jsandocUrlParam)
     {
-       /* if(typeof resumeUrlParam!=='string')
+        /*if(typeof jsandocUrlParam!=='string')
             return Promise.resolve(null);*/
-        return this.http.get('/resume/resume/'+resumeUrlParam).map((res:Response) => JSON.parse(res.json().data));
+        return this.http.get(this._jsandocUrl+jsandocUrlParam).map((res:Response) => JSON.parse(res.json().data));
     }
 
     private handleError (error: Response)
@@ -26,17 +26,17 @@ export class ResumeService
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    postResume()
+    postJsandoc()
     {
-        return this.http.get(this._resumeUrl).map((res:Response) => JSON.parse(res.json().data));
+        return this.http.get(this._jsandocUrl).map((res:Response) => JSON.parse(res.json().data));
     }
 
-    putResume()
+    putJsandoc()
     {
 
     }
 
-    deleteResume()
+    deleteJsandoc()
     {
 
     }

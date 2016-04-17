@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './resume-home.component', './resume-new.component', './resume-edition.component', './resume-show.component', './resume-shared.component', './lang.service', './resume.service', './resume-section.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './jsandoc-home.component', './jsandoc-new.component', './jsandoc-edition.component', './jsandoc-show.component', './jsandoc-shared.component', './lang.service', './jsandoc.service', './jsandoc-section.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, resume_home_component_1, resume_new_component_1, resume_edition_component_1, resume_show_component_1, resume_shared_component_1, lang_service_1, resume_service_1, resume_section_component_1, router_1;
+    var core_1, common_1, jsandoc_home_component_1, jsandoc_new_component_1, jsandoc_edition_component_1, jsandoc_show_component_1, jsandoc_shared_component_1, lang_service_1, jsandoc_service_1, jsandoc_section_component_1, router_1;
     var AppComponent;
     return {
         setters:[
@@ -20,40 +20,40 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
             function (common_1_1) {
                 common_1 = common_1_1;
             },
-            function (resume_home_component_1_1) {
-                resume_home_component_1 = resume_home_component_1_1;
+            function (jsandoc_home_component_1_1) {
+                jsandoc_home_component_1 = jsandoc_home_component_1_1;
             },
-            function (resume_new_component_1_1) {
-                resume_new_component_1 = resume_new_component_1_1;
+            function (jsandoc_new_component_1_1) {
+                jsandoc_new_component_1 = jsandoc_new_component_1_1;
             },
-            function (resume_edition_component_1_1) {
-                resume_edition_component_1 = resume_edition_component_1_1;
+            function (jsandoc_edition_component_1_1) {
+                jsandoc_edition_component_1 = jsandoc_edition_component_1_1;
             },
-            function (resume_show_component_1_1) {
-                resume_show_component_1 = resume_show_component_1_1;
+            function (jsandoc_show_component_1_1) {
+                jsandoc_show_component_1 = jsandoc_show_component_1_1;
             },
-            function (resume_shared_component_1_1) {
-                resume_shared_component_1 = resume_shared_component_1_1;
+            function (jsandoc_shared_component_1_1) {
+                jsandoc_shared_component_1 = jsandoc_shared_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
             },
-            function (resume_service_1_1) {
-                resume_service_1 = resume_service_1_1;
+            function (jsandoc_service_1_1) {
+                jsandoc_service_1 = jsandoc_service_1_1;
             },
-            function (resume_section_component_1_1) {
-                resume_section_component_1 = resume_section_component_1_1;
+            function (jsandoc_section_component_1_1) {
+                jsandoc_section_component_1 = jsandoc_section_component_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_langService, _resumeService, _router) {
+                function AppComponent(_langService, _jsandocService, _router) {
                     this._langService = _langService;
-                    this._resumeService = _resumeService;
+                    this._jsandocService = _jsandocService;
                     this._router = _router;
-                    this.currentAction = 'ResumeShared';
+                    this.currentAction = 'JsandocShared';
                     this.currentParam = '';
                 }
                 AppComponent.prototype.ngOnInit = function () {
@@ -71,42 +71,42 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
                     var str = toNavitage;
                     if (/shared\/.+/.test(str)) {
                         this.currentParam = 'beny';
-                        return this.currentAction = 'ResumeShared';
+                        return this.currentAction = 'JsandocShared';
                     }
                     if (/show\/.+/.test(str)) {
                         this.currentParam = 'beny';
-                        return this.currentAction = 'ResumeShow';
+                        return this.currentAction = 'JsandocShow';
                     }
                     if (/edit\/.+/.test(str)) {
                         this.currentParam = 'beny';
-                        return this.currentAction = 'ResumeEdit';
+                        return this.currentAction = 'JsandocEdit';
                     }
                     if (/home\/.+/.test(str)) {
                         this.currentParam = 'beny';
-                        return this.currentAction = 'ResumeHome';
+                        return this.currentAction = 'JsandocHome';
                     }
                     if (/home\//.test(str)) {
                         this.currentParam = '';
-                        return this.currentAction = 'ResumeHome2';
+                        return this.currentAction = 'JsandocHome2';
                     }
                     if (/new\//.test(str)) {
                         this.currentParam = '';
-                        return this.currentAction = 'ResumeNew';
+                        return this.currentAction = 'JsandocNew';
                     }
-                    return this.currentAction = 'ResumeHome';
+                    return this.currentAction = 'JsandocHome';
                 };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
                         templateUrl: 'templates/app-component.html',
                         directives: [
-                            resume_home_component_1.ResumeHomeComponent,
-                            resume_new_component_1.ResumeNewComponent,
-                            resume_edition_component_1.ResumeEditionComponent,
-                            resume_show_component_1.ResumeShowComponent,
-                            resume_shared_component_1.ResumeSharedComponent,
+                            jsandoc_home_component_1.JsandocHomeComponent,
+                            jsandoc_new_component_1.JsandocNewComponent,
+                            jsandoc_edition_component_1.JsandocEditionComponent,
+                            jsandoc_show_component_1.JsandocShowComponent,
+                            jsandoc_shared_component_1.JsandocSharedComponent,
                             router_1.ROUTER_DIRECTIVES,
-                            resume_section_component_1.ResumeSectionComponent
+                            jsandoc_section_component_1.JsandocSectionComponent
                         ],
                         providers: [
                             common_1.NgClass,
@@ -116,32 +116,32 @@ System.register(['angular2/core', 'angular2/common', './resume-home.component', 
                     }),
                     router_1.RouteConfig([{
                             path: '/',
-                            name: 'ResumeHome',
-                            component: resume_home_component_1.ResumeHomeComponent
-                        },
-                        {
-                            path: 'new/',
-                            name: 'ResumeNew',
-                            component: resume_new_component_1.ResumeNewComponent
-                        },
-                        {
-                            path: 'edit/:name',
-                            name: 'ResumeEdit',
-                            component: resume_edition_component_1.ResumeEditionComponent,
+                            name: 'JsandocHome',
+                            component: jsandoc_home_component_1.JsandocHomeComponent,
                             useAsDefault: true
                         },
                         {
+                            path: 'new/',
+                            name: 'JsandocNew',
+                            component: jsandoc_new_component_1.JsandocNewComponent
+                        },
+                        {
+                            path: 'edit/:name',
+                            name: 'JsandocEdit',
+                            component: jsandoc_edition_component_1.JsandocEditionComponent,
+                        },
+                        {
                             path: 'show/:name',
-                            name: 'ResumeShow',
-                            component: resume_show_component_1.ResumeShowComponent
+                            name: 'JsandocShow',
+                            component: jsandoc_show_component_1.JsandocShowComponent
                         },
                         {
                             path: 'shared/:name',
-                            name: 'ResumeShared',
-                            component: resume_shared_component_1.ResumeSharedComponent
+                            name: 'JsandocShared',
+                            component: jsandoc_shared_component_1.JsandocSharedComponent
                         }
                     ]), 
-                    __metadata('design:paramtypes', [lang_service_1.LangService, resume_service_1.ResumeService, router_1.Router])
+                    __metadata('design:paramtypes', [lang_service_1.LangService, jsandoc_service_1.JsandocService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

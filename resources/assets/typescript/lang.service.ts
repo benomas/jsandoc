@@ -4,13 +4,13 @@ import {Injectable} from 'angular2/core';
 export class LangService
 {
     currentLeng: string = "es";
-    currentContext: string ="resume";
+    currentContext: string ="jsandoc";
     languages = {"es":
                     {
-                        "resume":
+                        "jsandoc":
                         {
-                            "resume":"Resumen",
-                            "app_title":"Resumen personal",
+                            "jsandoc":"Jsandocn",
+                            "app_title":"Jsandocn personal",
                             "name":"Nombre",
                             "firstLastName":"Primer apellido",
                             "secondLastName":"Segundo apellido",

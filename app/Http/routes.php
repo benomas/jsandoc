@@ -22,7 +22,41 @@ Route::group(['middleware' => ['web']], function ()
     Route::get('auth/register', 'Auth\AuthController@getRegister');
     Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-    Route::resource('resume', 'ResumeController');
+    Route::get('jsandoc', function()
+    {
+        return 'lala';
+    });
+/*
+    Route::get('jsoandoc/cda', function()
+    {
+        return 'test1';
+    });
+    Route::get('/jsoandoc/cda', function()
+    {
+        return 'test2';
+    });
+    Route::get('jsoandoc/', function()
+    {
+        return 'test3';
+    });
+    Route::get('/jsoandoc/cda', function()
+    {
+        return 'test4';
+    });
+    Route::get('/jsoandoc/jsoandoc/cda', function()
+    {
+        return 'test5';
+    });
+    Route::get('/jsoandoc/jsoandoc/cda', function()
+    {
+        return 'test6';
+    });
+    Route::get('/jsoandoc/jsoandoc/jsandoc', function()
+    {
+        return 'test7';
+    });
+*/
+    Route::resource('jsandoc', 'JsandocController');
 
     Route::get('shared/{url_name}', function ()
     {
