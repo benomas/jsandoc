@@ -29,8 +29,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                     this.http = http;
                     this._docUrl = 'doc/';
                 }
-                DocService.prototype.getDoc = function (docUrl) {
-                    return this.http.get(this._docUrl + docUrl).map(function (res) { return JSON.parse(res.json().data); });
+                DocService.prototype.getDoc = function (user_namespace, doc_namespace) {
+                    return this.http.get(this._docUrl + user_namespace + '/' + doc_namespace).map(function (res) { return JSON.parse(res.json().data); });
                 };
                 DocService.prototype.handleError = function (error) {
                     console.error(error);

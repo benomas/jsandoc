@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.service', './jsandoc-core', './jsandoc.service', './jsandoc-section.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.service', './jsandoc-core', './doc.service', './user.service', './jsandoc-section.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -15,7 +15,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, lang_service_1, jsandoc_core_1, jsandoc_service_1, jsandoc_section_component_1;
+    var core_1, common_1, router_1, lang_service_1, jsandoc_core_1, doc_service_1, user_service_1, jsandoc_section_component_1;
     var JsandocNewComponent;
     return {
         setters:[
@@ -34,8 +34,11 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
             function (jsandoc_core_1_1) {
                 jsandoc_core_1 = jsandoc_core_1_1;
             },
-            function (jsandoc_service_1_1) {
-                jsandoc_service_1 = jsandoc_service_1_1;
+            function (doc_service_1_1) {
+                doc_service_1 = doc_service_1_1;
+            },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
             },
             function (jsandoc_section_component_1_1) {
                 jsandoc_section_component_1 = jsandoc_section_component_1_1;
@@ -43,10 +46,11 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
         execute: function() {
             JsandocNewComponent = (function (_super) {
                 __extends(JsandocNewComponent, _super);
-                function JsandocNewComponent(_langService, _jsandocService, _router, _routeParams) {
-                    _super.call(this, _langService, _jsandocService, _router, _routeParams);
+                function JsandocNewComponent(_langService, _docService, _userService, _router, _routeParams) {
+                    _super.call(this, _langService, _docService, _userService, _router, _routeParams);
                     this._langService = _langService;
-                    this._jsandocService = _jsandocService;
+                    this._docService = _docService;
+                    this._userService = _userService;
                     this._router = _router;
                     this._routeParams = _routeParams;
                     this.hasPermision = true;
@@ -55,7 +59,6 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this.collapseAll = false;
                 }
                 JsandocNewComponent.prototype.ngOnInit = function () {
-                    this.getJsandoc(this._routeParams.get('name'));
                 };
                 JsandocNewComponent = __decorate([
                     core_1.Component({
@@ -69,7 +72,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                             lang_service_1.LangService
                         ]
                     }), 
-                    __metadata('design:paramtypes', [lang_service_1.LangService, jsandoc_service_1.JsandocService, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [lang_service_1.LangService, doc_service_1.DocService, user_service_1.UserService, router_1.Router, router_1.RouteParams])
                 ], JsandocNewComponent);
                 return JsandocNewComponent;
             }(jsandoc_core_1.JsandocCore));

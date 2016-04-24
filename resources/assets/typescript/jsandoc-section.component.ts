@@ -1,7 +1,7 @@
 import {Component,EventEmitter, OnInit,OnChanges,SimpleChange }     from 'angular2/core';
-import {NgClass}                    from 'angular2/common';
-import {AddElementComponent}        from './add-element.component';
-import {LangService}                from './lang.service';
+import {NgClass}                                                    from 'angular2/common';
+import {AddElementComponent}                                        from './add-element.component';
+import {LangService}                                                from './lang.service';
 
 @Component({
     selector: 'jsandoc-section',

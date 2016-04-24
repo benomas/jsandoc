@@ -2,20 +2,20 @@ import {Injectable}     from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 @Injectable()
-export class JsandocService
+export class DocService
 {
     constructor (private http: Http)
     {
     }
 
-    private _jsandocUrl = 'jsandoc/';  // URL to web api
-    jsandoc;
+    private _docUrl = 'doc/';  // URL to web api
+    doc;
 
-    getJsandoc(jsandocUrlParam)
+    getDoc(user_namespace,doc_namespace)
     {
-        /*if(typeof jsandocUrlParam!=='string')
+        /*if(typeof docUrl!=='string')
             return Promise.resolve(null);*/
-        return this.http.get(this._jsandocUrl+jsandocUrlParam).map((res:Response) => JSON.parse(res.json().data));
+        return this.http.get(this._docUrl+user_namespace+'/'+doc_namespace).map((res:Response) => JSON.parse(res.json().data));
     }
 
     private handleError (error: Response)
@@ -26,17 +26,17 @@ export class JsandocService
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    postJsandoc()
+    postDoc()
     {
-        return this.http.get(this._jsandocUrl).map((res:Response) => JSON.parse(res.json().data));
+        return this.http.get(this._docUrl).map((res:Response) => JSON.parse(res.json().data));
     }
 
-    putJsandoc()
+    putDoc()
     {
 
     }
 
-    deleteJsandoc()
+    deleteDoc()
     {
 
     }

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './jsandoc-home.component', './jsandoc-new.component', './jsandoc-edition.component', './jsandoc-show.component', './jsandoc-shared.component', './lang.service', './jsandoc.service', './jsandoc-section.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './jsandoc-home.component', './jsandoc-new.component', './jsandoc-edition.component', './jsandoc-show.component', './jsandoc-shared.component', './lang.service', './doc.service', './user.service', './jsandoc-section.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, jsandoc_home_component_1, jsandoc_new_component_1, jsandoc_edition_component_1, jsandoc_show_component_1, jsandoc_shared_component_1, lang_service_1, jsandoc_service_1, jsandoc_section_component_1, router_1;
+    var core_1, common_1, jsandoc_home_component_1, jsandoc_new_component_1, jsandoc_edition_component_1, jsandoc_show_component_1, jsandoc_shared_component_1, lang_service_1, doc_service_1, user_service_1, jsandoc_section_component_1, router_1;
     var AppComponent;
     return {
         setters:[
@@ -38,8 +38,11 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
             },
-            function (jsandoc_service_1_1) {
-                jsandoc_service_1 = jsandoc_service_1_1;
+            function (doc_service_1_1) {
+                doc_service_1 = doc_service_1_1;
+            },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
             },
             function (jsandoc_section_component_1_1) {
                 jsandoc_section_component_1 = jsandoc_section_component_1_1;
@@ -49,9 +52,10 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_langService, _jsandocService, _router) {
+                function AppComponent(_langService, _docService, _userService, _router) {
                     this._langService = _langService;
-                    this._jsandocService = _jsandocService;
+                    this._docService = _docService;
+                    this._userService = _userService;
                     this._router = _router;
                     this.currentAction = 'JsandocShared';
                     this.currentParam = '';
@@ -60,10 +64,12 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
                     var _this = this;
                     this._router.subscribe(function (val) { _this.checkCurrentAction(val); });
                 };
-                AppComponent.prototype.gotoAction = function (action, param) {
-                    var link = [action];
-                    if (param)
-                        link = [action, { name: param }];
+                AppComponent.prototype.gotoAction = function (action, user_namespace, doc_namespace) {
+                    var link = [action, {}];
+                    if (typeof user_namespace !== 'undefined' && typeof user_namespace !== 'object')
+                        link[1]['user_namespace'] = user_namespace;
+                    if (typeof doc_namespace !== 'undefined' && typeof doc_namespace !== 'object')
+                        link[1]['doc_namespace'] = doc_namespace;
                     this.currentAction = action;
                     this._router.navigate(link);
                 };
@@ -115,33 +121,33 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
                         ]
                     }),
                     router_1.RouteConfig([{
-                            path: '/',
+                            path: ':user_namespace/home',
                             name: 'JsandocHome',
                             component: jsandoc_home_component_1.JsandocHomeComponent,
                             useAsDefault: true
                         },
                         {
-                            path: 'new/',
+                            path: ':user_namespace/new',
                             name: 'JsandocNew',
                             component: jsandoc_new_component_1.JsandocNewComponent
                         },
                         {
-                            path: 'edit/:name',
+                            path: ':user_namespace/edit/:doc_namespace',
                             name: 'JsandocEdit',
                             component: jsandoc_edition_component_1.JsandocEditionComponent,
                         },
                         {
-                            path: 'show/:name',
+                            path: ':user_namespace/show/:doc_namespace',
                             name: 'JsandocShow',
                             component: jsandoc_show_component_1.JsandocShowComponent
                         },
                         {
-                            path: 'shared/:name',
+                            path: ':user_namespace/shared/:doc_namespace',
                             name: 'JsandocShared',
                             component: jsandoc_shared_component_1.JsandocSharedComponent
                         }
                     ]), 
-                    __metadata('design:paramtypes', [lang_service_1.LangService, jsandoc_service_1.JsandocService, router_1.Router])
+                    __metadata('design:paramtypes', [lang_service_1.LangService, doc_service_1.DocService, user_service_1.UserService, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

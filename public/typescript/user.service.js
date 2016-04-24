@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, http_1, Observable_1;
-    var DocService;
+    var UserService;
     return {
         setters:[
             function (core_1_1) {
@@ -24,32 +24,35 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                 Observable_1 = Observable_1_1;
             }],
         execute: function() {
-            DocService = (function () {
-                function DocService(http) {
+            UserService = (function () {
+                function UserService(http) {
                     this.http = http;
-                    this._docUrl = 'doc/';
+                    this._userUrl = 'user/';
                 }
-                DocService.prototype.getDoc = function (docUrl) {
-                    return this.http.get(this._docUrl + docUrl).map(function (res) { return JSON.parse(res.json().data); });
+                UserService.prototype.getUserDocs = function () {
+                    return this.http.get(this._userUrl + 'docs').map(function (res) { return JSON.parse(res.json().data); });
                 };
-                DocService.prototype.handleError = function (error) {
+                UserService.prototype.getUserProfile = function () {
+                    return this.http.get(this._userUrl + 'profile').map(function (res) { return JSON.parse(res.json().data); });
+                };
+                UserService.prototype.handleError = function (error) {
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
                 };
-                DocService.prototype.postDoc = function () {
-                    return this.http.get(this._docUrl).map(function (res) { return JSON.parse(res.json().data); });
+                UserService.prototype.postUser = function () {
+                    return this.http.get(this._userUrl).map(function (res) { return JSON.parse(res.json().data); });
                 };
-                DocService.prototype.putDoc = function () {
+                UserService.prototype.putUser = function () {
                 };
-                DocService.prototype.deleteDoc = function () {
+                UserService.prototype.deleteUser = function () {
                 };
-                DocService = __decorate([
+                UserService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
-                ], DocService);
-                return DocService;
+                ], UserService);
+                return UserService;
             }());
-            exports_1("DocService", DocService);
+            exports_1("UserService", UserService);
         }
     }
 });

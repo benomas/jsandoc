@@ -22,74 +22,52 @@ Route::group(['middleware' => ['web']], function ()
     Route::get('auth/register', 'Auth\AuthController@getRegister');
     Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-    Route::get('jsandoc', function()
+    /*Route::get('jsandoc', function()
     {
         return 'lala';
-    });
-/*
-    Route::get('jsoandoc/cda', function()
-    {
-        return 'test1';
-    });
-    Route::get('/jsoandoc/cda', function()
-    {
-        return 'test2';
-    });
-    Route::get('jsoandoc/', function()
-    {
-        return 'test3';
-    });
-    Route::get('/jsoandoc/cda', function()
-    {
-        return 'test4';
-    });
-    Route::get('/jsoandoc/jsoandoc/cda', function()
-    {
-        return 'test5';
-    });
-    Route::get('/jsoandoc/jsoandoc/cda', function()
-    {
-        return 'test6';
-    });
-    Route::get('/jsoandoc/jsoandoc/jsandoc', function()
-    {
-        return 'test7';
-    });
-*/
-    Route::resource('jsandoc', 'JsandocController');
+    });*/
 
-    Route::get('shared/{url_name}', function ()
+    Route::get('doc/{user_namespace}/{doc_namespace}', 'DocController@doc_data');
+    Route::resource('doc', 'DocController');
+
+    Route::get('/{user_namespace}/shared/{doc_namespace}', function ()
     {
         return view('main');
     });
 });
+
 
 Route::group(['middleware' => ['web','auth']], function ()
 {
-    //Route::get('/', 'ResumeViewController@index');
-
     Route::get('/', function ()
     {
-        return view('main');
+        return redirect('beny/home');
     });
 
-    Route::get('new/', function ()
+    Route::get('{user_namespace}/home', function ()
+    {
+        return view('main');
+    });
+    Route::get('{user_namespace}/new', function ()
     {
         return view('main');
     });
 
-    Route::get('edit/{url_name}', function ()
+    Route::get('{user_namespace}/edit/{doc_namspace}', function ()
     {
         return view('main');
     });
 
-    Route::get('show/{url_name}', function ()
+    Route::get('{user_namespace}/show/{doc_namspace}', function ()
     {
         return view('main');
     });
+
+    Route::get('user/docs', 'UserController@docs');
+    Route::get('user/profile', 'UserController@profile');
+    Route::resource('user', 'UserController');
 
 });
-
 
 /*
 |--------------------------------------------------------------------------

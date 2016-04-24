@@ -1,5 +1,5 @@
-<h3>
-    Curriculum Vitae
+<h3 *ngIf="jsandoc && jsandoc.title">
+    {{jsandoc.title}}
     <button
             *ngIf="collapseAll"
             class="btn btn-xs btn-default"
@@ -39,8 +39,8 @@
 </h3>
 <div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
     <jsandoc-section
-                    *ngIf="jsandoc"
-                    [section]="jsandoc"
+                    *ngIf="jsandoc && jsandoc.doc"
+                    [section]="jsandoc.doc"
                     [sectionTitle]="'Curriculum Vitae'"
                     [editionActive]="editionActive"
                     [depth]="0"
