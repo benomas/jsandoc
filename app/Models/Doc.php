@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Auth;
 
 class Doc extends Model
 {
@@ -14,19 +15,30 @@ class Doc extends Model
         //return Doc::where('namespace', $doc_namespace)->first()->information;
 
         return DB::table('doc AS d')
-                    ->join('user_profile AS up', function($join) use ($user_namespace)
+                    ->join('users AS u', function($join) use ($user_namespace)
                     {
-                        $join->where('up.namespace', '=', $user_namespace );
+                        $join->where('u.user_namespace', '=', $user_namespace );
                     })
                     ->select(   'd.id',
                                 'd.name',
                                 'd.title',
-                                'up.namespace AS user_namespace',
-                                'd.namespace AS doc_namespace',
+                                'u.user_namespace AS user_namespace',
+                                'd.doc_namespace AS doc_namespace',
                                 'd.information AS doc',
                                 'd.created_at',
                                 'd.updated_at')
-                    ->where('d.namespace', '=', $doc_namespace)
+                    ->where('d.doc_namespace', '=', $doc_namespace)
                     ->first();
+    }
+
+    public function postDoc($data)
+    {
+        $newDoc = DB::table('doc')->insert([
+                            'users_id'          => Auth::user()->id,
+                            'name'              => $data['name'],
+                            'title'             => $data['title'],
+                            'doc_namespace'     => $data['doc_namespace']
+                        ]);
+        return $newDoc;
     }
 }

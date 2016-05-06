@@ -57,12 +57,13 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
                     this._docService = _docService;
                     this._userService = _userService;
                     this._router = _router;
-                    this.currentAction = 'JsandocShared';
-                    this.currentParam = '';
+                    this.currentUserNamespace = '';
+                    this.currentDocNamespace = '';
                 }
                 AppComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._router.subscribe(function (val) { _this.checkCurrentAction(val); });
+                    this.getUserProfile();
                 };
                 AppComponent.prototype.gotoAction = function (action, user_namespace, doc_namespace) {
                     var link = [action, {}];
@@ -74,32 +75,38 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
                     this._router.navigate(link);
                 };
                 AppComponent.prototype.checkCurrentAction = function (toNavitage) {
-                    var str = toNavitage;
-                    if (/shared\/.+/.test(str)) {
-                        this.currentParam = 'beny';
-                        return this.currentAction = 'JsandocShared';
-                    }
-                    if (/show\/.+/.test(str)) {
-                        this.currentParam = 'beny';
-                        return this.currentAction = 'JsandocShow';
-                    }
-                    if (/edit\/.+/.test(str)) {
-                        this.currentParam = 'beny';
-                        return this.currentAction = 'JsandocEdit';
-                    }
-                    if (/home\/.+/.test(str)) {
-                        this.currentParam = 'beny';
+                    var matchs = toNavitage.split('/');
+                    this.currentUserNamespace = '';
+                    this.currentDocNamespace = '';
+                    if (typeof matchs === 'undefined' ||
+                        typeof matchs[1] === 'undefined')
                         return this.currentAction = 'JsandocHome';
+                    this.currentUserNamespace = matchs[0];
+                    switch (matchs[1]) {
+                        case 'shared':
+                            this.currentAction = 'JsandocShared';
+                            break;
+                        case 'show':
+                            this.currentAction = 'JsandocShow';
+                            break;
+                        case 'edit':
+                            this.currentAction = 'JsandocEdit';
+                            break;
+                        case 'new': return this.currentAction = 'JsandocNew';
+                        default: return this.currentAction = 'JsandocHome';
                     }
-                    if (/home\//.test(str)) {
-                        this.currentParam = '';
-                        return this.currentAction = 'JsandocHome2';
-                    }
-                    if (/new\//.test(str)) {
-                        this.currentParam = '';
-                        return this.currentAction = 'JsandocNew';
-                    }
-                    return this.currentAction = 'JsandocHome';
+                    if (typeof matchs[2] === 'undefined')
+                        return this.currentAction = 'JsandocHome';
+                    this.currentDocNamespace = matchs[2];
+                    return this.currentAction;
+                };
+                AppComponent.prototype.getUserProfile = function () {
+                    var _this = this;
+                    this._userService.getUserProfile().subscribe(function (data) {
+                        _this.userProfile = data;
+                    }, function (err) {
+                        _this.errorMessage = true;
+                    });
                 };
                 AppComponent = __decorate([
                     core_1.Component({

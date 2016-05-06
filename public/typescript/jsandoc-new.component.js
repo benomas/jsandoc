@@ -53,12 +53,21 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this._userService = _userService;
                     this._router = _router;
                     this._routeParams = _routeParams;
-                    this.hasPermision = true;
-                    this.editionActive = false;
-                    this.openAll = true;
-                    this.collapseAll = false;
+                    this.newDoc = {};
                 }
                 JsandocNewComponent.prototype.ngOnInit = function () {
+                    this.getUserProfile();
+                };
+                JsandocNewComponent.prototype.createDocument = function () {
+                    this.postJsandoc(this.newDoc);
+                };
+                JsandocNewComponent.prototype.postJsandoc = function (doc) {
+                    var _this = this;
+                    this._docService.postDoc(doc).subscribe(function (data) {
+                        return _this.gotoAction('JsandocHome', _this.userProfile.user_namespace, '');
+                    }, function (err) {
+                        _this.errorMessage = true;
+                    });
                 };
                 JsandocNewComponent = __decorate([
                     core_1.Component({

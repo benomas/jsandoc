@@ -21,6 +21,7 @@ import { JsandocSectionComponent }      from './jsandoc-section.component';
 
 export class JsandocNewComponent extends JsandocCore implements OnInit
 {
+    newDoc;
     constructor(protected _langService: LangService,
                 protected _docService: DocService,
                 protected _userService: UserService,
@@ -32,14 +33,31 @@ export class JsandocNewComponent extends JsandocCore implements OnInit
                 _userService,
                 _router,
                 _routeParams);
-        this.hasPermision=true;
-        this.editionActive=false;
-        this.openAll=true;
-        this.collapseAll=false;
+        this.newDoc={};
     }
 
     ngOnInit()
     {
-        //this.getJsandoc(this._routeParams.get('user_namespace'),null);
+        this.getUserProfile();
+    }
+
+    createDocument()
+    {
+        this.postJsandoc(this.newDoc);
+    }
+
+    postJsandoc(doc)
+    {
+        this._docService.postDoc(doc).subscribe(
+        data =>
+        {
+            return this.gotoAction('JsandocHome',this.userProfile.user_namespace,'');
+        },
+        err =>
+        {
+            this.errorMessage = true;
+            //this._router.navigate(['JsandocHome']);
+        }
+        );
     }
 }

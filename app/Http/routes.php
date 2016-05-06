@@ -28,11 +28,15 @@ Route::group(['middleware' => ['web']], function ()
     });*/
 
     Route::get('doc/{user_namespace}/{doc_namespace}', 'DocController@doc_data');
-    Route::resource('doc', 'DocController');
 
     Route::get('/{user_namespace}/shared/{doc_namespace}', function ()
     {
         return view('main');
+    });
+
+    Route::get('{user_namespace}/shared', function ()
+    {
+        return redirect('auth/login');
     });
 });
 
@@ -41,31 +45,55 @@ Route::group(['middleware' => ['web','auth']], function ()
 {
     Route::get('/', function ()
     {
-        return redirect('beny/home');
+        return redirect(Auth::user()->user_namespace.'/home');
     });
 
-    Route::get('{user_namespace}/home', function ()
+    Route::get('{user_namespace}/home', function ($user_namespace)
     {
+        if(Auth::user()->user_namespace!== $user_namespace)
+            return redirect(Auth::user()->user_namespace.'/home');
+
         return view('main');
     });
-    Route::get('{user_namespace}/new', function ()
+    Route::get('{user_namespace}/new', function ($user_namespace)
     {
+        if(Auth::user()->user_namespace!== $user_namespace)
+            return redirect(Auth::user()->user_namespace.'/new');
+
         return view('main');
     });
 
-    Route::get('{user_namespace}/edit/{doc_namspace}', function ()
+    Route::get('{user_namespace}/edit/{doc_namspace}', function ($user_namespace,$doc_namspace)
     {
+        if(Auth::user()->user_namespace!== $user_namespace)
+            return redirect(Auth::user()->user_namespace.'/home');
+
         return view('main');
     });
 
-    Route::get('{user_namespace}/show/{doc_namspace}', function ()
+    Route::get('{user_namespace}/edit', function ()
     {
+        return redirect(Auth::user()->user_namespace.'/home');
+    });
+
+
+    Route::get('{user_namespace}/show/{doc_namspace}', function ($user_namespace,$doc_namspace)
+    {
+        if(Auth::user()->user_namespace!== $user_namespace)
+            return redirect(Auth::user()->user_namespace.'/home');
+
         return view('main');
+    });
+
+    Route::get('{user_namespace}/show', function ()
+    {
+        return redirect(Auth::user()->user_namespace.'/home');
     });
 
     Route::get('user/docs', 'UserController@docs');
     Route::get('user/profile', 'UserController@profile');
     Route::resource('user', 'UserController');
+    Route::resource('doc', 'DocController');
 
 });
 

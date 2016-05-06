@@ -1,10 +1,12 @@
-import {Injectable}     from 'angular2/core';
-import {Http, Response} from 'angular2/http';
-import {Observable}     from 'rxjs/Observable';
+import {Injectable}                             from 'angular2/core';
+import {Http, Response,Headers, RequestOptions} from 'angular2/http';
+import {Observable}                             from 'rxjs/Observable';
+import { ExRequestOptions }                     from './ex-request.options';
+import { BrowserDomAdapter }                    from 'angular2/platform/browser';
 @Injectable()
 export class DocService
 {
-    constructor (private http: Http)
+    constructor (private http: Http,private _domAdapter: BrowserDomAdapter)
     {
     }
 
@@ -26,9 +28,13 @@ export class DocService
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    postDoc()
+    postDoc(doc)
     {
-        return this.http.get(this._docUrl).map((res:Response) => JSON.parse(res.json().data));
+        let options = new ExRequestOptions();
+        options.appendHeaders('Content-Type', 'application/json');
+        doc._token =this._domAdapter.getAttribute(this._domAdapter.query('meta'),'content');
+        options.appendHeaders('X-CSRF-TOKEN',doc._token);
+        return this.http.post('doc',JSON.stringify(doc),options).map((res:Response) => res.json().status);
     }
 
     putDoc()

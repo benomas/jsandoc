@@ -1,56 +1,9 @@
-<div *ngIf="userProfile && userProfile.name">
-  <h1 userProfile>
-    Bienvenido {{userProfile.name +' '+ userProfile.first_last_name}}
+<div *ngIf="userProfile && userProfile.full_name">
+  <h1 >
+    Bienvenido {{userProfile.full_name}}
   </h1>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Perfil</h3>
-    </div>
-    <div class="panel-body" style="margin:10px;">
-      <div class="row">
-        <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="border-radius:5px; border:1px solid #CCCCCC; padding:15px;">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            Nombre:
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
-            {{userProfile.name}}
-          </div>
-        </div>
-        <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="border-radius:5px; border:1px solid #CCCCCC; padding:15px;">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            Apellido paterno:
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
-            {{userProfile.first_last_name}}
-          </div>
-        </div>
-        <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="border-radius:5px; border:1px solid #CCCCCC; padding:15px;">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            Apellido materno:
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
-            {{userProfile.second_last_name}}
-          </div>
-        </div>
-        <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="border-radius:5px; border:1px solid #CCCCCC; padding:15px;">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            Correo electronico:
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
-            {{userProfile.email}}
-          </div>
-        </div>
-        <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="border-radius:5px; border:1px solid #CCCCCC; padding:15px;">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            Espacio de nombre:
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
-            {{userProfile.user_namespace}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <user-profile [userProfile]="userProfile">
+  </user-profile>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Documentos</h3>
@@ -65,10 +18,10 @@
             {{doc.name}}
           </div>
           <div class="col-xs-11" style="padding-top:3px; padding-bottom:3px;">
-            <button type="button" class="btn btn-success btn-sm"  (click)="gotoAction('JsandocShow',doc.user_namespace,doc.doc_namespace)">Ver</button>
-            <button type="button" class="btn btn-warning btn-sm"  (click)="gotoAction('JsandocEdit',doc.user_namespace,doc.doc_namespace)">Editar</button>
-            <button type="button" class="btn btn-danger btn-sm"  (click)="gotoAction('JsandocEdit',doc.user_namespace,doc.doc_namespace)">Borrar</button>
-            <button type="button" class="btn btn-info btn-sm"  (click)="gotoAction('JsandocShared',doc.user_namespace,doc.doc_namespace)">Compartido</button>
+            <button type="button" class="btn btn-success btn-sm"  (click)="gotoAction('JsandocShow',userProfile.user_namespace,doc.doc_namespace)">Ver</button>
+            <button type="button" class="btn btn-warning btn-sm"  (click)="gotoAction('JsandocEdit',userProfile.user_namespace,doc.doc_namespace)">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm"  (click)="gotoAction('JsandocEdit',userProfile.user_namespace,doc.doc_namespace)">Borrar</button>
+            <button type="button" class="btn btn-info btn-sm"  (click)="gotoAction('JsandocShared',userProfile.user_namespace,doc.doc_namespace)">Compartido</button>
           </div>
         </div>
       </div>

@@ -63,19 +63,24 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,RouteParams,RouteConfig} fr
 export class AppComponent implements OnInit
 {
     currentAction;
-    currentParam;
+    currentUserNamespace;
+    currentDocNamespace;
+    userProfile;
+    errorMessage;
     constructor(protected _langService: LangService,
                 protected _docService: DocService,
                 protected _userService: UserService,
                 private _router: Router)
     {
-        this.currentAction='JsandocShared';
-        this.currentParam='';
+        //this.currentAction='JsandocShared';
+        this.currentUserNamespace='';
+        this.currentDocNamespace='';
     }
 
     ngOnInit()
     {
         this._router.subscribe((val) => {this.checkCurrentAction(val)});
+        this.getUserProfile();
     }
 
     gotoAction(action,user_namespace,doc_namespace)
@@ -92,38 +97,46 @@ export class AppComponent implements OnInit
 
     checkCurrentAction(toNavitage)
     {
-        let str = toNavitage;
-        if( /shared\/.+/.test(str))
-        {
-            this.currentParam = 'beny';
-            return this.currentAction='JsandocShared';
-        }
-        if( /show\/.+/.test(str))
-        {
-            this.currentParam = 'beny';
-            return this.currentAction='JsandocShow';
-        }
-        if( /edit\/.+/.test(str))
-        {
-            this.currentParam = 'beny';
-            return this.currentAction='JsandocEdit';
-        }
-        if( /home\/.+/.test(str))
-        {
-            this.currentParam = 'beny';
+        let matchs = toNavitage.split('/');
+        this.currentUserNamespace='';
+        this.currentDocNamespace='';
+
+        if( typeof matchs==='undefined' ||
+            typeof matchs[1]==='undefined')
             return this.currentAction='JsandocHome';
-        }
-        if( /home\//.test(str))
+
+        this.currentUserNamespace=matchs[0];
+        switch(matchs[1])
         {
-            this.currentParam = '';
-            return this.currentAction='JsandocHome2';
-        }
-        if( /new\//.test(str))
-        {
-            this.currentParam = '';
-            return this.currentAction='JsandocNew';
+            case 'shared':  this.currentAction='JsandocShared';
+                            break;
+            case 'show':    this.currentAction='JsandocShow';
+                            break;
+            case 'edit':    this.currentAction='JsandocEdit';
+                            break;
+            case 'new':     return this.currentAction='JsandocNew';
+            default:        return this.currentAction='JsandocHome';
+
         }
 
-        return this.currentAction='JsandocHome';
+        if(typeof matchs[2]==='undefined')
+            return this.currentAction='JsandocHome';
+
+        this.currentDocNamespace = matchs[2];
+        return this.currentAction;
+    }
+
+    getUserProfile()
+    {
+        this._userService.getUserProfile().subscribe(
+            data =>
+            {
+                this.userProfile = data;
+            },
+            err =>
+            {
+                this.errorMessage = true;
+            }
+        );
     }
 }

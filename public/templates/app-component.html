@@ -4,29 +4,29 @@
     <ul class="nav navbar-nav">
         <li
           [ngClass]='{"active":currentAction==="JsandocHome"}'>
-          <a (click)="gotoAction('JsandocHome','beny')">
+          <a (click)="gotoAction('JsandocHome',userProfile.user_namespace)">
             Inicio
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li [ngClass]='{"active":currentAction==="JsandocNew"}'>
-          <a (click)="gotoAction('JsandocNew','beny')">
+          <a (click)="gotoAction('JsandocNew',userProfile.user_namespace)">
             Nuevo
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li
-          *ngIf="currentAction==='JsandocEdit' && currentParam"
+          *ngIf="currentAction==='JsandocEdit' && currentDocNamespace"
           [ngClass]='{"active":currentAction==="JsandocEdit"}'>
-          <a (click)="gotoAction('JsandocEdit','beny',currentParam)">
+          <a (click)="gotoAction('JsandocEdit',userProfile.user_namespace,currentDocNamespace)">
             Edición
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li
-          *ngIf="currentAction==='JsandocShow' && currentParam"
+          *ngIf="currentAction==='JsandocShow' && currentDocNamespace"
           [ngClass]='{"active":currentAction==="JsandocShow"}'>
-          <a (click)="gotoAction('JsandocShow','beny',currentParam)">
+          <a (click)="gotoAction('JsandocShow',userProfile.user_namespace,currentDocNamespace)">
             Vista
             <span class="sr-only">(current)</span>
           </a>
@@ -36,6 +36,5 @@
     </div>
 </nav>
 <router-outlet
-[action]="currentAction"
 >
 </router-outlet>

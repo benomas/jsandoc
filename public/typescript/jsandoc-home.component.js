@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.service', './jsandoc-core', './doc.service', './user.service', './jsandoc-section.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.service', './jsandoc-core', './doc.service', './user.service', './user-profile.component', './jsandoc-section.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -15,7 +15,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, lang_service_1, jsandoc_core_1, doc_service_1, user_service_1, jsandoc_section_component_1;
+    var core_1, common_1, router_1, lang_service_1, jsandoc_core_1, doc_service_1, user_service_1, user_profile_component_1, jsandoc_section_component_1;
     var JsandocHomeComponent;
     return {
         setters:[
@@ -39,6 +39,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
+            },
+            function (user_profile_component_1_1) {
+                user_profile_component_1 = user_profile_component_1_1;
             },
             function (jsandoc_section_component_1_1) {
                 jsandoc_section_component_1 = jsandoc_section_component_1_1;
@@ -67,7 +70,8 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                         selector: 'jsandoc-home',
                         templateUrl: 'templates/jsandoc-home.html',
                         directives: [
-                            jsandoc_section_component_1.JsandocSectionComponent
+                            jsandoc_section_component_1.JsandocSectionComponent,
+                            user_profile_component_1.UserProfileComponent
                         ],
                         providers: [
                             common_1.NgClass,
