@@ -80,6 +80,15 @@
                 text-decoration: none;
                 cursor: pointer;
             }
+            .emptySection
+            {
+                border-left:1px solid #CCCCCC;
+                min-height: 10px;
+            }
+            .mini-remove
+            {
+                font-size: 6px !important;
+            }
         </style>
     </head>
     <body>

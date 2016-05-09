@@ -40,6 +40,6 @@ export class JsandocShowComponent extends JsandocCore implements OnInit
 
     ngOnInit()
     {
-        this.getJsandoc(this._routeParams.get('user_namespace'),this._routeParams.get('doc_namespace'));
+        this.getJsandoc(this._routeParams.get('user_namespace'),this._routeParams.get('doc_namespace'),null);
     }
 }

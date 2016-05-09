@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Models\Doc AS Doc;
 use Auth;
@@ -32,6 +33,19 @@ class DocController extends Controller
         $data['doc_namespace']  = $request->input('doc_namespace');
         $newDoc = $this->docModel->postDoc($data);
         if($newDoc)
+            return response()->json(['status'=>'ok','data'=>[1]], 200);
+        return response()->json(['status'=>'error','data'=>[1]], 400);
+    }
+
+    public function update(Request $request)
+    {
+        $data['id']             = $request->input('id');
+        $data['name']           = $request->input('name');
+        $data['title']          = $request->input('title');
+        $data['doc_namespace']  = $request->input('doc_namespace');
+        $data['information']    = $request->input('doc');
+        $updatedDoc = $this->docModel->putDoc($data);
+        if($updatedDoc)
             return response()->json(['status'=>'ok','data'=>[1]], 200);
         return response()->json(['status'=>'error','data'=>[1]], 400);
     }

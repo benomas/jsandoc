@@ -41,4 +41,18 @@ class Doc extends Model
                         ]);
         return $newDoc;
     }
+
+    public function putDoc($data)
+    {
+        $updatedDoc = DB::table('doc')->
+                            where('id', $data['id'])->
+                            update([
+                                    'users_id'          => Auth::user()->id,
+                                    'name'              => $data['name'],
+                                    'title'             => $data['title'],
+                                    'doc_namespace'     => $data['doc_namespace'],
+                                    'information'       => $data['information']
+                                    ]);
+        return $updatedDoc;
+    }
 }

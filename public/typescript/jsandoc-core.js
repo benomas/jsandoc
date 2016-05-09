@@ -18,16 +18,25 @@ System.register([], function(exports_1, context_1) {
                     this.collapseAll = false;
                 }
                 JsandocCore.prototype.loadJson = function () {
-                    this.jsandoc = {};
-                    this.jsandoc = JSON.parse(this.jsonEditor);
+                    console.log(this.jsonEditor);
+                    this.jsandoc.doc = JSON.parse(this.jsonEditor);
                 };
-                JsandocCore.prototype.getJsandoc = function (user_namespace, doc_namespace) {
+                JsandocCore.prototype.getJsandoc = function (user_namespace, doc_namespace, callBacks) {
                     var _this = this;
                     if (!user_namespace)
                         return false;
+                    if (typeof callBacks !== 'undefined' && typeof callBacks.beforeAjax !== 'undefined') {
+                        callBacks.beforeAjax();
+                    }
                     this._docService.getDoc(user_namespace, doc_namespace).subscribe(function (data) {
+                        if (typeof callBacks !== 'undefined' && typeof callBacks.afterSuccessAjax !== 'undefined') {
+                            callBacks.afterSuccessAjax(data);
+                        }
                         _this.jsandoc = data;
                     }, function (err) {
+                        if (typeof callBacks !== 'undefined' && typeof callBacks.afterErrorsAjax !== 'undefined') {
+                            callBacks.afterErrorsAjax(err);
+                        }
                         _this.errorMessage = true;
                     });
                 };

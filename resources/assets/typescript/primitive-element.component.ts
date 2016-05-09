@@ -12,7 +12,7 @@ import {LangService}            from './lang.service';
                 'primitiveElementPlaceHolder',
                 'primitiveElementTitle'
             ],
-    outputs:['sendData'],
+    outputs:['sendData','emitSubmit'],
     directives:[
                     NgClass,
                     PrimitiveElementComponent
@@ -21,6 +21,7 @@ import {LangService}            from './lang.service';
 export class PrimitiveElementComponent
 {
     public sendData = new EventEmitter();
+    public emitSubmit = new EventEmitter();
     jsonValue;
 
     constructor(private _langService: LangService)
@@ -36,5 +37,10 @@ export class PrimitiveElementComponent
             this.sendData.next(this.jsonValue);
         else
             this.sendData.next(null);
+    }
+
+    trySubmit()
+    {
+        this.emitSubmit.next(true);
     }
 }

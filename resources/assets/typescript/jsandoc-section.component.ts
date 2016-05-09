@@ -12,9 +12,10 @@ import {LangService}                                                from './lang
                 'editionActive',
                 'depth',
                 'collapseAll',
-                'openAll'
+                'openAll',
+                'defaultState'
             ],
-    outputs: ['childover','childleave'],
+    outputs: ['childover','childleave','sectionCreated','sectionUpdated'],
     styles: [`
                 .section-title
                 {
@@ -46,13 +47,14 @@ export class JsandocSectionComponent implements OnInit,OnChanges
 {
     public childover = new EventEmitter();
     public childleave = new EventEmitter();
+    public sectionCreated = new EventEmitter();
+    public sectionUpdated = new EventEmitter();
     section;
     keys;
     dataType;
     depth;
-    collapseAll;
-    openAll;
-
+    collapseAll:boolean;
+    openAll:boolean;
 
     sectionTitle;
     sectionParent;
@@ -62,38 +64,43 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     overThisElement = false;
     hiddens = [];
     newElement;
+    initReady:boolean;
 
     constructor(private _langService: LangService)
     {
         this.editionOnElement={};
+        this.initReady=false;
     }
 
     ngOnInit()
     {
-        this.dataType = this.getCase(this.section);
-        this.setDataType();
+        this.makeInit();
     }
 
     ngOnChanges(changes: {[propertyName: string]: SimpleChange})
     {
-        if(typeof this.collapseAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
+        if(this.hasSection())
         {
-            if(changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue)
+            this.makeInit();
+            if(typeof this.collapseAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
             {
-                if(changes['collapseAll'].currentValue)
+                if(changes['collapseAll'].currentValue !== changes['collapseAll'].previousValue)
                 {
-                    this.hiddenAll();
+                    if(changes['collapseAll'].currentValue===true)
+                    {
+                        this.hiddenAll();
+                    }
                 }
             }
-        }
 
-        if(typeof this.openAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
-        {
-            if(changes['openAll'].currentValue !== changes['openAll'].previousValue)
+            if(typeof this.openAll !== 'undefined' && typeof changes['collapseAll'] !== 'undefined')
             {
-                if(changes['openAll'].currentValue)
+                if(changes['openAll'].currentValue !== changes['openAll'].previousValue)
                 {
-                    this.showAll();
+                    if(changes['openAll'].currentValue===true)
+                    {
+                        this.showAll();
+                    }
                 }
             }
         }
@@ -222,24 +229,48 @@ export class JsandocSectionComponent implements OnInit,OnChanges
 
     getCase(item):string
     {
+        if(typeof item ==='undefined' || item===null)
+        {
+            return 'empty';
+        }
+
         if(!this.isObject(item))
+        {
             return "primitive";
+        }
 
         if(this.isArray(item))
+        {
             return "array";
+        }
 
         return "property-value";
     }
 
     add(jsonInsert)
     {
-        if(this.dataType === 'array')
-            this.section.splice(jsonInsert.position,0 ,jsonInsert.jsonValue );
-        if(this.dataType === 'property-value')
+        this.initReady=false;
+        if(this.hasSection())
         {
-            this.propertyInsert(jsonInsert);
-            this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
+            if(this.dataType === 'array')
+            {
+                this.section.splice(jsonInsert.position,0 ,jsonInsert.jsonValue );
+                this.sectionUpdatedNotify();
+            }
+            if(this.dataType === 'property-value')
+            {
+                this.propertyInsert(jsonInsert);
+                this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
+                this.sectionUpdatedNotify();
+            }
         }
+        else
+        {
+            this.section = jsonInsert.jsonValue;
+            this.sectionCreated.next(this.section);
+            this.sectionUpdatedNotify();
+        }
+        this.makeInit();
         this.setDataType();
     }
 
@@ -260,7 +291,7 @@ export class JsandocSectionComponent implements OnInit,OnChanges
 
     setDataType()
     {
-        if( this.dataType ==='property-value')
+        if( this.hasSection() && this.dataType ==='property-value')
             this.keys = Object.keys(this.section);
     }
 
@@ -275,19 +306,74 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     {
         var count = 0;
         var newSection={};
-        console.log(jsonInsert.position);
+        //console.log(jsonInsert.position);
         while(count<jsonInsert.position)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];
             count++;
         }
         newSection[jsonInsert.newProperty] = jsonInsert.newValue;
-        console.log(this.keys.length);
+        //console.log(this.keys.length);
         while(count<this.keys.length)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];
             count++;
         }
         this.section = newSection;
+    }
+
+    hasSection():boolean
+    {
+        return typeof this.section === 'object' && this.section!==null;
+    }
+
+    makeInit():void
+    {
+        //console.log(this.initReady);
+        if(this.initReady===false)
+        {
+            //console.log('this.initReady===false');
+            this.dataType = this.getCase(this.section);
+            this.setDataType();
+            this.initReady=true;
+            //console.log('section-defaultMode:'+this.defaultAddMode);
+            //console.log('section-dataType:'+this.dataType);
+        }
+    }
+
+    sectionUpdatedNotify()
+    {
+        this.sectionUpdated.next(this.section);
+    }
+
+    isEmpty()
+    {
+        if(this.hasSection())
+        {
+            if(this.dataType==='array' && this.section.length===0)
+                return true;
+            if(this.dataType==='property-value' && this.keys.length===0)
+                return true;
+            return false;
+        }
+        return true;
+    }
+
+    removeByKey(key)
+    {
+        if(confirm('Seguro que deseas eliminar?'))
+        {
+            delete this.section[key];
+            this.sectionUpdated.next(this.section);
+        }
+    }
+
+    removeSection()
+    {
+        if(confirm('Seguro que deseas eliminar?'))
+        {
+            delete this.section;
+            this.sectionUpdated.next(this.section);
+        }
     }
 }

@@ -28,6 +28,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                 function PrimitiveElementComponent(_langService) {
                     this._langService = _langService;
                     this.sendData = new core_1.EventEmitter();
+                    this.emitSubmit = new core_1.EventEmitter();
                 }
                 PrimitiveElementComponent.prototype.setData = function (localJsonValue) {
                     if (this.jsonValue &&
@@ -35,6 +36,9 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                         this.sendData.next(this.jsonValue);
                     else
                         this.sendData.next(null);
+                };
+                PrimitiveElementComponent.prototype.trySubmit = function () {
+                    this.emitSubmit.next(true);
                 };
                 PrimitiveElementComponent = __decorate([
                     core_1.Component({
@@ -44,7 +48,7 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                             'primitiveElementPlaceHolder',
                             'primitiveElementTitle'
                         ],
-                        outputs: ['sendData'],
+                        outputs: ['sendData', 'emitSubmit'],
                         directives: [
                             common_1.NgClass,
                             PrimitiveElementComponent

@@ -12,9 +12,8 @@ class CreateDocTable extends Migration
      */
     public function up()
     {
-
-        Schema::drop('json_data');
-        Schema::create('doc', function (Blueprint $table) {
+        Schema::create('doc', function (Blueprint $table)
+        {
             $table->increments('id')->index();
             $table->integer('users_id')->unsigned();
             $table->string('name', 254);
@@ -34,9 +33,6 @@ class CreateDocTable extends Migration
      */
     public function down()
     {
-        Schema::table('doc', function (Blueprint $table)
-        {
-            //
-        });
+        Schema::drop('doc');
     }
 }

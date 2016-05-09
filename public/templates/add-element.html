@@ -15,7 +15,7 @@
       </button>
       <button  class="btn btn-info btn-xs"
               (click)="changeMode('array')"
-              title="Arreglo"
+              title="Lista simple"
               [ngClass]='{"les-important":getModeAsInt()!==2}'
       >
         <span
@@ -26,7 +26,7 @@
       </button>
       <button  class="btn btn-warning btn-xs"
               (click)="changeMode('property-value')"
-              title="Propiedad-valor"
+              title="Lista compuesta"
               [ngClass]='{"les-important":getModeAsInt()!==3}'
       >
         <span
@@ -54,6 +54,7 @@
       <label class="sr-only" for="primitive">Email address</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'primitiveElementValue')"
+                          (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Concepto'"
                           [primitiveElementTitle]="'Agregar un concepto'"
       >
@@ -105,7 +106,7 @@
       </button>
       <button  class="btn btn-info btn-xs"
               (click)="changeMode('primitive-array')"
-              title="Arreglo"
+              title="Lista simple"
               [ngClass]='{"les-important":getModeAsInt()!==5}'
       >
         <span
@@ -116,7 +117,7 @@
       </button>
       <button  class="btn btn-warning btn-xs"
               (click)="changeMode('primitive-property')"
-              title="Propiedad-valor"
+              title="Lista compuesta"
               [ngClass]='{"les-important":getModeAsInt()!==6}'
       >
         <span
@@ -141,6 +142,7 @@
     <div class="form-group">
       <label class="sr-only" for="exampleInputEmail3">Email address</label>
       <primitive-element (sendData)="setJsonLevel($event,'propertyPrimitiveElementValue')"
+                          (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Propiedad'"
                           [primitiveElementTitle]="'Agregar una propiedad'"
       >
@@ -150,6 +152,7 @@
       <label class="sr-only" for="exampleInputEmail3">Email address</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'propertyValuePrimitiveElementValue')"
+                          (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Valor'"
                           [primitiveElementTitle]="'Agregar un valor'"
       >
@@ -181,6 +184,58 @@
         {{key}}
         </option>
       </select>
+    </div>
+  </form>
+</div>
+<div style="margin:5px;" *ngIf="dataType==='empty'">
+  <form class="form-inline">
+    <div class="form-group" >
+      <button  class="btn btn-info btn-xs"
+              (click)="changeMode('array')"
+              title="Lista simple"
+              [ngClass]='{"les-important":getModeAsInt()!==2}'
+      >
+        <span
+              class="glyphicon glyphicon-align-justify"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+      <button  class="btn btn-warning btn-xs"
+              (click)="changeMode('property-value')"
+              title="Lista compuesta"
+              [ngClass]='{"les-important":getModeAsInt()!==3}'
+      >
+        <span
+              class="glyphicon glyphicon-list"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+      <button  class="btn btn-primary btn-xs"
+                      (click)="add(section)"
+                      title="Agregar"
+                      [disabled]="mode!=='array' && mode!=='property-value' "
+
+      >
+        <span
+              class="glyphicon glyphicon-plus"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+    </div>
+    <div class="form-group" *ngIf="mode==='array'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <array-element  *ngIf="mode==='array'"
+                      (sendData)="setJsonLevel($event,'arrayElementValue')" >
+      </array-element>
+    </div>
+    <div class="form-group" *ngIf="mode==='property-value'">
+      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <property-element  *ngIf="mode==='property-value'"
+                      (sendData)="setJsonLevel($event,'propertyElementValue')" >
+      </property-element>
     </div>
   </form>
 </div>

@@ -59,7 +59,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this.collapseAll = false;
                 }
                 JsandocSharedComponent.prototype.ngOnInit = function () {
-                    this.getJsandoc(this._routeParams.get('user_namespace'), this._routeParams.get('doc_namespace'));
+                    this.getJsandoc(this._routeParams.get('user_namespace'), this._routeParams.get('doc_namespace'), null);
                 };
                 JsandocSharedComponent = __decorate([
                     core_1.Component({

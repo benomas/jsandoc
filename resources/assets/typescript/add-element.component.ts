@@ -48,16 +48,12 @@ export class AddElementComponent implements OnInit
 
     ngOnInit()
     {
-
-        if(this.dataType ==='array')
-            this.mode='primitive';
-        if(this.dataType ==='property-value')
-            this.mode='primitive-primitive';
-        this.typeSelector='primitive-primitive';
+        this.initMode();
     }
 
     changeMode(mode)
     {
+        //console.log(mode);
         this.mode = mode;
     }
 
@@ -74,6 +70,8 @@ export class AddElementComponent implements OnInit
             case 'primitive-array'      :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyArrayPrimitiveElementValue,"position":this.getPosition()}); break;
             case 'primitive-property'   :   this.pushdata.next({"newProperty":this.propertyPrimitiveElementValue,"newValue":this.propertyPropertyElementValue,"position":this.getPosition()}); break;
         }
+        this.mode = null;
+        this.initMode();
     }
 
     getModeAsInt()
@@ -141,5 +139,20 @@ export class AddElementComponent implements OnInit
             return selectedPosition - 1;
 
         return 0;
+    }
+
+    initMode():void
+    {
+        this.mode=null;
+        if(this.dataType ==='array')
+            this.mode='primitive';
+        if(this.dataType ==='property-value')
+            this.mode='primitive-primitive';
+        this.typeSelector='primitive-primitive';
+        if(typeof this.mode==='undefined' || this.mode===null)
+            this.mode='array';
+        /*
+        console.log('add-element-mode:'+this.mode);
+        console.log('add-element-dataType:'+this.dataType);*/
     }
 }

@@ -37,9 +37,29 @@ export class DocService
         return this.http.post('doc',JSON.stringify(doc),options).map((res:Response) => res.json().status);
     }
 
-    putDoc()
+    putDoc(doc)
     {
+        //let jsonString =
+        let options = new ExRequestOptions();
+        options.appendHeaders('Content-Type', 'application/json');
+        doc._token =this._domAdapter.getAttribute(this._domAdapter.query('meta'),'content');
+        options.appendHeaders('X-CSRF-TOKEN',doc._token);
 
+        let tempDoc = { "id":doc.id,
+                        "name":doc.name,
+                        "title":doc.title,
+                        "doc_namespace":doc.doc_namespace,
+                        "doc":JSON.stringify(doc.doc),
+                        "_token":doc._token
+                        };
+        /*tempDoc.id=doc.id;
+        tempDoc.name=doc.name;
+        tempDoc.title=doc.title;
+        tempDoc.doc_namespace=doc.doc_namespace;
+        tempDoc.doc=JSON.stringify(doc.doc);
+        tempDoc._token=doc._token;*/
+
+        return this.http.put(this._docUrl+tempDoc.id,JSON.stringify(tempDoc),options).map((res:Response) => res.json().status);
     }
 
     deleteDoc()

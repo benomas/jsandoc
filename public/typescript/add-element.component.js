@@ -39,11 +39,7 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                     this.pushdata = new core_1.EventEmitter();
                 }
                 AddElementComponent.prototype.ngOnInit = function () {
-                    if (this.dataType === 'array')
-                        this.mode = 'primitive';
-                    if (this.dataType === 'property-value')
-                        this.mode = 'primitive-primitive';
-                    this.typeSelector = 'primitive-primitive';
+                    this.initMode();
                 };
                 AddElementComponent.prototype.changeMode = function (mode) {
                     this.mode = mode;
@@ -71,6 +67,8 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                             this.pushdata.next({ "newProperty": this.propertyPrimitiveElementValue, "newValue": this.propertyPropertyElementValue, "position": this.getPosition() });
                             break;
                     }
+                    this.mode = null;
+                    this.initMode();
                 };
                 AddElementComponent.prototype.getModeAsInt = function () {
                     switch (this.mode) {
@@ -123,6 +121,16 @@ System.register(['angular2/core', 'angular2/common', './primitive-element.compon
                     if (orderPosition === 'before')
                         return selectedPosition - 1;
                     return 0;
+                };
+                AddElementComponent.prototype.initMode = function () {
+                    this.mode = null;
+                    if (this.dataType === 'array')
+                        this.mode = 'primitive';
+                    if (this.dataType === 'property-value')
+                        this.mode = 'primitive-primitive';
+                    this.typeSelector = 'primitive-primitive';
+                    if (typeof this.mode === 'undefined' || this.mode === null)
+                        this.mode = 'array';
                 };
                 AddElementComponent = __decorate([
                     core_1.Component({

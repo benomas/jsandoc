@@ -21,6 +21,7 @@ import { JsandocSectionComponent }      from './jsandoc-section.component';
 
 export class JsandocEditionComponent extends JsandocCore implements OnInit
 {
+    needToSave:boolean;
     constructor(protected _langService: LangService,
                 protected _docService: DocService,
                 protected _userService: UserService,
@@ -40,6 +41,39 @@ export class JsandocEditionComponent extends JsandocCore implements OnInit
 
     ngOnInit()
     {
-        this.getJsandoc(this._routeParams.get('user_namespace'),this._routeParams.get('doc_namespace'));
+        this.getJsandoc(this._routeParams.get('user_namespace'),this._routeParams.get('doc_namespace'),
+            {
+                "afterSuccessAjax":data=>{
+                    this.needToSave=false;
+                }
+            });
+    }
+
+    sectionWasCreated(section)
+    {
+        this.jsandoc.doc=section;
+    }
+
+    sectionWasUpdated(section)
+    {
+        this.needToSave=true;
+        this.jsandoc.doc=section;
+    }
+
+    saveDoc()
+    {
+        this._docService.putDoc(this.jsandoc).subscribe(
+        data =>
+        {
+            this.needToSave=false;
+            alert('Saved');
+            /*return this.gotoAction('JsandocHome',this.userProfile.user_namespace,'');*/
+        },
+        err =>
+        {
+            this.errorMessage = true;
+            //this._router.navigate(['JsandocHome']);
+        }
+        );
     }
 }

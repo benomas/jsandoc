@@ -59,7 +59,28 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this.collapseAll = false;
                 }
                 JsandocEditionComponent.prototype.ngOnInit = function () {
-                    this.getJsandoc(this._routeParams.get('user_namespace'), this._routeParams.get('doc_namespace'));
+                    var _this = this;
+                    this.getJsandoc(this._routeParams.get('user_namespace'), this._routeParams.get('doc_namespace'), {
+                        "afterSuccessAjax": function (data) {
+                            _this.needToSave = false;
+                        }
+                    });
+                };
+                JsandocEditionComponent.prototype.sectionWasCreated = function (section) {
+                    this.jsandoc.doc = section;
+                };
+                JsandocEditionComponent.prototype.sectionWasUpdated = function (section) {
+                    this.needToSave = true;
+                    this.jsandoc.doc = section;
+                };
+                JsandocEditionComponent.prototype.saveDoc = function () {
+                    var _this = this;
+                    this._docService.putDoc(this.jsandoc).subscribe(function (data) {
+                        _this.needToSave = false;
+                        alert('Saved');
+                    }, function (err) {
+                        _this.errorMessage = true;
+                    });
                 };
                 JsandocEditionComponent = __decorate([
                     core_1.Component({

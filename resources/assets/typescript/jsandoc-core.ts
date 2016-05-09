@@ -7,8 +7,8 @@ import { Router,RouteParams}            from 'angular2/router';
 export class JsandocCore
 {
     jsonEditor;
-    collapseAll;
-    openAll;
+    collapseAll:boolean;
+    openAll:boolean;
 
     jsandoc;
     userDocs;
@@ -20,8 +20,8 @@ export class JsandocCore
 
     loadJson()
     {
-        this.jsandoc = {};
-        this.jsandoc = JSON.parse(this.jsonEditor);
+        console.log(this.jsonEditor);
+        this.jsandoc.doc = JSON.parse(this.jsonEditor);
     }
 
     constructor(protected _langService: LangService,
@@ -36,18 +36,33 @@ export class JsandocCore
         this.collapseAll=false;
     }
 
-    getJsandoc(user_namespace,doc_namespace)
+    getJsandoc(user_namespace,doc_namespace,callBacks)
     {
         if(!user_namespace )
             return false; //this._router.navigate(['JsandocHome']);
-         this._docService.getDoc(user_namespace,doc_namespace).subscribe(
-          data =>
-          {
-            this.jsandoc = data;
-          },
-          err =>
-          {
-            this.errorMessage = true;
+
+        if(typeof callBacks !=='undefined' && typeof callBacks.beforeAjax !=='undefined')
+        {
+            callBacks.beforeAjax();
+        }
+
+        this._docService.getDoc(user_namespace,doc_namespace).subscribe(
+            data =>
+            {
+                if(typeof callBacks !=='undefined' && typeof callBacks.afterSuccessAjax !=='undefined')
+                {
+                    callBacks.afterSuccessAjax(data);
+                }
+                this.jsandoc = data;
+            },
+            err =>
+            {
+                if(typeof callBacks !=='undefined' && typeof callBacks.afterErrorsAjax !=='undefined')
+                {
+                    callBacks.afterErrorsAjax(err);
+                }
+
+                this.errorMessage = true;
             //this._router.navigate(['JsandocHome']);
             }
         );
