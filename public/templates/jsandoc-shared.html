@@ -1,7 +1,7 @@
 <h3 *ngIf="jsandoc && jsandoc.title">
     {{jsandoc.title}}
     <button
-            *ngIf="collapseAll"
+            *ngIf="jsandoc.doc && collapseAll"
             class="btn btn-xs btn-default"
             title="Abrir todo"
             (click)="setOpenAll()"
@@ -13,7 +13,7 @@
       </span>
     </button>
     <button
-            *ngIf="openAll"
+            *ngIf="jsandoc.doc && openAll"
             class="btn btn-xs btn-default"
             title="Cerrar todo"
             (click)="setCollapseAll()"
@@ -36,16 +36,46 @@
       >
       </span>
     </button>
+    <button *ngIf="hasPermision && needToSave"
+            class="btn btn-xs btn-primary"
+            title="Valor"
+            (click)="saveDoc()"
+    >
+      <span
+            class="glyphicon glyphicon-floppy-save"
+            aria-hidden="true"
+      >
+      </span>
+    </button>
 </h3>
 <div style="border:1px solid #CCCCCC; border-radius: 5px; padding:5px;">
     <jsandoc-section
-                    *ngIf="jsandoc && jsandoc.doc"
+                    *ngIf="jsandoc"
                     [section]="jsandoc.doc"
                     [sectionTitle]="'Curriculum Vitae'"
                     [editionActive]="editionActive"
                     [depth]="0"
                     [openAll]="openAll"
                     [collapseAll]="collapseAll"
+                    (sectionCreated)="sectionWasCreated($event)"
+                    (sectionUpdated)="sectionWasUpdated($event)"
     >
     </jsandoc-section>
 </div>
+<!--
+<textarea [(ngModel)]="jsonEditor">
+
+</textarea>
+
+<button
+            class="btn btn-xs"
+            title="Valor"
+            (click)="loadJson()"
+    >
+  <span
+        class="glyphicon glyphicon-edit"
+        aria-hidden="true"
+  >
+  </span>
+</button>
+-->

@@ -41,7 +41,7 @@ export class JsandocCore
         if(!user_namespace )
             return false; //this._router.navigate(['JsandocHome']);
 
-        if(typeof callBacks !=='undefined' && typeof callBacks.beforeAjax !=='undefined')
+        if(typeof callBacks !=='undefined' && callBacks!==null && typeof callBacks.beforeAjax !=='undefined')
         {
             callBacks.beforeAjax();
         }
@@ -49,7 +49,7 @@ export class JsandocCore
         this._docService.getDoc(user_namespace,doc_namespace).subscribe(
             data =>
             {
-                if(typeof callBacks !=='undefined' && typeof callBacks.afterSuccessAjax !=='undefined')
+                if(typeof callBacks !=='undefined'  && callBacks!==null && typeof callBacks.afterSuccessAjax !=='undefined')
                 {
                     callBacks.afterSuccessAjax(data);
                 }
@@ -57,7 +57,7 @@ export class JsandocCore
             },
             err =>
             {
-                if(typeof callBacks !=='undefined' && typeof callBacks.afterErrorsAjax !=='undefined')
+                if(typeof callBacks !=='undefined'  && callBacks!==null && typeof callBacks.afterErrorsAjax !=='undefined')
                 {
                     callBacks.afterErrorsAjax(err);
                 }

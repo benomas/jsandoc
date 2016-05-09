@@ -25,16 +25,16 @@ System.register([], function(exports_1, context_1) {
                     var _this = this;
                     if (!user_namespace)
                         return false;
-                    if (typeof callBacks !== 'undefined' && typeof callBacks.beforeAjax !== 'undefined') {
+                    if (typeof callBacks !== 'undefined' && callBacks !== null && typeof callBacks.beforeAjax !== 'undefined') {
                         callBacks.beforeAjax();
                     }
                     this._docService.getDoc(user_namespace, doc_namespace).subscribe(function (data) {
-                        if (typeof callBacks !== 'undefined' && typeof callBacks.afterSuccessAjax !== 'undefined') {
+                        if (typeof callBacks !== 'undefined' && callBacks !== null && typeof callBacks.afterSuccessAjax !== 'undefined') {
                             callBacks.afterSuccessAjax(data);
                         }
                         _this.jsandoc = data;
                     }, function (err) {
-                        if (typeof callBacks !== 'undefined' && typeof callBacks.afterErrorsAjax !== 'undefined') {
+                        if (typeof callBacks !== 'undefined' && callBacks !== null && typeof callBacks.afterErrorsAjax !== 'undefined') {
                             callBacks.afterErrorsAjax(err);
                         }
                         _this.errorMessage = true;
