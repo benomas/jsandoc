@@ -249,6 +249,16 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                         this.sectionUpdated.next(this.section);
                     }
                 };
+                JsandocSectionComponent.prototype.isEmptyObject = function (item) {
+                    var currentCase = this.getCase(item);
+                    if (currentCase === "array") {
+                        return item.length === 0;
+                    }
+                    if (currentCase === "property-value") {
+                        return Object.keys(item).length === 0;
+                    }
+                    return true;
+                };
                 JsandocSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'jsandoc-section',

@@ -376,4 +376,18 @@ export class JsandocSectionComponent implements OnInit,OnChanges
             this.sectionUpdated.next(this.section);
         }
     }
+
+    isEmptyObject(item)
+    {
+        let currentCase = this.getCase(item);
+        if(currentCase==="array")
+        {
+            return item.length===0;
+        }
+        if(currentCase==="property-value")
+        {
+            return Object.keys(item).length===0;
+        }
+        return true;
+    }
 }
