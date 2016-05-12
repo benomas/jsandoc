@@ -13,34 +13,10 @@ import {LangService}                                                from './lang
                 'depth',
                 'collapseAll',
                 'openAll',
-                'defaultState'
+                'defaultState',
+                'parentDataType'
             ],
     outputs: ['childover','childleave','sectionCreated','sectionUpdated'],
-    styles: [`
-                .section-title
-                {
-                  font-weight:bold;
-                }
-                .with-child-over
-                {
-                    /*text-decoration:underline;*/
-                    color:#204D74;
-                }
-                .clickeable
-                {
-                    cursor:pointer;
-                }
-                .border-left
-                {
-                    border-left:2px solid #FFFFFF;
-                }
-                .border-left:hover
-                {
-                    border-left:2px solid #204D74;
-                }
-
-                `
-            ],
     directives:[JsandocSectionComponent,NgClass,AddElementComponent],
 })
 export class JsandocSectionComponent implements OnInit,OnChanges
@@ -52,6 +28,7 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     section;
     keys;
     dataType;
+    parentDataType;
     depth;
     collapseAll:boolean;
     openAll:boolean;
@@ -343,6 +320,9 @@ export class JsandocSectionComponent implements OnInit,OnChanges
 
     sectionUpdatedNotify()
     {
+        this.initReady=false; 
+        this.makeInit();
+        /*console.log(this.keys);*/
         this.sectionUpdated.next(this.section);
     }
 

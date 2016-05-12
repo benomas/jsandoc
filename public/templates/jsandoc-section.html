@@ -1,106 +1,125 @@
-<div  *ngIf="editionActive && section || (editionActive && !section && depth === 0)" [ngClass]='{"emptySection":isEmpty()}'>
-  <div *ngIf="isEmpty() && dataType==='property-value'" style="color:#CCCCCC;">
-    Lista compuesta vacia
-    <button
-            *ngIf="depth === 0"
-            class="btn btn-danger btn-xs mini-remove"
-            (click)="removeSection()"
-            title="Remover"
-
-    >
-      <span
-            class="glyphicon glyphicon-remove"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-  </div>
-  <div *ngIf="isEmpty() && dataType==='array'" style="color:#CCCCCC;">
-    Lista simple vacia
-    <button
-            *ngIf="depth === 0"
-            class="btn btn-danger btn-xs mini-remove"
-            (click)="removeSection()"
-            title="Remover"
-
-    >
-      <span
-            class="glyphicon glyphicon-remove"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-  </div>
-  <div *ngIf="isEmpty() && depth === 0 && dataType!=='array' && dataType!=='property-value'" style="color:#CCCCCC;">
-    No se ha definido raiz
-  </div>
-  <div  style="padding-left:13px;"
-  >
-    <button
-            class="btn btn-xs"
-            title="Valor"
-            (click)="setEditionOnElement('root')"
-            [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-success":getEditionOnElement("root")}'
-    >
-      <span
-            class="glyphicon glyphicon-edit"
-            aria-hidden="true"
-      >
-      </span>
-    </button>
-  </div>
-  <add-element  *ngIf="section  && getEditionOnElement('root')"
-                (pushdata)=add($event)
-                [section]="section"
-                [dataType]="dataType"
-                [keys]="keys"
-                style="display: table-cell; padding-left:7px;"
-  >
-  </add-element>
-  <add-element  *ngIf="!section && depth === 0  && getEditionOnElement('root')"
-                (pushdata)=add($event)
-                [section]="section"
-                [dataType]="dataType"
-                [keys]="keys"
-                style="display: table-cell; padding-left:7px;"
-  >
-  </add-element>
-</div>
-<div *ngIf="section && dataType === 'property-value'">
-  <div  *ngFor="#key of keys; #position = index #end = last"
-        class="left-indent"
-  >
-    <div *ngIf="section[key]">
-      <span
-            *ngIf="getCase(section[key])!=='primitive' && !isEmptyObject(section[key])"
-            class="glyphicon low-font"
-            aria-hidden="true"
-            style="cursor:pointer;"
-            (click)="panelToggle(position)"
-            [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
-      >
-      </span>
-      <span
-            class="section-title"
-            [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElement}'
-            (mouseenter)="overThis(key)"
-            (mouseleave)="leaveThis(key)"
-            (click)="panelToggle(key)"
+<div 
+      class="section-child"
+      [ngClass]='{"section-edition":getEditionOnElement("root"),"section-edition-simple-list":getEditionOnElement("root") && parentDataType==="array","section-edition-complex-list":getEditionOnElement("root") && parentDataType==="property-value"}'
+>
+  <div  *ngIf="editionActive && section || (editionActive && !section && depth === 0)" [ngClass]='{"emptySection":isEmpty()}'>
+    <div *ngIf="isEmpty() && dataType==='property-value'" style="color:#CCCCCC;">
+      Lista compuesta vacia
+      <button
+              *ngIf="depth === 0"
+              class="btn btn-danger btn-xs mini-remove"
+              (click)="removeSection()"
+              title="Remover"
 
       >
-        {{key}}
-      </span>
-      <span
-            *ngIf="getCase(section[key])==='primitive'"
-            [ngClass]='{"with-child-over":key===overThisElement}'
-            (mouseenter)="overThis(key)"
-            (mouseleave)="leaveThis(key)"
+        <span
+              class="glyphicon glyphicon-remove"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+    </div>
+    <div *ngIf="isEmpty() && dataType==='array'" style="color:#CCCCCC;">
+      Lista simple vacia
+      <button
+              *ngIf="depth === 0"
+              class="btn btn-danger btn-xs mini-remove"
+              (click)="removeSection()"
+              title="Remover"
+
       >
-        {{section[key]}}
-        <button  *ngIf="editionActive"
-                  class="btn btn-danger btn-xs mini-remove"
-                  (click)="removeByKey(key)"
-                  title="Remover"
+        <span
+              class="glyphicon glyphicon-remove"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+    </div>
+    <div *ngIf="isEmpty() && depth === 0 && dataType!=='array' && dataType!=='property-value'" style="color:#CCCCCC;">
+      No se ha definido raiz
+    </div>
+    <div  style="padding-left:13px;"
+    >
+      <button
+              class="btn btn-xs"
+              title="Valor"
+              (click)="setEditionOnElement('root')"
+              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-success":getEditionOnElement("root")}'
+      >
+        <span
+              class="glyphicon glyphicon-edit"
+              aria-hidden="true"
+        >
+        </span>
+      </button>
+    </div>
+    <add-element  *ngIf="section  && getEditionOnElement('root')"
+                  (pushdata)=add($event)
+                  [section]="section"
+                  [dataType]="dataType"
+                  [keys]="keys"
+                  style="display: table-cell; padding-left:7px;"
+    >
+    </add-element>
+    <add-element  *ngIf="!section && depth === 0  && getEditionOnElement('root')"
+                  (pushdata)=add($event)
+                  [section]="section"
+                  [dataType]="dataType"
+                  [keys]="keys"
+                  style="display: table-cell; padding-left:7px;"
+    >
+    </add-element>
+  </div>
+  <div *ngIf="section && dataType === 'property-value'"      
+  >
+    <div  *ngFor="#key of keys; #position = index #end = last"
+          class="left-indent"
+    >
+      <div *ngIf="section[key]">
+        <span
+              *ngIf="getCase(section[key])!=='primitive' && !isEmptyObject(section[key])"
+              class="glyphicon low-font"
+              aria-hidden="true"
+              style="cursor:pointer;"
+              (click)="panelToggle(position)"
+              [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+        >
+        </span>
+        <span
+              class="section-title"
+              [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElement}'
+              (mouseenter)="overThis(key)"
+              (mouseleave)="leaveThis(key)"
+              (click)="panelToggle(key)"
+
+        >
+          <span class="label label-warning">{{key}}</span>
+        </span>
+        <span
+              *ngIf="getCase(section[key])==='primitive'"
+              [ngClass]='{"with-child-over":key===overThisElement}'
+              (mouseenter)="overThis(key)"
+              (mouseleave)="leaveThis(key)"
+        >
+          {{section[key]}}
+          <button  *ngIf="editionActive"
+                    class="btn btn-danger btn-xs mini-remove"
+                    (click)="removeByKey(key)"
+                    title="Remover"
+
+          >
+            <span
+                  class="glyphicon glyphicon-remove"
+                  aria-hidden="true"
+            >
+            </span>
+          </button>
+        </span>
+        <button
+                *ngIf="editionActive && getCase(section[key])!=='primitive'"
+                class="btn btn-danger btn-xs mini-remove"
+                (click)="removeByKey(key)"
+                title="Remover"
 
         >
           <span
@@ -109,90 +128,8 @@
           >
           </span>
         </button>
-      </span>
-      <button
-              *ngIf="editionActive && getCase(section[key])!=='primitive'"
-              class="btn btn-danger btn-xs mini-remove"
-              (click)="removeByKey(key)"
-              title="Remover"
-
-      >
-        <span
-              class="glyphicon glyphicon-remove"
-              aria-hidden="true"
-        >
-        </span>
-      </button>
-      <div *ngIf="getCase(section[key])!=='primitive'">
-        <jsandoc-section  [section]="section[key]"
-                          [sectionTitle]="position+1"
-                          [editionActive]="editionActive"
-                          (childover)="notifyOverToParent($event)"
-                          (childleave)="notifyLeaveToParent($event)"
-                          [hidden]="hiddenPosition(position)"
-                          [depth]="depth+1"
-                          [openAll]="openAll"
-                          [collapseAll]="collapseAll"
-                          (sectionUpdated)="section[key] = $event; sectionUpdatedNotify()"
-        >
-        </jsandoc-section>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="section && dataType === 'array'">
-  <div
-        *ngFor="#item of section; #position = index #end = last"
-  >
-    <div *ngIf="item">
-      <div *ngIf="getCase(item) === 'primitive'"
-            [ngClass]='{"with-child-over":item===overThisElement}'
-            (mouseenter)="overThis(item)"
-            (mouseleave)="leaveThis(item)"
-            class="left-indent"
-      >
-        {{item}}
-        <button
-                *ngIf="editionActive"
-                class="btn btn-danger btn-xs mini-remove"
-                (click)="removeByKey(position)"
-                title="Remover"
-
-            >
-              <span
-                    class="glyphicon glyphicon-remove"
-                    aria-hidden="true"
-              >
-              </span>
-        </button>
-      </div>
-      <button
-              *ngIf="editionActive && getCase(item) !== 'primitive'"
-              class="btn btn-danger btn-xs mini-remove"
-              (click)="removeByKey(position)"
-              title="Remover"
-
-      >
-        <span
-              class="glyphicon glyphicon-remove"
-              aria-hidden="true"
-        >
-        </span>
-      </button>
-      <div *ngIf="getCase(item) !== 'primitive'"
-            class="left-indent"
-      >
-          <span
-            *ngIf="!isEmptyObject(section[key])"
-            class="glyphicon low-font"
-            aria-hidden="true"
-            style="cursor:pointer;"
-            (click)="panelToggle(position)"
-            [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
-          >
-          </span>
-          <jsandoc-section  [section]="item"
+        <div *ngIf="getCase(section[key])!=='primitive'">
+          <jsandoc-section  [section]="section[key]"
                             [sectionTitle]="position+1"
                             [editionActive]="editionActive"
                             (childover)="notifyOverToParent($event)"
@@ -201,12 +138,84 @@
                             [depth]="depth+1"
                             [openAll]="openAll"
                             [collapseAll]="collapseAll"
-                            [defaultState]="defaultState"
-                            (sectionUpdated)="section[position] = $event; sectionUpdatedNotify()"
+                            (sectionUpdated)="section[key] = $event; sectionUpdatedNotify()"
+                            [parentDataType]="dataType"
           >
           </jsandoc-section>
+        </div>
       </div>
     </div>
   </div>
+
+  <div *ngIf="section && dataType === 'array'">
+    <div
+          *ngFor="#item of section; #position = index #end = last"
+    >
+      <div *ngIf="item">
+        <div *ngIf="getCase(item) === 'primitive'"
+              [ngClass]='{"with-child-over":item===overThisElement}'
+              (mouseenter)="overThis(item)"
+              (mouseleave)="leaveThis(item)"
+              class="left-indent"
+        >
+          {{item}}
+          <button
+                  *ngIf="editionActive"
+                  class="btn btn-danger btn-xs mini-remove"
+                  (click)="removeByKey(position)"
+                  title="Remover"
+
+              >
+                <span
+                      class="glyphicon glyphicon-remove"
+                      aria-hidden="true"
+                >
+                </span>
+          </button>
+        </div>
+        <button
+                *ngIf="editionActive && getCase(item) !== 'primitive'"
+                class="btn btn-danger btn-xs mini-remove"
+                (click)="removeByKey(position)"
+                title="Remover"
+
+        >
+            <span
+                  class="glyphicon glyphicon-remove"
+                  aria-hidden="true"
+            >
+            </span>
+        </button>
+        <div *ngIf="getCase(item) !== 'primitive'"
+              class="left-indent"
+        >
+            <span
+              *ngIf="!isEmptyObject(item)"
+              class="glyphicon low-font"
+              aria-hidden="true"
+              style="cursor:pointer;"
+              (click)="panelToggle(position)"
+              [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+            >
+            </span>
+            <span class="label label-info">{{position}}</span>
+            <jsandoc-section  [section]="item"
+                              [sectionTitle]="position+1"
+                              [editionActive]="editionActive"
+                              (childover)="notifyOverToParent($event)"
+                              (childleave)="notifyLeaveToParent($event)"
+                              [hidden]="hiddenPosition(position)"
+                              [depth]="depth+1"
+                              [openAll]="openAll"
+                              [collapseAll]="collapseAll"
+                              [defaultState]="defaultState"
+                              (sectionUpdated)="section[position] = $event; sectionUpdatedNotify()"
+                              [parentDataType]="dataType"
+            >
+            </jsandoc-section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr *ngIf="depth === 1">
 </div>
-<hr *ngIf="depth === 1">

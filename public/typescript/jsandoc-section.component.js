@@ -225,6 +225,8 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     }
                 };
                 JsandocSectionComponent.prototype.sectionUpdatedNotify = function () {
+                    this.initReady = false;
+                    this.makeInit();
                     this.sectionUpdated.next(this.section);
                 };
                 JsandocSectionComponent.prototype.isEmpty = function () {
@@ -270,11 +272,10 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                             'depth',
                             'collapseAll',
                             'openAll',
-                            'defaultState'
+                            'defaultState',
+                            'parentDataType'
                         ],
                         outputs: ['childover', 'childleave', 'sectionCreated', 'sectionUpdated'],
-                        styles: ["\n                .section-title\n                {\n                  font-weight:bold;\n                }\n                .with-child-over\n                {\n                    /*text-decoration:underline;*/\n                    color:#204D74;\n                }\n                .clickeable\n                {\n                    cursor:pointer;\n                }\n                .border-left\n                {\n                    border-left:2px solid #FFFFFF;\n                }\n                .border-left:hover\n                {\n                    border-left:2px solid #204D74;\n                }\n\n                "
-                        ],
                         directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])

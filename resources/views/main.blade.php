@@ -89,6 +89,72 @@
             {
                 font-size: 6px !important;
             }
+
+            .section-title
+            {
+              font-weight:bold;
+            }
+            .with-child-over
+            {
+                /*text-decoration:underline;*/
+                color:#204D74;
+            }
+            .clickeable
+            {
+                cursor:pointer;
+            }
+            .border-left
+            {
+                border-left:2px solid #FFFFFF;
+            }
+            .border-left:hover
+            {
+                border-left:2px solid #204D74;
+            }
+
+            .section-child
+            {
+                padding-top:3px;
+                padding-bottom:3px;
+                padding-left:10px;
+            }
+
+            .section-edition
+            {
+                border-radius:0 5px 5px 5px;
+            }
+
+            .section-edition-simple-list
+            {
+                border:1px solid #5BC0DE;
+            }
+
+            .section-edition-complex-list
+            {
+                border:1px solid #F0AD4E;
+            }
+
+
+            .simple-list-element-position
+            {
+                padding:3px;
+                background-color:#;
+            }
+
+            .simple-list-element-value
+            {
+
+            }
+
+            .complex-list-property-element
+            {
+
+            }
+
+            .complex-list-property-element
+            {
+                
+            }
         </style>
     </head>
     <body>
