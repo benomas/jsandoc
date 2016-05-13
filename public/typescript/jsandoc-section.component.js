@@ -88,7 +88,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     else
                         this.hiddens[position] = !this.hiddens[position];
                 };
-                JsandocSectionComponent.prototype.hiddenPosition = function (position) {
+                JsandocSectionComponent.prototype.hiddenPosition = function (position, forceValue) {
                     if (typeof this.hiddens[position] === 'undefined')
                         return false;
                     return this.hiddens[position];

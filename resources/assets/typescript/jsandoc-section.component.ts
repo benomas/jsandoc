@@ -120,7 +120,7 @@ export class JsandocSectionComponent implements OnInit,OnChanges
             this.hiddens[position] = !this.hiddens[position];
     }
 
-    hiddenPosition(position)
+    hiddenPosition(position,forceValue)
     {
         if( typeof this.hiddens[position]==='undefined')
             return false;
