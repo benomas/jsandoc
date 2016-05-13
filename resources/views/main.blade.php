@@ -87,7 +87,7 @@
             }
             .mini-remove
             {
-                font-size: 6px !important;
+                font-size: 10px !important;
             }
 
             .section-title
@@ -121,7 +121,7 @@
 
             .section-edition
             {
-                border-radius:0 5px 5px 5px;
+                border-radius:0 0 5px 5px;
             }
 
             .section-edition-simple-list
@@ -134,26 +134,17 @@
                 border:1px solid #F0AD4E;
             }
 
+            .list-box
+            {
+                border-radius: 0 0 0 5px;
+                font-size: 10px;
+                margin-top:-3px;
+            }
 
             .simple-list-element-position
             {
                 padding:3px;
-                background-color:#;
-            }
-
-            .simple-list-element-value
-            {
-
-            }
-
-            .complex-list-property-element
-            {
-
-            }
-
-            .complex-list-property-element
-            {
-                
+                background-color:#5BC0DE;
             }
         </style>
     </head>

@@ -1,26 +1,17 @@
-<div 
+<div
       class="section-child"
-      [ngClass]='{"section-edition":getEditionOnElement("root"),"section-edition-simple-list":getEditionOnElement("root") && parentDataType==="array","section-edition-complex-list":getEditionOnElement("root") && parentDataType==="property-value"}'
+      [ngClass]='{"section-edition":getEditionOnElement("root"),"section-edition-simple-list":editionActive && getEditionOnElement("root") && dataType==="array","section-edition-complex-list":editionActive && getEditionOnElement("root") && dataType==="property-value"}'
 >
-  <div  *ngIf="editionActive && section || (editionActive && !section && depth === 0)" [ngClass]='{"emptySection":isEmpty()}'>
-    <div *ngIf="isEmpty() && dataType==='property-value'" style="color:#CCCCCC;">
-      Lista compuesta vacia
-      <button
-              *ngIf="depth === 0"
-              class="btn btn-danger btn-xs mini-remove"
-              (click)="removeSection()"
-              title="Remover"
+  <span
+        *ngIf="editionActive && getEditionOnElement('root') && dataType==='property-value'"
+        class="label label-warning pull-right list-box">Lista compuesta</span>
+  <span
+        *ngIf="editionActive && getEditionOnElement('root') && dataType==='array'"
+        class="label label-info pull-right list-box">Lista simple</span>
 
-      >
-        <span
-              class="glyphicon glyphicon-remove"
-              aria-hidden="true"
-        >
-        </span>
-      </button>
-    </div>
-    <div *ngIf="isEmpty() && dataType==='array'" style="color:#CCCCCC;">
-      Lista simple vacia
+  <div  *ngIf="editionActive && section || (editionActive && !section && depth === 0)" [ngClass]='{"emptySection":isEmpty()}'>
+    <div *ngIf="isEmpty()" style="color:#CCCCCC;">
+      vacia
       <button
               *ngIf="depth === 0"
               class="btn btn-danger btn-xs mini-remove"
@@ -44,7 +35,7 @@
               class="btn btn-xs"
               title="Valor"
               (click)="setEditionOnElement('root')"
-              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-success":getEditionOnElement("root")}'
+              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-warning":getEditionOnElement("root") && dataType==="property-value","btn-info":getEditionOnElement("root") && dataType==="array"}'
       >
         <span
               class="glyphicon glyphicon-edit"
@@ -70,7 +61,7 @@
     >
     </add-element>
   </div>
-  <div *ngIf="section && dataType === 'property-value'"      
+  <div *ngIf="section && dataType === 'property-value'"
   >
     <div  *ngFor="#key of keys; #position = index #end = last"
           class="left-indent"
