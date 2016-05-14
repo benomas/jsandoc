@@ -150,7 +150,7 @@
               (mouseleave)="leaveThis(item)"
               class="left-indent"
         >
-            <span class="label label-info">{{position}}</span>
+            <span class="label label-info">{{position+1}}</span>
           {{item}}
           <button
                   *ngIf="editionActive"
@@ -191,7 +191,7 @@
               [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
             >
             </span>
-            <span class="label label-info">{{position}}</span>
+            <span class="label label-info">{{position+1}}</span>
             <jsandoc-section  [section]="item"
                               [sectionTitle]="position+1"
                               [editionActive]="editionActive"

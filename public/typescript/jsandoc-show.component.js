@@ -55,8 +55,8 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this._routeParams = _routeParams;
                     this.hasPermision = false;
                     this.editionActive = false;
-                    this.openAll = true;
-                    this.collapseAll = false;
+                    this.openAll = false;
+                    this.collapseAll = true;
                 }
                 JsandocShowComponent.prototype.ngOnInit = function () {
                     this.getJsandoc(this._routeParams.get('user_namespace'), this._routeParams.get('doc_namespace'), null);

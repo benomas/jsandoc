@@ -55,8 +55,8 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', './lang.
                     this._routeParams = _routeParams;
                     this.hasPermision = true;
                     this.editionActive = false;
-                    this.openAll = true;
-                    this.collapseAll = false;
+                    this.openAll = false;
+                    this.collapseAll = true;
                 }
                 JsandocEditionComponent.prototype.ngOnInit = function () {
                     var _this = this;

@@ -35,8 +35,8 @@ export class JsandocEditionComponent extends JsandocCore implements OnInit
                 _routeParams);
         this.hasPermision=true;
         this.editionActive=false;
-        this.openAll=true;
-        this.collapseAll=false;
+        this.openAll=false;
+        this.collapseAll=true;
     }
 
     ngOnInit()
