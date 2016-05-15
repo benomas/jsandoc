@@ -1,6 +1,7 @@
 import {Component,EventEmitter, OnInit,OnChanges,SimpleChange }     from 'angular2/core';
 import {NgClass}                                                    from 'angular2/common';
 import {AddElementComponent}                                        from './add-element.component';
+import {PrimitiveElementComponent}                                  from './primitive-element.component';
 import {LangService}                                                from './lang.service';
 
 @Component({
@@ -17,7 +18,7 @@ import {LangService}                                                from './lang
                 'parentDataType'
             ],
     outputs: ['childover','childleave','sectionCreated','sectionUpdated'],
-    directives:[JsandocSectionComponent,NgClass,AddElementComponent],
+    directives:[JsandocSectionComponent,NgClass,AddElementComponent,PrimitiveElementComponent],
 })
 export class JsandocSectionComponent implements OnInit,OnChanges
 {
@@ -320,7 +321,7 @@ export class JsandocSectionComponent implements OnInit,OnChanges
 
     sectionUpdatedNotify()
     {
-        this.initReady=false; 
+        this.initReady=false;
         this.makeInit();
         /*console.log(this.keys);*/
         this.sectionUpdated.next(this.section);
@@ -369,5 +370,24 @@ export class JsandocSectionComponent implements OnInit,OnChanges
             return Object.keys(item).length===0;
         }
         return true;
+    }
+
+    catchEdition(oldValue,newValue,type,positionOrKey)
+    {
+        if(typeof newValue ==='string' && newValue!== oldValue)
+        {
+            if(type==='property')
+            {
+                this.add({"newProperty":newValue,"newValue":this.section[oldValue],"position":positionOrKey});
+                delete this.section[oldValue] ;
+
+            }
+            if(type==='value')
+            {
+                this.section[positionOrKey]=newValue;
+            }
+
+            this.sectionUpdatedNotify();
+        }
     }
 }

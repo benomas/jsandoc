@@ -51,23 +51,25 @@
 
   <!-- inputs -->
     <div class="form-group" *ngIf="mode==='primitive'">
-      <label class="sr-only" for="primitive">Email address</label>
+      <label class="sr-only" for="primitive">Primitive</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'primitiveElementValue')"
                           (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Concepto'"
                           [primitiveElementTitle]="'Agregar un concepto'"
+                          [validModes]="'edition'"
+                          [inputType]="'value'"
       >
       </primitive-element>
     </div>
     <div class="form-group" *ngIf="mode==='array'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="simple_list">Lista simple</label>
       <array-element  *ngIf="mode==='array'"
                       (sendData)="setJsonLevel($event,'arrayElementValue')" >
       </array-element>
     </div>
     <div class="form-group" *ngIf="mode==='property-value'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="complex_list">Lista compuesta</label>
       <property-element  *ngIf="mode==='property-value'"
                       (sendData)="setJsonLevel($event,'propertyElementValue')" >
       </property-element>
@@ -140,32 +142,36 @@
       </button>
     </div>
     <div class="form-group">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="complex_list">Lista compuesta</label>
       <primitive-element (sendData)="setJsonLevel($event,'propertyPrimitiveElementValue')"
                           (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Propiedad'"
                           [primitiveElementTitle]="'Agregar una propiedad'"
+                          [validModes]="'edition'"
+                          [inputType]="'property'"
       >
       </primitive-element>
     </div>
     <div class="form-group" *ngIf="mode==='primitive-primitive'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="complex_list">Lista compuesta</label>
       <primitive-element
                           (sendData)="setJsonLevel($event,'propertyValuePrimitiveElementValue')"
                           (emitSubmit)="add(section)"
                           [primitiveElementPlaceHolder]="'Valor'"
                           [primitiveElementTitle]="'Agregar un valor'"
+                          [validModes]="'edition'"
+                          [inputType]="'value'"
       >
       </primitive-element>
     </div>
     <div class="form-group" *ngIf="mode==='primitive-array'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="simple_list">Lista simple</label>
       <array-element
                       (sendData)="setJsonLevel($event,'propertyArrayPrimitiveElementValue')">
       </array-element>
     </div>
     <div class="form-group" *ngIf="mode==='primitive-property'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="complex_list">Lista compuesta</label>
       <property-element
                       (sendData)="setJsonLevel($event,'propertyPropertyElementValue')">
       </property-element>
@@ -226,13 +232,13 @@
       </button>
     </div>
     <div class="form-group" *ngIf="mode==='array'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="simple_list">Lista simple</label>
       <array-element  *ngIf="mode==='array'"
                       (sendData)="setJsonLevel($event,'arrayElementValue')" >
       </array-element>
     </div>
     <div class="form-group" *ngIf="mode==='property-value'">
-      <label class="sr-only" for="exampleInputEmail3">Email address</label>
+      <label class="sr-only" for="complex_list">Lista compuesta</label>
       <property-element  *ngIf="mode==='property-value'"
                       (sendData)="setJsonLevel($event,'propertyElementValue')" >
       </property-element>

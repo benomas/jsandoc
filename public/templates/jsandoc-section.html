@@ -85,7 +85,20 @@
               (click)="panelToggle(key)"
 
         >
-          <span class="label label-warning">{{key}}</span>
+          <span class="label label-warning">
+            <primitive-element
+
+                            [jsonValue]="key"
+                            [section]="section"
+                            [primitiveElementPlaceHolder]="'Concepto'"
+                            [primitiveElementTitle]="'Modificar un concepto'"
+                            [validModes]="'edition-view'"
+                            (emitSubmit)="catchEdition(key,$event,'property',position)"
+                            [switchable]="editionActive"
+                            [inputType]="'property'"
+            >
+            </primitive-element>
+          </span>
         </span>
         <span
               *ngIf="getCase(section[key])==='primitive'"
@@ -93,7 +106,18 @@
               (mouseenter)="overThis(key)"
               (mouseleave)="leaveThis(key)"
         >
-          {{section[key]}}
+          <primitive-element
+
+                            [jsonValue]="section[key]"
+                            [section]="section"
+                            [primitiveElementPlaceHolder]="'Valor'"
+                            [primitiveElementTitle]="'Modificar un valor'"
+                            [validModes]="'edition-view'"
+                            (emitSubmit)="catchEdition(section[key],$event,'value',key)"
+                            [switchable]="editionActive"
+                            [inputType]="'value'"
+            >
+          </primitive-element>
           <button  *ngIf="editionActive"
                     class="btn btn-danger btn-xs mini-remove"
                     (click)="removeByKey(key)"
@@ -150,8 +174,19 @@
               (mouseleave)="leaveThis(item)"
               class="left-indent"
         >
-            <span class="label label-info">{{position+1}}</span>
-          {{item}}
+          <span class="label label-info">{{position+1}}</span>
+          <primitive-element
+
+                            [jsonValue]="item"
+                            [section]="section"
+                            [primitiveElementPlaceHolder]="'Valor'"
+                            [primitiveElementTitle]="'Modificar un valor'"
+                            [validModes]="'edition-view'"
+                            (emitSubmit)="catchEdition(section[position],$event,'value',position)"
+                            [switchable]="editionActive"
+                            [inputType]="'value'"
+            >
+          </primitive-element>
           <button
                   *ngIf="editionActive"
                   class="btn btn-danger btn-xs mini-remove"

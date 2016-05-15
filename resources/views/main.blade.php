@@ -146,6 +146,11 @@
                 padding:3px;
                 background-color:#5BC0DE;
             }
+
+            .edition-view-mode-edition
+            {
+                color:#000000;
+            }
         </style>
     </head>
     <body>

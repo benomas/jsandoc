@@ -29,16 +29,72 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                     this._langService = _langService;
                     this.sendData = new core_1.EventEmitter();
                     this.emitSubmit = new core_1.EventEmitter();
+                    this.wasReset = new core_1.EventEmitter();
+                    this.initialMode;
                 }
-                PrimitiveElementComponent.prototype.setData = function (localJsonValue) {
-                    if (this.jsonValue &&
-                        this.jsonValue !== '')
-                        this.sendData.next(this.jsonValue);
+                PrimitiveElementComponent.prototype.ngOnInit = function () {
+                    if (this.validModes === 'edition-view') {
+                        if (typeof this.initialMode === 'string' &&
+                            this.initialMode === 'view' ||
+                            this.initialMode === 'edition') {
+                            this.currentMode = this.initialMode;
+                        }
+                        else
+                            this.currentMode = this.initialMode = 'view';
+                        this.originalValue = this.jsonValue;
+                    }
+                    else if (this.validModes === 'view' || this.validModes === 'edition') {
+                        this.currentMode = this.initialMode = this.validModes;
+                    }
+                    if (this.currentMode === 'view') {
+                        if (!this.isEmptyValue())
+                            this.emptyValue = false;
+                        else
+                            this.emptyValue = true;
+                    }
+                };
+                PrimitiveElementComponent.prototype.setData = function () {
+                    if (!this.isEmptyValue())
+                        this.emptyValue = false;
                     else
-                        this.sendData.next(null);
+                        this.emptyValue = true;
+                    if (this.validModes === 'edition') {
+                        if (!this.isEmptyValue()) {
+                            this.sendData.next(this.jsonValue);
+                        }
+                        else {
+                            this.sendData.next(null);
+                        }
+                    }
                 };
                 PrimitiveElementComponent.prototype.trySubmit = function () {
-                    this.emitSubmit.next(true);
+                    if (this.validModes === 'edition')
+                        this.emitSubmit.next(true);
+                    if (this.validModes === 'edition-view') {
+                        if (this.switchable === true) {
+                            if (this.currentMode === 'edition')
+                                this.emitSubmit.next(this.jsonValue);
+                            this.switchMode();
+                        }
+                    }
+                };
+                PrimitiveElementComponent.prototype.switchMode = function () {
+                    if (this.validModes === 'edition-view') {
+                        if (this.currentMode === 'edition')
+                            this.currentMode = 'view';
+                        else {
+                            if (this.currentMode === 'view')
+                                this.currentMode = 'edition';
+                        }
+                    }
+                };
+                PrimitiveElementComponent.prototype.isEmptyValue = function () {
+                    if (this.jsonValue &&
+                        this.jsonValue !== '' &&
+                        this.jsonValue !== null &&
+                        this.jsonValue.length > 0)
+                        return false;
+                    return true;
                 };
                 PrimitiveElementComponent = __decorate([
                     core_1.Component({
@@ -46,9 +102,16 @@ System.register(['angular2/core', 'angular2/common', './lang.service'], function
                         templateUrl: 'templates/primitive-element.html',
                         inputs: [
                             'primitiveElementPlaceHolder',
-                            'primitiveElementTitle'
+                            'primitiveElementTitle',
+                            'jsonValue',
+                            'mode',
+                            'initialMode',
+                            'validModes',
+                            'switchable',
+                            'inputType',
+                            'reset'
                         ],
-                        outputs: ['sendData', 'emitSubmit'],
+                        outputs: ['sendData', 'emitSubmit', 'wasReset'],
                         directives: [
                             common_1.NgClass,
                             PrimitiveElementComponent

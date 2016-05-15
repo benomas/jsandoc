@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './add-element.component', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './add-element.component', './primitive-element.component', './lang.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, add_element_component_1, lang_service_1;
+    var core_1, common_1, add_element_component_1, primitive_element_component_1, lang_service_1;
     var JsandocSectionComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
             },
             function (add_element_component_1_1) {
                 add_element_component_1 = add_element_component_1_1;
+            },
+            function (primitive_element_component_1_1) {
+                primitive_element_component_1 = primitive_element_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -261,6 +264,18 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     }
                     return true;
                 };
+                JsandocSectionComponent.prototype.catchEdition = function (oldValue, newValue, type, positionOrKey) {
+                    if (typeof newValue === 'string' && newValue !== oldValue) {
+                        if (type === 'property') {
+                            this.add({ "newProperty": newValue, "newValue": this.section[oldValue], "position": positionOrKey });
+                            delete this.section[oldValue];
+                        }
+                        if (type === 'value') {
+                            this.section[positionOrKey] = newValue;
+                        }
+                        this.sectionUpdatedNotify();
+                    }
+                };
                 JsandocSectionComponent = __decorate([
                     core_1.Component({
                         selector: 'jsandoc-section',
@@ -276,7 +291,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                             'parentDataType'
                         ],
                         outputs: ['childover', 'childleave', 'sectionCreated', 'sectionUpdated'],
-                        directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent],
+                        directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent, primitive_element_component_1.PrimitiveElementComponent],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])
                 ], JsandocSectionComponent);
