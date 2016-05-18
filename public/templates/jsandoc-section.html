@@ -4,7 +4,7 @@
 >
   <span
         *ngIf="editionActive && getEditionOnElement('root') && dataType==='property-value'"
-        class="label label-warning pull-right list-box">Lista compuesta
+        class="label label-primary pull-right list-box">Lista compuesta
   </span>
   <span
         *ngIf="editionActive && getEditionOnElement('root') && dataType==='array'"
@@ -36,7 +36,7 @@
               class="btn btn-xs"
               title="Valor"
               (click)="setEditionOnElement('root')"
-              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-warning":getEditionOnElement("root") && dataType==="property-value","btn-info":getEditionOnElement("root") && dataType==="array"}'
+              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-primary":getEditionOnElement("root") && dataType==="property-value","btn-info":getEditionOnElement("root") && dataType==="array"}'
       >
         <span
               class="glyphicon glyphicon-edit"
@@ -93,7 +93,7 @@
               (click)="panelToggle(key)"
 
         >
-          <span class="label label-warning">
+          <span class="label label-primary">
             <primitive-element
 
                             [jsonValue]="key"

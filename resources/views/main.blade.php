@@ -131,7 +131,7 @@
 
             .section-edition-complex-list
             {
-                border:1px solid #F0AD4E;
+                border:1px solid #337AB7;
             }
 
             .list-box
