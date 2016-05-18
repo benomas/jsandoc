@@ -76,6 +76,14 @@
               (click)="panelToggle(position)"
               [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
         >
+        </span>        
+        <span
+              *ngIf="getCase(section[key])==='primitive'"
+              class="glyphicon low-font"
+              aria-hidden="true"
+              style="visibility:hidden;"
+              [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+        >
         </span>
         <span
               class="section-title"
@@ -174,9 +182,16 @@
               (mouseleave)="leaveThis(item)"
               class="left-indent"
         >
+
+          <span
+                class="glyphicon low-font"
+                aria-hidden="true"
+                style="visibility:hidden;"
+                [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+          >
+          </span>
           <span class="label label-info">{{position+1}}</span>
           <primitive-element
-
                             [jsonValue]="item"
                             [section]="section"
                             [primitiveElementPlaceHolder]="'Valor'"

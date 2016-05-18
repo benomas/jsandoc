@@ -116,7 +116,7 @@
             {
                 padding-top:3px;
                 padding-bottom:3px;
-                padding-left:10px;
+                padding-left:5px;
             }
 
             .section-edition
