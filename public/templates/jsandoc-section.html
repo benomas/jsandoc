@@ -76,13 +76,12 @@
               (click)="panelToggle(position)"
               [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
         >
-        </span>        
+        </span>
         <span
-              *ngIf="getCase(section[key])==='primitive'"
-              class="glyphicon low-font"
+              *ngIf="getCase(section[key])==='primitive' || (isEmptyObject(section[key]) && !editionActive)"
+              class="glyphicon glyphicon-triangle-right low-font"
               aria-hidden="true"
               style="visibility:hidden;"
-              [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
         >
         </span>
         <span
@@ -90,8 +89,6 @@
               [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElementS}'
               (mouseenter)="overThis(key)"
               (mouseleave)="leaveThis(key)"
-              (click)="panelToggle(key)"
-
         >
           <span class="label label-primary">
             <primitive-element
@@ -184,10 +181,10 @@
         >
 
           <span
-                class="glyphicon low-font"
+                *ngIf="!isEmptyObject(item) || editionActive"
+                class="glyphicon glyphicon-triangle-right low-font"
                 aria-hidden="true"
                 style="visibility:hidden;"
-                [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
           >
           </span>
           <span class="label label-info">{{position+1}}</span>
@@ -239,6 +236,13 @@
               style="cursor:pointer;"
               (click)="panelToggle(position)"
               [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+            >
+            </span>
+            <span
+                  *ngIf="isEmptyObject(item) && !editionActive"
+                  class="glyphicon glyphicon-triangle-right low-font"
+                  aria-hidden="true"
+                  style="visibility:hidden;"
             >
             </span>
             <span class="label label-info">{{position+1}}</span>
