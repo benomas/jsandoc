@@ -179,9 +179,8 @@
               (mouseleave)="leaveThis(item)"
               class="left-indent"
         >
-
           <span
-                *ngIf="!isEmptyObject(item) || editionActive"
+                *ngIf="isEmptyObject(item) || editionActive"
                 class="glyphicon glyphicon-triangle-right low-font"
                 aria-hidden="true"
                 style="visibility:hidden;"
