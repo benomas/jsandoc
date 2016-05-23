@@ -40,6 +40,8 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     this.overThisElement = false;
                     this.hiddens = [];
                     this.editionOnElement = {};
+                    this.ownEditionActive = false;
+                    this.childrenEditionActive = [];
                     this.initReady = false;
                 }
                 JsandocSectionComponent.prototype.ngOnInit = function () {
@@ -175,18 +177,25 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                         this.sectionCreated.next(this.section);
                     }
                     this.sectionUpdatedNotify();
-                    this.makeInit();
                 };
-                JsandocSectionComponent.prototype.setEditionOnElement = function (position) {
-                    if (typeof this.editionOnElement[position] === 'undefined')
-                        this.editionOnElement[position] = true;
+                JsandocSectionComponent.prototype.switchOwnEditionActive = function () {
+                    this.ownEditionActive = !this.ownEditionActive;
+                };
+                JsandocSectionComponent.prototype.getOwnEditionActive = function () {
+                    return this.ownEditionActive;
+                };
+                JsandocSectionComponent.prototype.switchChildrenEditionActive = function (position) {
+                    if (typeof this.childrenEditionActive[position] === 'undefined')
+                        this.childrenEditionActive[position] = true;
                     else
-                        this.editionOnElement[position] = !this.editionOnElement[position];
+                        this.childrenEditionActive[position] = !this.childrenEditionActive[position];
+                    if (this.childrenEditionActive[position] === true)
+                        this.hiddens[position] = false;
                 };
-                JsandocSectionComponent.prototype.getEditionOnElement = function (position) {
-                    if (typeof this.editionOnElement[position] === 'undefined')
+                JsandocSectionComponent.prototype.getChildrenEditionActive = function (position) {
+                    if (typeof this.childrenEditionActive[position] === 'undefined')
                         return false;
-                    return this.editionOnElement[position];
+                    return this.childrenEditionActive[position];
                 };
                 JsandocSectionComponent.prototype.setDataType = function () {
                     if (this.hasSection() && this.dataType === 'property-value')
@@ -246,6 +255,8 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                             this.section.splice(start, 1);
                         else
                             this.propertySplit(start, 1, null, null);
+                        this.initReady = false;
+                        this.makeInit();
                         this.sectionUpdated.next(this.section);
                     }
                 };
@@ -291,7 +302,8 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                             'collapseAll',
                             'openAll',
                             'defaultState',
-                            'parentDataType'
+                            'parentDataType',
+                            'ownEditionActive'
                         ],
                         outputs: ['childover', 'childleave', 'sectionCreated', 'sectionUpdated'],
                         directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent, primitive_element_component_1.PrimitiveElementComponent],

@@ -85,7 +85,13 @@
                 border-left:1px solid #CCCCCC;
                 min-height: 10px;
             }
+
             .mini-remove
+            {
+                font-size: 10px !important;
+            }
+
+            .mini-edit
             {
                 font-size: 10px !important;
             }
@@ -150,6 +156,15 @@
             .edition-view-mode-edition
             {
                 color:#000000;
+            }
+
+            .property-container
+            {
+
+            }
+            .value-container
+            {
+                padding-left:2px;
             }
         </style>
     </head>

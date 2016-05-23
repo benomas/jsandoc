@@ -15,7 +15,8 @@ import {LangService}                                                from './lang
                 'collapseAll',
                 'openAll',
                 'defaultState',
-                'parentDataType'
+                'parentDataType',
+                'ownEditionActive'
             ],
     outputs: ['childover','childleave','sectionCreated','sectionUpdated'],
     directives:[JsandocSectionComponent,NgClass,AddElementComponent,PrimitiveElementComponent],
@@ -44,11 +45,13 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     newElement;
     initReady:boolean;
     ownEditionActive:boolean;
+    childrenEditionActive;
 
     constructor(private _langService: LangService)
     {
         this.editionOnElement={};
         this.ownEditionActive=false;
+        this.childrenEditionActive= [];
         this.initReady=false;
     }
 
@@ -243,22 +246,34 @@ export class JsandocSectionComponent implements OnInit,OnChanges
             this.sectionCreated.next(this.section);
         }
         this.sectionUpdatedNotify();
-        this.makeInit();
     }
 
-    setEditionOnElement(position):void
+    switchOwnEditionActive():void
     {
-        if( typeof this.editionOnElement[position]==='undefined')
-            this.editionOnElement[position]= true;
+        this.ownEditionActive=!this.ownEditionActive;
+    }
+
+    getOwnEditionActive():boolean
+    {
+        return this.ownEditionActive;
+    }
+
+    switchChildrenEditionActive(position):void
+    {
+        if( typeof this.childrenEditionActive[position]==='undefined')
+            this.childrenEditionActive[position]=true;
         else
-            this.editionOnElement[position] = !this.editionOnElement[position];
+            this.childrenEditionActive[position]=!this.childrenEditionActive[position];
+
+        if(this.childrenEditionActive[position]===true)
+            this.hiddens[position]=false;
     }
 
-    getEditionOnElement(position):boolean
+    getChildrenEditionActive(position):boolean
     {
-        if(typeof this.editionOnElement[position]==='undefined')
+        if( typeof this.childrenEditionActive[position]==='undefined')
             return false;
-        return this.editionOnElement[position];
+        return this.childrenEditionActive[position];
     }
 
     setDataType()
@@ -347,7 +362,9 @@ export class JsandocSectionComponent implements OnInit,OnChanges
                 this.section.splice(start,1);
             else
                 this.propertySplit(start,1,null,null);
-                //delete this.section[start];
+
+            this.initReady=false;
+            this.makeInit();
             this.sectionUpdated.next(this.section);
         }
     }
