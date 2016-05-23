@@ -86,7 +86,7 @@
                       style="display: table-cell; padding-left:7px;"
         >
         </add-element>
-        <hr>
+        <hr class="add-separator">
       </div>
     </div>
 
@@ -168,9 +168,10 @@
             </span>
           </button>
         </span>
+        <span class="value-container">
           <button
                   *ngIf="editionActive && getCase(section[key])!=='primitive'"
-                  class="btn btn-xs btn-primary mini-edit"
+                  class="btn btn-xs btn-default mini-edit"
                   title="Valor"
                   (click)="switchChildrenEditionActive(position)"
                   [ngClass]='{"btn-primary":getChildrenEditionActive(position) && getCase(section[key])==="property-value","btn-info":getChildrenEditionActive(position) && getCase(section[key])==="array"}'
@@ -181,19 +182,20 @@
             >
             </span>
           </button>
-        <button
-                *ngIf="editionActive && getCase(section[key])!=='primitive'"
-                class="btn btn-danger btn-xs mini-remove"
-                (click)="removePosition(position)"
-                title="Remover"
+          <button
+                  *ngIf="editionActive && getCase(section[key])!=='primitive'"
+                  class="btn btn-danger btn-xs mini-remove"
+                  (click)="removePosition(position)"
+                  title="Remover"
 
-        >
-          <span
-                class="glyphicon glyphicon-remove"
-                aria-hidden="true"
           >
-          </span>
-        </button>
+            <span
+                  class="glyphicon glyphicon-remove"
+                  aria-hidden="true"
+            >
+            </span>
+          </button>
+        </span>
         <div *ngIf="hiddenPosition(position)===false && getCase(section[key])!=='primitive'">
           <jsandoc-section  [section]="section[key]"
                             [sectionTitle]="position+1"
@@ -280,7 +282,7 @@
             <span class="label label-info">{{position+1}}</span>
             <button
                 *ngIf="editionActive && getCase(item)!=='primitive'"
-                class="btn btn-xs btn-primary mini-edit"
+                class="btn btn-xs btn-default mini-edit"
                 title="Valor"
                 (click)="switchChildrenEditionActive(position)"
                 [ngClass]='{"btn-primary":getChildrenEditionActive(position) && getCase(item)==="property-value","btn-info":getChildrenEditionActive(position) && getCase(item)==="array"}'

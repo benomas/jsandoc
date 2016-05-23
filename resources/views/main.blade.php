@@ -166,6 +166,14 @@
             {
                 padding-left:2px;
             }
+
+            hr.add-separator
+            {
+                border-width: 1px 0 0;
+                border-style: ridge;
+                border-color:#449D44;
+                margin-top: 5px
+            }
         </style>
     </head>
     <body>
