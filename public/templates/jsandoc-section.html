@@ -97,41 +97,43 @@
           class="left-indent"
     >
       <div *ngIf="section[key]">
-        <span
-              *ngIf="getCase(section[key])!=='primitive' && (!isEmptyObject(section[key]) || editionActive )"
-              class="glyphicon low-font"
-              aria-hidden="true"
-              style="cursor:pointer;"
-              (click)="panelToggle(position)"
-              [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
-        >
-        </span>
-        <span
-              *ngIf="getCase(section[key])==='primitive' || (isEmptyObject(section[key]) && !editionActive)"
-              class="glyphicon glyphicon-triangle-right low-font"
-              aria-hidden="true"
-              style="visibility:hidden;"
-        >
-        </span>
-        <span
-              class="section-title"
-              [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElementS}'
-              (mouseenter)="overThis(key)"
-              (mouseleave)="leaveThis(key)"
-        >
-          <span class="label label-primary">
-            <primitive-element
+        <span class="property-container">
+          <span
+                *ngIf="getCase(section[key])!=='primitive' && (!isEmptyObject(section[key]) || editionActive )"
+                class="glyphicon low-font"
+                aria-hidden="true"
+                style="cursor:pointer;"
+                (click)="panelToggle(position)"
+                [ngClass]='{"glyphicon-triangle-right":hiddenPosition(position),"glyphicon-triangle-bottom":!hiddenPosition(position)}'
+          >
+          </span>
+          <span
+                *ngIf="getCase(section[key])==='primitive' || (isEmptyObject(section[key]) && !editionActive)"
+                class="glyphicon glyphicon-triangle-right low-font"
+                aria-hidden="true"
+                style="visibility:hidden;"
+          >
+          </span>
+          <span
+                class="section-title"
+                [ngClass]='{"with-child-over":childElementOver ===section[key] || key===overThisElementS}'
+                (mouseenter)="overThis(key)"
+                (mouseleave)="leaveThis(key)"
+          >
+            <span class="label label-primary">
+              <primitive-element
 
-                            [jsonValue]="key"
-                            [section]="section"
-                            [primitiveElementPlaceHolder]="'Concepto'"
-                            [primitiveElementTitle]="'Modificar un concepto'"
-                            [validModes]="'edition-view'"
-                            (emitSubmit)="catchEdition(key,$event,'property',position)"
-                            [switchable]="editionActive"
-                            [inputType]="'property'"
-            >
-            </primitive-element>
+                              [jsonValue]="key"
+                              [section]="section"
+                              [primitiveElementPlaceHolder]="'Concepto'"
+                              [primitiveElementTitle]="'Modificar un concepto'"
+                              [validModes]="'edition-view'"
+                              (emitSubmit)="catchEdition(key,$event,'property',position)"
+                              [switchable]="editionActive"
+                              [inputType]="'property'"
+              >
+              </primitive-element>
+            </span>
           </span>
         </span>
         <span
@@ -139,6 +141,7 @@
               [ngClass]='{"with-child-over":key===overThisElement}'
               (mouseenter)="overThis(key)"
               (mouseleave)="leaveThis(key)"
+              class="value-container"
         >
           <primitive-element
 
@@ -219,7 +222,7 @@
               [ngClass]='{"with-child-over":item===overThisElement}'
               (mouseenter)="overThis(item)"
               (mouseleave)="leaveThis(item)"
-              class="left-indent"
+              class="property-container left-indent"
         >
           <span
                 *ngIf="isEmptyObject(item) || editionActive"
@@ -256,7 +259,7 @@
         </div>
 
         <div *ngIf="getCase(item) !== 'primitive'"
-              class="left-indent"
+              class="value-container left-indent"
         >
             <span
               *ngIf="!isEmptyObject(item) || editionActive"
