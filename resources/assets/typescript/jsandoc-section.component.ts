@@ -43,10 +43,12 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     hiddens = [];
     newElement;
     initReady:boolean;
+    ownEditionActive:boolean;
 
     constructor(private _langService: LangService)
     {
         this.editionOnElement={};
+        this.ownEditionActive=false;
         this.initReady=false;
     }
 
@@ -231,25 +233,17 @@ export class JsandocSectionComponent implements OnInit,OnChanges
         if(this.hasSection())
         {
             if(this.dataType === 'array')
-            {
                 this.section.splice(jsonInsert.position,0 ,jsonInsert.jsonValue );
-                this.sectionUpdatedNotify();
-            }
             if(this.dataType === 'property-value')
-            {
-                this.propertyInsert(jsonInsert);
-                this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
-                this.sectionUpdatedNotify();
-            }
+                this.propertySplit(jsonInsert.position,0,jsonInsert.newProperty,jsonInsert.newValue);
         }
         else
         {
             this.section = jsonInsert.jsonValue;
             this.sectionCreated.next(this.section);
-            this.sectionUpdatedNotify();
         }
+        this.sectionUpdatedNotify();
         this.makeInit();
-        this.setDataType();
     }
 
     setEditionOnElement(position):void
@@ -280,18 +274,24 @@ export class JsandocSectionComponent implements OnInit,OnChanges
         return null;
     }
 
-    propertyInsert(jsonInsert)
+    propertySplit(start,deleteCount,newProperty,newValue)
     {
         var count = 0;
         var newSection={};
-        //console.log(jsonInsert.position);
-        while(count<jsonInsert.position)
+        while(count<start)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];
             count++;
         }
-        newSection[jsonInsert.newProperty] = jsonInsert.newValue;
-        //console.log(this.keys.length);
+
+        if( typeof newProperty!== 'undefined' && newProperty!==null &&
+            typeof newValue!== 'undefined' && newValue!==null
+            )
+            newSection[newProperty] = newValue;
+
+        if(typeof newProperty!== 'number')
+            count = count + deleteCount;
+
         while(count<this.keys.length)
         {
             newSection[this.keys[count]] = this.section[this.keys[count]];
@@ -323,7 +323,6 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     {
         this.initReady=false;
         this.makeInit();
-        /*console.log(this.keys);*/
         this.sectionUpdated.next(this.section);
     }
 
@@ -340,11 +339,15 @@ export class JsandocSectionComponent implements OnInit,OnChanges
         return true;
     }
 
-    removeByKey(key)
+    removePosition(start)
     {
         if(confirm('Seguro que deseas eliminar?'))
         {
-            delete this.section[key];
+            if(this.dataType === 'array')
+                this.section.splice(start,1);
+            else
+                this.propertySplit(start,1,null,null);
+                //delete this.section[start];
             this.sectionUpdated.next(this.section);
         }
     }
@@ -354,6 +357,8 @@ export class JsandocSectionComponent implements OnInit,OnChanges
         if(confirm('Seguro que deseas eliminar?'))
         {
             delete this.section;
+            this.initReady=false;
+            this.makeInit();
             this.sectionUpdated.next(this.section);
         }
     }

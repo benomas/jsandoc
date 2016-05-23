@@ -28,7 +28,7 @@ import {LangService}            from './lang.service';
                     PrimitiveElementComponent
                 ],
 })
-export class PrimitiveElementComponent implements OnInit OnChanges
+export class PrimitiveElementComponent implements OnInit
 {
     public sendData     = new EventEmitter();
     public emitSubmit   = new EventEmitter();
@@ -139,23 +139,4 @@ export class PrimitiveElementComponent implements OnInit OnChanges
             return false;
         return true;
     }
-
-/*
-    ngOnChanges(changes: {[propertyName: string]: SimpleChange})
-    {
-        if(this.validModes==='edition')
-        {
-            if(typeof this.reset !== 'undefined' && typeof changes['reset'] !== 'undefined')
-            {
-                if(changes['reset'].currentValue !== changes['reset'].previousValue)
-                {
-                    if(changes['reset'].currentValue===true)
-                    {
-                        this.jsonValue='';
-                        this.wasReset.next(this.inputType);
-                    }
-                }
-            }
-        }
-    }*/
 }

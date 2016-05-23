@@ -165,23 +165,17 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                 JsandocSectionComponent.prototype.add = function (jsonInsert) {
                     this.initReady = false;
                     if (this.hasSection()) {
-                        if (this.dataType === 'array') {
+                        if (this.dataType === 'array')
                             this.section.splice(jsonInsert.position, 0, jsonInsert.jsonValue);
-                            this.sectionUpdatedNotify();
-                        }
-                        if (this.dataType === 'property-value') {
-                            this.propertyInsert(jsonInsert);
-                            this.section[jsonInsert['newProperty']] = jsonInsert['newValue'];
-                            this.sectionUpdatedNotify();
-                        }
+                        if (this.dataType === 'property-value')
+                            this.propertySplit(jsonInsert.position, 0, jsonInsert.newProperty, jsonInsert.newValue);
                     }
                     else {
                         this.section = jsonInsert.jsonValue;
                         this.sectionCreated.next(this.section);
-                        this.sectionUpdatedNotify();
                     }
+                    this.sectionUpdatedNotify();
                     this.makeInit();
-                    this.setDataType();
                 };
                 JsandocSectionComponent.prototype.setEditionOnElement = function (position) {
                     if (typeof this.editionOnElement[position] === 'undefined')
@@ -203,14 +197,18 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                         return Object.keys(item);
                     return null;
                 };
-                JsandocSectionComponent.prototype.propertyInsert = function (jsonInsert) {
+                JsandocSectionComponent.prototype.propertySplit = function (start, deleteCount, newProperty, newValue) {
                     var count = 0;
                     var newSection = {};
-                    while (count < jsonInsert.position) {
+                    while (count < start) {
                         newSection[this.keys[count]] = this.section[this.keys[count]];
                         count++;
                     }
-                    newSection[jsonInsert.newProperty] = jsonInsert.newValue;
+                    if (typeof newProperty !== 'undefined' && newProperty !== null &&
+                        typeof newValue !== 'undefined' && newValue !== null)
+                        newSection[newProperty] = newValue;
+                    if (typeof newProperty !== 'number')
+                        count = count + deleteCount;
                     while (count < this.keys.length) {
                         newSection[this.keys[count]] = this.section[this.keys[count]];
                         count++;
@@ -242,15 +240,20 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     }
                     return true;
                 };
-                JsandocSectionComponent.prototype.removeByKey = function (key) {
+                JsandocSectionComponent.prototype.removePosition = function (start) {
                     if (confirm('Seguro que deseas eliminar?')) {
-                        delete this.section[key];
+                        if (this.dataType === 'array')
+                            this.section.splice(start, 1);
+                        else
+                            this.propertySplit(start, 1, null, null);
                         this.sectionUpdated.next(this.section);
                     }
                 };
                 JsandocSectionComponent.prototype.removeSection = function () {
                     if (confirm('Seguro que deseas eliminar?')) {
                         delete this.section;
+                        this.initReady = false;
+                        this.makeInit();
                         this.sectionUpdated.next(this.section);
                     }
                 };

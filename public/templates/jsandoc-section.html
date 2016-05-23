@@ -11,7 +11,13 @@
         class="label label-info pull-right list-box">Lista simple
   </span>
   <div  *ngIf="editionActive && section || (editionActive && !section && depth === 0)" [ngClass]='{"emptySection":isEmpty()}'>
-    <div *ngIf="isEmpty()" style="color:#CCCCCC;">
+    <div *ngIf="section && isEmpty()" style="color:#CCCCCC;">
+      <span *ngIf="dataType==='array'">
+        Lista simple
+      </span>
+      <span *ngIf="dataType==='property-value'">
+        Lista compuesta
+      </span>
       vacia
       <button
               *ngIf="depth === 0"
@@ -27,16 +33,23 @@
         </span>
       </button>
     </div>
-    <div *ngIf="isEmpty() && depth === 0 && dataType!=='array' && dataType!=='property-value'" style="color:#CCCCCC;">
+    <div *ngIf="isEmpty() && depth === 0 && dataType==='empty'" style="color:#CCCCCC;">
       No se ha definido raiz
     </div>
+    <h3 *ngIf="depth === 0 && dataType!=='empty'"  style="margin-top:-2px;">
+      <span class="label"
+            [ngClass]='{"label-primary":dataType==="property-value","label-info":dataType==="array","label-success":dataType==="empty"}'
+      >Raiz del documento
+      </span>
+    </h3>
+
     <div  style="padding-left:13px;"
     >
       <button
               class="btn btn-xs"
               title="Valor"
               (click)="setEditionOnElement('root')"
-              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-primary":getEditionOnElement("root") && dataType==="property-value","btn-info":getEditionOnElement("root") && dataType==="array"}'
+              [ngClass]='{"btn-default":!getEditionOnElement("root"),"btn-primary":getEditionOnElement("root") && dataType==="property-value","btn-info":getEditionOnElement("root") && dataType==="array","btn-success":getEditionOnElement("root") && dataType==="empty"}'
       >
         <span
               class="glyphicon glyphicon-edit"
@@ -125,7 +138,7 @@
           </primitive-element>
           <button  *ngIf="editionActive"
                     class="btn btn-danger btn-xs mini-remove"
-                    (click)="removeByKey(key)"
+                    (click)="removePosition(position)"
                     title="Remover"
 
           >
@@ -139,7 +152,7 @@
         <button
                 *ngIf="editionActive && getCase(section[key])!=='primitive'"
                 class="btn btn-danger btn-xs mini-remove"
-                (click)="removeByKey(key)"
+                (click)="removePosition(position)"
                 title="Remover"
 
         >
@@ -149,13 +162,13 @@
           >
           </span>
         </button>
-        <div *ngIf="getCase(section[key])!=='primitive'">
+        <div *ngIf="!hiddenPosition(position) && getCase(section[key])!=='primitive'">
           <jsandoc-section  [section]="section[key]"
                             [sectionTitle]="position+1"
                             [editionActive]="editionActive"
                             (childover)="notifyOverToParent($event)"
                             (childleave)="notifyLeaveToParent($event)"
-                            [hidden]="hiddenPosition(position)"
+
                             [depth]="depth+1"
                             [openAll]="openAll"
                             [collapseAll]="collapseAll"
@@ -201,7 +214,7 @@
           <button
                   *ngIf="editionActive"
                   class="btn btn-danger btn-xs mini-remove"
-                  (click)="removeByKey(position)"
+                  (click)="removePosition(position)"
                   title="Remover"
 
               >
@@ -215,7 +228,7 @@
         <button
                 *ngIf="editionActive && getCase(item) !== 'primitive'"
                 class="btn btn-danger btn-xs mini-remove"
-                (click)="removeByKey(position)"
+                (click)="removePosition(position)"
                 title="Remover"
 
         >
@@ -245,12 +258,14 @@
             >
             </span>
             <span class="label label-info">{{position+1}}</span>
-            <jsandoc-section  [section]="item"
+            <jsandoc-section
+                              *ngIf="hiddenPosition(position)"
+                              [section]="item"
                               [sectionTitle]="position+1"
                               [editionActive]="editionActive"
                               (childover)="notifyOverToParent($event)"
                               (childleave)="notifyLeaveToParent($event)"
-                              [hidden]="hiddenPosition(position)"
+
                               [depth]="depth+1"
                               [openAll]="openAll"
                               [collapseAll]="collapseAll"
