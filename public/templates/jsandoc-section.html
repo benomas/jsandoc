@@ -1,6 +1,6 @@
 <div
       class="section-child"
-      [ngClass]='{"section-edition":getOwnEditionActive(),"section-edition-simple-list":editionActive && getOwnEditionActive() && dataType==="array","section-edition-complex-list":editionActive && getOwnEditionActive() && dataType==="property-value"}'
+      [ngClass]='{"section-edition":getOwnEditionActive(),"section-edition-simple-list":editionActive && getOwnEditionActive() && dataType==="array","section-edition-complex-list":editionActive && getOwnEditionActive() && dataType==="property-value","root-section-child":depth === "1"}'
 >
   <div *ngIf="editionActive">
     <span *ngIf="getOwnEditionActive()">
@@ -14,7 +14,6 @@
       </span>
     </span>
     <div  *ngIf="section || (!section && depth === 0)"
-          [ngClass]='{"emptySection":isEmpty()}'
     >
       <div *ngIf="depth === 0">
         <div>
@@ -196,8 +195,10 @@
             </span>
           </button>
         </span>
-        <div *ngIf="hiddenPosition(position)===false && getCase(section[key])!=='primitive'">
-          <jsandoc-section  [section]="section[key]"
+        <div >
+          <jsandoc-section  
+                            [hidden]="hiddenPosition(position)===true && getCase(section[key])!=='primitive'"
+                            [section]="section[key]"
                             [sectionTitle]="position+1"
                             [editionActive]="editionActive"
                             (childover)="notifyOverToParent($event)"
@@ -307,7 +308,7 @@
                 </span>
             </button>
             <jsandoc-section
-                              *ngIf="hiddenPosition(position)===false"
+                              [hidden]="hiddenPosition(position)===true"
                               [section]="item"
                               [sectionTitle]="position+1"
                               [editionActive]="editionActive"

@@ -120,9 +120,15 @@
 
             .section-child
             {
-                padding-top:3px;
-                padding-bottom:3px;
+                padding-top:1px;
+                padding-bottom:1px;
                 padding-left:5px;
+            }
+
+            .root-section-child
+            {                
+                /*margin-bottom: 5px;
+                border-bottom: 1px solid #CCCCCC;*/
             }
 
             .section-edition
