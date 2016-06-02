@@ -196,13 +196,15 @@
           </button>
         </span>
         <div >
+        <!--        
+            (childover)="notifyOverToParent($event)"
+            (childleave)="notifyLeaveToParent($event)"
+        -->
           <jsandoc-section  
                             [hidden]="hiddenPosition(position)===true && getCase(section[key])!=='primitive'"
                             [section]="section[key]"
                             [sectionTitle]="position+1"
                             [editionActive]="editionActive"
-                            (childover)="notifyOverToParent($event)"
-                            (childleave)="notifyLeaveToParent($event)"
                             [ownEditionActive]="getChildrenEditionActive(position)"
                             [depth]="depth+1"
                             [openAll]="openAll"
@@ -307,13 +309,15 @@
                 >
                 </span>
             </button>
+          <!--        
+              (childover)="notifyOverToParent($event)"
+              (childleave)="notifyLeaveToParent($event)"
+          -->
             <jsandoc-section
                               [hidden]="hiddenPosition(position)===true"
                               [section]="item"
                               [sectionTitle]="position+1"
                               [editionActive]="editionActive"
-                              (childover)="notifyOverToParent($event)"
-                              (childleave)="notifyLeaveToParent($event)"
                               [ownEditionActive]="getChildrenEditionActive(position)"
                               [depth]="depth+1"
                               [openAll]="openAll"
