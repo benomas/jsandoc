@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterDocTable extends Migration
+class Alter2DocTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class AlterDocTable extends Migration
      */
     public function up()
     {
-        /*Schema::table('doc', function ($table)
+        Schema::table('doc', function ($table)
         {
-            $table->renameColumn('namespace', 'doc_namespace');
-        });*/
+            $table->integer('limit_version')->unsigned()->default(100);
+        });
     }
 
     /**
@@ -25,9 +25,9 @@ class AlterDocTable extends Migration
      */
     public function down()
     {
-        /*Schema::table('doc', function ($table)
+        Schema::table('doc', function ($table)
         {
-            $table->renameColumn('doc_namespace', 'namespace');
-        });*/
+            $table->dropColumn('limit_version');
+        });
     }
 }

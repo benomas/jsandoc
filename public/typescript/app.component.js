@@ -57,6 +57,7 @@ System.register(['angular2/core', 'angular2/common', './jsandoc-home.component',
                     this._docService = _docService;
                     this._userService = _userService;
                     this._router = _router;
+                    this.currentAction = 'JsandocShared';
                     this.currentUserNamespace = '';
                     this.currentDocNamespace = '';
                 }

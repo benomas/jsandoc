@@ -72,7 +72,7 @@ export class AppComponent implements OnInit
                 protected _userService: UserService,
                 private _router: Router)
     {
-        //this.currentAction='JsandocShared';
+        this.currentAction='JsandocShared';
         this.currentUserNamespace='';
         this.currentDocNamespace='';
     }
