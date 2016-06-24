@@ -79,7 +79,7 @@ class AuthController extends Controller
 
     public function getLogin()
     {
-        return !Auth::check()? view('header').view('auth\login').view('footer'):redirect('/');
+        return !Auth::check()? view('header').view('auth/login').view('footer'):redirect('/');
     }
 
     /**
@@ -89,7 +89,7 @@ class AuthController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('header').view('auth\register').view('footer');
+        return view('header').view('auth/register').view('footer');
     }
 
 
