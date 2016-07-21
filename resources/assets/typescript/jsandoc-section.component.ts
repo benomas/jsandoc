@@ -2,6 +2,7 @@ import {Component,EventEmitter, OnInit,OnChanges,SimpleChange }     from 'angula
 import {NgClass}                                                    from 'angular2/common';
 import {AddElementComponent}                                        from './add-element.component';
 import {PrimitiveElementComponent}                                  from './primitive-element.component';
+import {FreeModeElementComponent}                                          from './free-mode-element.component';
 import {LangService}                                                from './lang.service';
 
 @Component({
@@ -19,7 +20,7 @@ import {LangService}                                                from './lang
                 'ownEditionActive'
             ],
     outputs: ['childover','childleave','sectionCreated','sectionUpdated'],
-    directives:[JsandocSectionComponent,NgClass,AddElementComponent,PrimitiveElementComponent],
+    directives:[JsandocSectionComponent,NgClass,AddElementComponent,PrimitiveElementComponent,FreeModeElementComponent],
 })
 export class JsandocSectionComponent implements OnInit,OnChanges
 {
@@ -46,12 +47,14 @@ export class JsandocSectionComponent implements OnInit,OnChanges
     initReady:boolean;
     ownEditionActive:boolean;
     childrenEditionActive;
+    childrenFreeEditionActive;
 
     constructor(private _langService: LangService)
     {
         this.editionOnElement={};
         this.ownEditionActive=false;
         this.childrenEditionActive= [];
+        this.childrenFreeEditionActive= [];
         this.initReady=false;
     }
 
@@ -275,6 +278,26 @@ export class JsandocSectionComponent implements OnInit,OnChanges
             return false;
         return this.childrenEditionActive[position];
     }
+
+
+    switchChildrenFreeEditionActive(position):void
+    {
+        if( typeof this.childrenFreeEditionActive[position]==='undefined')
+            this.childrenFreeEditionActive[position]=true;
+        else
+            this.childrenFreeEditionActive[position]=!this.childrenFreeEditionActive[position];
+
+        if(this.childrenFreeEditionActive[position]===true)
+            this.hiddens[position]=true;
+    }
+
+    getChildrenFreeEditionActive(position):boolean
+    {
+        if( typeof this.childrenFreeEditionActive[position]==='undefined')
+            return false;
+        return this.childrenFreeEditionActive[position];
+    }
+
 
     setDataType()
     {

@@ -26,7 +26,7 @@
     </button>
     <button *ngIf="hasPermision"
             class="btn btn-xs"
-            title="Valor"
+            title="Editar nivel"
             [ngClass]='{"btn-default":!editionActive,"btn-success":editionActive}'
             (click)="editionActive = !editionActive"
     >
@@ -38,7 +38,7 @@
     </button>
     <button *ngIf="hasPermision && needToSave"
             class="btn btn-xs btn-primary"
-            title="Valor"
+            title="Guardar cambios"
             (click)="saveDoc()"
     >
       <span

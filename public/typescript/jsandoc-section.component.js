@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './add-element.component', './primitive-element.component', './lang.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', './add-element.component', './primitive-element.component', './free-mode-element.component', './lang.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, add_element_component_1, primitive_element_component_1, lang_service_1;
+    var core_1, common_1, add_element_component_1, primitive_element_component_1, free_mode_element_component_1, lang_service_1;
     var JsandocSectionComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
             },
             function (primitive_element_component_1_1) {
                 primitive_element_component_1 = primitive_element_component_1_1;
+            },
+            function (free_mode_element_component_1_1) {
+                free_mode_element_component_1 = free_mode_element_component_1_1;
             },
             function (lang_service_1_1) {
                 lang_service_1 = lang_service_1_1;
@@ -42,6 +45,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                     this.editionOnElement = {};
                     this.ownEditionActive = false;
                     this.childrenEditionActive = [];
+                    this.childrenFreeEditionActive = [];
                     this.initReady = false;
                 }
                 JsandocSectionComponent.prototype.ngOnInit = function () {
@@ -197,6 +201,19 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                         return false;
                     return this.childrenEditionActive[position];
                 };
+                JsandocSectionComponent.prototype.switchChildrenFreeEditionActive = function (position) {
+                    if (typeof this.childrenFreeEditionActive[position] === 'undefined')
+                        this.childrenFreeEditionActive[position] = true;
+                    else
+                        this.childrenFreeEditionActive[position] = !this.childrenFreeEditionActive[position];
+                    if (this.childrenFreeEditionActive[position] === true)
+                        this.hiddens[position] = true;
+                };
+                JsandocSectionComponent.prototype.getChildrenFreeEditionActive = function (position) {
+                    if (typeof this.childrenFreeEditionActive[position] === 'undefined')
+                        return false;
+                    return this.childrenFreeEditionActive[position];
+                };
                 JsandocSectionComponent.prototype.setDataType = function () {
                     if (this.hasSection() && this.dataType === 'property-value')
                         this.keys = Object.keys(this.section);
@@ -306,7 +323,7 @@ System.register(['angular2/core', 'angular2/common', './add-element.component', 
                             'ownEditionActive'
                         ],
                         outputs: ['childover', 'childleave', 'sectionCreated', 'sectionUpdated'],
-                        directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent, primitive_element_component_1.PrimitiveElementComponent],
+                        directives: [JsandocSectionComponent, common_1.NgClass, add_element_component_1.AddElementComponent, primitive_element_component_1.PrimitiveElementComponent, free_mode_element_component_1.FreeModeElementComponent],
                     }), 
                     __metadata('design:paramtypes', [lang_service_1.LangService])
                 ], JsandocSectionComponent);
